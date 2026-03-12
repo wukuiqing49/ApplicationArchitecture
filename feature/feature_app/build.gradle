@@ -1,0 +1,36 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace = 'com.wkq.feature.app'
+    compileSdk appConfig.compileSdk
+
+    defaultConfig {
+        minSdk appConfig.minSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = appConfig.jvmTarget
+    }
+}
+
+dependencies {
+    implementation libs.androidx.core.ktx
+    implementation project(':core:core_base')
+    implementation project(':core:core_util')
+    implementation project(':core:core_router')
+
+}

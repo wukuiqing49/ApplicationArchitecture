@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Rounded Corners 5dp -->
+    <style name="ShapeableImageView_R5">
+        <item name="shapeAppearance">@style/ShapeAppearance_R5</item>
+    </style>
+
+    <!-- Rounded Corners 10dp -->
+    <style name="ShapeableImageView_R10">
+        <item name="shapeAppearance">@style/ShapeAppearance_R10</item>
+    </style>
+
+    <!-- Rounded Corners 15dp -->
+    <style name="ShapeableImageView_R15">
+        <item name="shapeAppearance">@style/ShapeAppearance_R15</item>
+    </style>
+
+    <!-- Rounded Corners 20dp -->
+    <style name="ShapeableImageView_R20">
+        <item name="shapeAppearance">@style/ShapeAppearance_R20</item>
+    </style>
+
+    <!-- Circle (50%) -->
+    <style name="ShapeableImageView_Circle">
+        <item name="shapeAppearance">@style/ShapeAppearance_Circle</item>
+    </style>
+
+    <!-- ShapeAppearance Definitions -->
+    <style name="ShapeAppearance_R5" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">5dp</item>
+    </style>
+
+    <style name="ShapeAppearance_R10" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+    <style name="ShapeAppearance_R15" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15dp</item>
+    </style>
+
+    <style name="ShapeAppearance_R20" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="ShapeAppearance_Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>

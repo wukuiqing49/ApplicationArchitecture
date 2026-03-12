@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommonTitleBar">
+        <!-- 标题区域 -->
+        <attr name="titleBar_title" format="string" />
+        <attr name="titleBar_titleColor" format="color" />
+        <attr name="titleBar_titleSize" format="dimension" />
+        <attr name="titleBar_titleStyle" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="italic" value="2"/>
+        </attr>
+
+        <!-- 左侧区域 -->
+        <attr name="titleBar_leftIcon" format="reference" />
+        <attr name="titleBar_leftIconVisible" format="boolean" />
+        <attr name="titleBar_leftText" format="string" />
+        <attr name="titleBar_leftTextColor" format="color" />
+        <attr name="titleBar_leftTextSize" format="dimension" />
+        
+        <!-- 右侧区域 -->
+        <attr name="titleBar_rightIcon" format="reference" />
+        <attr name="titleBar_rightIconVisible" format="boolean" />
+        <attr name="titleBar_rightText" format="string" />
+        <attr name="titleBar_rightTextColor" format="color" />
+        <attr name="titleBar_rightTextSize" format="dimension" />
+    </declare-styleable>
+</resources>

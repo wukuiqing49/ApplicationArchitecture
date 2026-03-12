@@ -1,0 +1,42 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace = 'com.wkq.net'
+    compileSdk appConfig.compileSdk
+
+    defaultConfig {
+        minSdk appConfig.minSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = appConfig.jvmTarget
+    }
+}
+
+dependencies {
+    implementation libs.androidx.core.ktx
+    
+    api project(':core:core_util')
+}

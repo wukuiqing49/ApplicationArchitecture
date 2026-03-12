@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="20dp"
+        android:text="测试入口 (Test Portal)"
+        android:textColor="#333333"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_image_loader"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:text="图片加载测试 (ImageLoader)"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_gradient_label"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:text="渐变标签测试 (GradientLabel)"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:text="指示器测试 (MagicIndicator)"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="预览效果 (Preview Components)"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+
+    <com.wkq.ui.widget.GradientShapeLabelView
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:label_bg_end_color="#FF80AB"
+        app:label_bg_orientation="left_right"
+        app:label_bg_radius="18dp"
+        app:label_bg_start_color="#FF4081"
+        app:label_left_icon="@android:drawable/ic_menu_gallery"
+        app:label_text="Gradient Label Sample"
+        app:label_text_color="#FFFFFF"
+        app:label_text_size="13sp"
+        app:label_icon_padding="4dp"
+        app:label_icon_size="16dp" />
+
+</LinearLayout>

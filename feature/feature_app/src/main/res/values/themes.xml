@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.QdVoice" parent="Theme.Material3.DayNight.NoActionBar">
+    </style>
+
+    <style name="Theme.QdVoice" parent="Base.Theme.QdVoice" />
+
+    <!-- 专门给 SplashActivity 用的首屏防黑屏主题 -->
+    <style name="Theme.QdVoice.Splash" parent="Theme.QdVoice">
+
+        <!-- 适配 Android 12+ 的全新 Splash Screen API -->
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">@color/splash_bg_color</item>
+
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:theme">@android:style/Theme.Light.NoTitleBar.Fullscreen</item>
+<!--        <item name="android:windowBackground">@drawable/shape_launcher</item>-->
+        <!--不让windowBackground延申到navigation bar区域-->
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+    </style>
+</resources>

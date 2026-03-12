@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 允许应用程序连接到互联网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许应用程序访问有关网络的信息 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+</manifest>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TitleBar 颜色 Token（黑夜模式覆盖） -->
+    <color name="color_title_bar_bg">#1C1C2E</color>
+    <color name="color_title_bar_text">#E8E8F0</color>
+    <color name="color_title_bar_icon">#C8C8D8</color>
+</resources>

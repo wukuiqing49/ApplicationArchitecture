@@ -1,0 +1,47 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose) // 添加 compose 编译器插件
+}
+
+android {
+    namespace = 'com.wkq.core.router'
+    compileSdk appConfig.compileSdk
+
+    defaultConfig {
+        minSdk appConfig.minSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = appConfig.jvmTarget
+    }
+}
+
+dependencies {
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+
+    // Compose 基础运行时支持（提供 @Composable 注解）
+    implementation platform(libs.compose.bom)
+    implementation libs.compose.runtime
+}

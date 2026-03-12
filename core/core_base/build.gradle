@@ -1,0 +1,56 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace = 'com.wkq.base'
+    compileSdk appConfig.compileSdk
+
+    defaultConfig {
+        minSdk appConfig.minSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = appConfig.jvmTarget
+    }
+}
+
+dependencies {
+    api libs.androidx.core.ktx
+    api libs.androidx.appcompat
+    api libs.material
+    api libs.androidx.lifecycle.viewmodel.ktx
+    api libs.androidx.lifecycle.runtime.ktx
+    api libs.androidx.activity.ktx
+    api libs.androidx.fragment.ktx
+    api libs.androidx.constraintlayout
+    api libs.androidx.recyclerview
+    api libs.androidx.viewpager2
+    api libs.immersionbar
+    api libs.immersionbar.ktx
+    api libs.smartrefresh.layout.kernel
+    api libs.smartrefresh.header.classics
+    api libs.smartrefresh.header.material
+    api project(':core:core_util')
+    api project(':core:core_res')
+}

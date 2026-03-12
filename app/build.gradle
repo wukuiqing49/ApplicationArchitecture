@@ -1,0 +1,194 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace = appConfig.appNamespace
+    compileSdk appConfig.compileSdk
+
+    defaultConfig {
+        applicationId = "com.qianrun.voice"
+        minSdk appConfig.minSdk
+        targetSdk appConfig.targetSdk
+        versionCode appConfig.versionCode
+        versionName appConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            storeFile = file('qdvoice.jks')
+            storePassword = 'qiandu1234560.'
+            keyAlias = 'qianrun'
+            keyPassword = 'qiandu1234560.'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig = signingConfigs.release
+        }
+        debug {
+            signingConfig = signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def buildType = variant.buildType.name
+                def versionName = variant.versionName
+                def time = new Date().format("yyyyMMdd_HHmm")
+                def fileName = "QdVoice_${buildType}_v${versionName}_${time}.apk"
+                outputFileName = fileName
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += "$buildDir/generated/source/router"
+        }
+    }
+}
+
+dependencies {
+
+  
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+
+    implementation project(':core:core_base')
+    implementation project(':core:core_ui')
+    implementation project(':core:core_network')
+    implementation project(':core:core_router')
+
+    // Auto-include all feature and component modules
+    rootProject.subprojects { proj ->
+        if (proj.path.startsWith(':feature:') || proj.path.startsWith(':component:')) {
+            implementation project(proj.path)
+        }
+    }
+}
+
+
+// 自动生成 RouterInit.kt
+// ========================================
+tasks.register("generateRouterInit") {
+
+    // 1️⃣ 动态获取 namespace
+    def basePackage = android.namespace ?: "com.wkq.test"
+
+    // 2️⃣ 输出目录，路径跟包名一致
+    def outputDir = file("$buildDir/generated/source/router/${basePackage.replace('.', '/')}/core/router")
+    def outputFile = file("$outputDir/RouterInit.kt")
+
+    // 3️⃣ 收集 feature/component 模块的源码目录
+    def sourceDirs = []
+    rootProject.subprojects { proj ->
+        if (proj.path.startsWith(':feature:') || proj.path.startsWith(':component:')) {
+            sourceDirs.add(proj.file("src/main/java"))
+        }
+    }
+
+    def routeFiles = files(sourceDirs).asFileTree.matching {
+        include "**/*Routes.kt"
+    }
+
+    // 4️⃣ 增量构建输入输出
+    inputs.files(routeFiles)
+    outputs.file(outputFile)
+
+    // 5️⃣ 生成逻辑
+    doLast {
+        outputDir.mkdirs()
+        def routerClasses = []
+
+        routeFiles.each { file ->
+            def text = file.text
+            def pkgMatch = text =~ /package\s+([a-zA-Z0-9_.]+)/
+            def objMatch = text =~ /object\s+([a-zA-Z0-9_]+Routes)/
+
+            if (pkgMatch.find() && objMatch.find()) {
+                routerClasses.add("${pkgMatch.group(1)}.${objMatch.group(1)}")
+            }
+        }
+
+        // 6️⃣ 拼接 RouterInit.kt 内容
+        def sb = new StringBuilder()
+        sb.append("package ${basePackage}.core.router\n\n")
+        sb.append("import com.wkq.core.router.Router\n\n")
+        sb.append("object RouterInit {\n")
+        sb.append("    fun registerAll() {\n")
+        routerClasses.each { clazz ->
+            sb.append("        ${clazz}.routes.forEach { Router.add(it) }\n")
+        }
+        sb.append("    }\n")
+        sb.append("}\n")
+
+        // 7️⃣ 写入文件
+        outputFile.text = sb.toString()
+        println("✅ RouterInit.kt generated at ${outputFile.absolutePath}")
+    }
+}
+
+android.sourceSets {
+    main {
+        java.srcDirs += "$buildDir/generated/source/router/${android.namespace.replace('.', '/')}/core/router"
+    }
+}
+
+
+preBuild.dependsOn("generateRouterInit")
+
+tasks.whenTaskAdded { task ->
+    // 匹配所有 merge<Flavor><BuildType>NativeLibs 任务
+    if (task.name.matches(/merge.*NativeLibs/)) {
+        // 在“配置阶段”提前读取属性，避免在“执行阶段”（doFirst）调用 project 对象，
+        // 防止破坏 Gradle 8.0+ 的 Configuration Cache 特性。
+        def shouldPrintSo = project.hasProperty("printSo")
+        
+        task.doFirst {
+            // 通过附加参数 -PprintSo 来手动开启打印，避免每次编译都刷屏
+            if (shouldPrintSo) {
+                println("------- [${task.name}] start scanning so files -------")
+
+                // 遍历所有输入文件
+                it.inputs.files.each { file ->
+                    printSoFiles(file)
+                }
+
+                println("------- [${task.name}] end scanning so files -------")
+            }
+        }
+    }
+}
+
+// 递归查找 .so 文件
+def printSoFiles(File file) {
+    if (file == null || !file.exists()) return
+
+    if (file.isDirectory()) {
+        file.listFiles()?.each { printSoFiles(it) }
+    } else if (file.name.endsWith(".so")) {
+        println("Found .so: ${file.absolutePath}")
+    }
+}

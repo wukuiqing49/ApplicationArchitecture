@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 底色，通常用白色或品牌主色避免黑屏 -->
+    <item android:drawable="@color/splash_bg_color" />
+    
+    <!-- 中间的 Logo (暂无 logo 图标，先纯色填充即可消除黑屏) 
+         如果有 logo 可以这么写：
+         <item>
+             <bitmap android:src="@mipmap/ic_launcher" android:gravity="center" />
+         </item>
+    -->
+</layer-list>

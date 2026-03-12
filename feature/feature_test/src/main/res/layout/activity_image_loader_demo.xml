@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 6. 永久缓存加载 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="6. 永久缓存加载 (Pinned Cache)"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_pinned"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal" />
+
+
+        <!-- 1. 普通加载 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. 普通加载 (Default)"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_normal"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+
+            android:scaleType="centerCrop" />
+
+        <!-- 2. 圆形裁剪 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="2. 圆形裁剪 (Circle Crop)"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_circle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+
+            android:layout_gravity="center_horizontal" />
+
+        <!-- 3. 圆角加载 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="3. 圆角加载 (Rounded Corners 30dp)"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_rounded"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+
+            android:scaleType="centerCrop" />
+
+        <!-- 4. 灰度模式 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="4. 灰度模式 (Grayscale)"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_grayscale"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:background="#EEEEEE"
+            android:scaleType="centerCrop" />
+
+        <!-- 5. GIF 播放 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="5. GIF 动图加载 (Gif Support)"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_gif"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitCenter" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"
+            android:text="(再次进入页面将秒开)"
+            android:textColor="#999999"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

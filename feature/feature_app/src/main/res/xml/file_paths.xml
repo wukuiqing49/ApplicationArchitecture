@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <files-path
+        name="log"
+        path="." />
+    <files-path
+        name="file_root"
+        path="." />
+
+    <cache-path
+        name="cache_root"
+        path="." />
+
+    <external-path
+        name="external_storage_root"
+        path="." />
+
+    <external-files-path
+        name="external_file_root"
+        path="." />
+
+    <external-cache-path
+        name="external_cache_root"
+        path="." />
+    <cache-path name="my_images" path="." />
+    <cache-path name="my_videos" path="." />
+    <!-- /storage/emulated/0/Download/${applicationId}/.beta/apk-->
+    <external-path
+        name="beta_external_path"
+        path="Download/" />
+    <!--/storage/emulated/0/Android/data/${applicationId}/files/apk/-->
+    <external-path
+        name="beta_external_files_path"
+        path="Android/data/" />
+
+
+    <external-files-path
+        name="umeng_cache"
+        path="umeng_cache/" />
+    <!-- QQ 官方分享SDK 共享路径 -->
+    <root-path
+        name="opensdk_root"
+        path="" />
+    <external-files-path
+        name="opensdk_external"
+        path="Images/tmp" />
+    <!-- 新浪微博 官方分享SDK 10.10.0共享路径 -->
+    <external-files-path
+        name="share_files"
+        path="." />
+
+    <!--x5-->
+    <external-path name="external_files" path="." />
+    <cache-path name="cache" path="." />
+    <files-path name="files" path="." />
+</paths>

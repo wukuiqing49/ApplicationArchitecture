@@ -1,0 +1,24 @@
+<resources>
+
+    <string name="lib_ui_name">Lib UI</string>
+    <string name="lib_util_name">Lib Util</string>
+    <string name="lib_net_name">Lib Net</string>
+    <string name="lib_res_name">Lib Res</string>
+
+    <string name="hello_from_base">Hello from lib_base resources!</string>
+    <string name="string_cancel">取消</string>
+    <string name="string_sure">Yes</string>
+    <string name="permission_request_title">权限申请</string>
+    <string name="permission_request_setting_title">权限申请</string>
+    <string name="permission_permanently_denied">以下权限被永久拒绝，是否前往设置页面进行授权？</string>
+    <string name="go_to_settings">前往设置</string>
+    <string name="cancel">取消</string>
+    <string name="permissions_granted_setting">请前往系统设置开启应用通知</string>
+    <string name="permissions_granted">权限已在设置中开启</string>
+    <string name="permissions_not_granted">权限仍未全部开启，请再次检查设置</string>
+    <string name="partial_permission_denied">部分权限被拒绝: %1$s</string>
+    
+    <string name="base_empty_no_data">暂无数据</string>
+    <string name="base_dialog_common_title">title</string>
+    <string name="base_dialog_common_content">content</string>
+</resources>

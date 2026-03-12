@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.wkq.base.widget.CommonTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleBar_title="MagicIndicator 测试" />
+
+    <!-- MagicIndicator 容器 -->
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FFFFFF" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ScaleTransitionPagerTitleView 效果:"
+        android:textSize="12sp"
+        android:layout_marginStart="10dp"
+        android:textColor="#999999"/>
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FFFFFF" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- 底部展示标签预览 -->
+    <com.wkq.ui.widget.GradientShapeLabelView
+        android:id="@+id/label_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        app:label_text="GradientShapeLabelView 效果预览"
+        app:label_text_color="#FFFFFF"
+        app:label_text_size="14sp"
+        app:label_bg_radius="25dp"
+        app:label_bg_start_color="#4FC3F7"
+        app:label_bg_end_color="#2196F3"
+        app:label_left_icon="@android:drawable/ic_menu_gallery"
+        app:label_right_icon="@android:drawable/ic_menu_share"
+        app:label_icon_padding="8dp"
+        app:label_icon_size="18dp" />
+
+</LinearLayout>

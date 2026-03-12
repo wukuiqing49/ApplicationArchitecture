@@ -1,0 +1,39 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+namespace = 'com.qianrun.voice.core.aar'
+    compileSdk appConfig.compileSdk
+
+    defaultConfig {
+        minSdk appConfig.minSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = appConfig.jvmTarget
+    }
+}
+
+dependencies {
+    // 统一在这里添加你需要引用的基于 AAR 形式的第三方或者历史库
+    // 示例： API 形式暴露出去，让依赖 core_aar 的模块都能访问 AAR 内容
+    // api fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+}
