@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QdVoice (CN)</string>
+    <string name="app_name">ApplicationArchitecture</string>
     <string name="lib_ui_name">UI 库</string>
     <string name="lib_util_name">工具 库</string>
     <string name="lib_net_name">网络 库</string>

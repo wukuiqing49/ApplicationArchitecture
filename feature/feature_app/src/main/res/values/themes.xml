@@ -1,11 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Base.Theme.QdVoice" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ApplicationArchitecture" parent="Theme.Material3.DayNight.NoActionBar">
     </style>
 
-    <style name="Theme.QdVoice" parent="Base.Theme.QdVoice" />
+    <style name="Theme.ApplicationArchitecture" parent="Base.Theme.ApplicationArchitecture" />
 
     <!-- 专门给 SplashActivity 用的首屏防黑屏主题 -->
-    <style name="Theme.QdVoice.Splash" parent="Theme.QdVoice">
+    <style name="Theme.ApplicationArchitecture.Splash" parent="Theme.ApplicationArchitecture">
 
         <!-- 适配 Android 12+ 的全新 Splash Screen API -->
         <item name="android:windowSplashScreenBackground" tools:targetApi="31">@color/splash_bg_color</item>

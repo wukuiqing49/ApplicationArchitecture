@@ -1,4 +1,4 @@
-package com.qianrun.voice.feature.app.application
+package com.wkq.feature.app.application
 
 import android.app.Application
 import com.wkq.util.SpUtils
@@ -10,7 +10,7 @@ import com.wkq.util.coil.CacheManager
  * 全局 Application
  * 负责初始化全局组件（如 SpUtils）
  */
-class QdVoiceApp : Application() {
+class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -34,7 +34,7 @@ class QdVoiceApp : Application() {
     }
 
     companion object {
-        lateinit var instance: QdVoiceApp
+        lateinit var instance: MyApplication
             private set
     }
 }

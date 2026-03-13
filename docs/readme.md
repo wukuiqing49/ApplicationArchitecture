@@ -119,11 +119,11 @@ JVM           Java 17
 
 构建 APK 时会自动生成带版本和时间的文件名：
 
-    QdVoice_${buildType}_v${versionName}_${time}.apk
+    ApplicationArchitecture_${buildType}_v${versionName}_${time}.apk
 
 示例：
 
-    QdVoice_release_v1.0.0_20260313.apk
+    ApplicationArchitecture_release_v1.0.0_20260313.apk
 
 ------------------------------------------------------------------------
 
