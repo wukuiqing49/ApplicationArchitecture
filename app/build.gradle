@@ -52,7 +52,7 @@ android {
                 def buildType = variant.buildType.name
                 def versionName = variant.versionName
                 def time = new Date().format("yyyyMMdd_HHmm")
-                def fileName = "QdVoice_${buildType}_v${versionName}_${time}.apk"
+                def fileName = appConfig.appNamespace+ "_${buildType}_v${versionName}_${time}.apk"
                 outputFileName = fileName
             }
         }

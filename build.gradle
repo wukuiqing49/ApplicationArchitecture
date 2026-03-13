@@ -14,7 +14,8 @@ ext {
     appVersionCode = 1001
     
     appConfig = [
-        appNamespace : "com.qianrun.voice",
+
+        appNamespace : "com.wkq.app",
         compileSdk : 36,
         minSdk     : 24,
         targetSdk  : 36,
@@ -22,5 +23,6 @@ ext {
         // 将数字转成字符串后，每个字符中间插入 "."。
         versionName: appVersionCode.toString().toCharArray().join("."),
         jvmTarget  : JvmTarget.JVM_17
+
     ]
 }

@@ -245,9 +245,9 @@ class AdvancedNetworkExample {
                                
             if (isAllSuccess) {
                 // 这个时候你就能拿到所有的数据了
-                val data1 = (result1 as ApiResponse.Success).data
-                val data2 = (result2 as ApiResponse.Success).data
-                val data3 = (result3 as ApiResponse.Success).data
+                val data1 = result1.data
+                val data2 = result2.data
+                val data3 = result3.data
                 
                 println("太棒了，3个接口全通！即将把海量数据合并渲染进入主 UI！总数据量: ${data1?.size} + ${data2?.size} + ${data3?.size}")
             } else {
