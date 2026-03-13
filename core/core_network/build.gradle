@@ -36,7 +36,15 @@ kotlin {
 }
 
 dependencies {
-    implementation libs.androidx.core.ktx
-    
-    api project(':core:core_util')
+
+//    // Coroutines
+    api libs.kotlinx.coroutines.core
+    api libs.kotlinx.coroutines.android
+
+    api libs.retrofit
+    api libs.retrofit.converter.gson
+    api libs.okhttp
+    api libs.okhttp.logging
+    api libs.gson
+
 }

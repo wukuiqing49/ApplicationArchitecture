@@ -1,10 +1,10 @@
-package com.wkq.feature.app.application
+package com.wkq.app
 
 import android.app.Application
+import android.util.Log
+import com.wkq.core.router.Router
 import com.wkq.util.SpUtils
-import com.wkq.util.ThemeManager
 import com.wkq.util.coil.CacheManager
-
 
 /**
  * 全局 Application
@@ -20,17 +20,8 @@ class MyApplication : Application() {
         // 初始化图片加载缓存
         CacheManager.init(this)
         // 初始化主题
-        ThemeManager.init(this)
-        
         // 初始化路由 (自动生成的 RouterInit 位于 app 模块)
-        try {
-            val clazz = Class.forName("com.qianrun.voice.core.router.RouterInit")
-            val instance = clazz.getField("INSTANCE").get(null)
-            val method = clazz.getMethod("registerAll")
-            method.invoke(instance)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        Router.registerRouterInit(this)
     }
 
     companion object {

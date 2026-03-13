@@ -37,7 +37,15 @@ kotlin {
 
 dependencies {
 
-    implementation libs.androidx.core.ktx
+    implementation(libs.androidx.core.ktx)
+    implementation( libs.androidx.appcompat)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation( libs.material)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
 
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation libs.compose.ui

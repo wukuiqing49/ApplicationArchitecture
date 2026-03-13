@@ -1,4 +1,4 @@
-package com.wkq.util.pop
+package com.wkq.util
 
 import android.content.Context
 import android.graphics.Color
@@ -48,17 +48,6 @@ import com.lxj.xpopup.impl.LoadingPopupView
             .show();
     }
 
-    /**
-     *创建通用弹框
-     */
-    fun createCommonPopupView(
-        context: Context, title: String, desc: String, sureText: String? = "",
-        listener: CommonPopupListener? = null
-    ):BasePopupView {
-        return dialogBuilder(context)
-            .asCustom(CommonPopupView(context, title, desc, sureText, listener))
-            .show()
-    }
 
     private fun dialogBuilder(
         context: Context, hasShadowBg: Boolean? = true, isTouchOutside: Boolean? = true

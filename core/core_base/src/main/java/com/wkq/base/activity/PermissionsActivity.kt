@@ -2,17 +2,18 @@ package com.wkq.base.activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.wkq.core.res.R
-
-import com.wkq.util.pop.CommonPopupListener
-import com.wkq.util.pop.PopupUtil
-import com.wkq.util.showToast
+import com.lxj.xpopup.XPopup
+import com.wkq.base.R
+import com.wkq.base.util.pop.CommonPopupListener
+import com.wkq.base.util.pop.PermissionsPopupView
+import es.dmoral.toasty.Toasty
 
 
 /**
@@ -49,21 +50,30 @@ open class PermissionsActivity : AppCompatActivity() {
         } else {
             if (permanentlyDeniedPermissions.isNotEmpty()) {
                 // 如果权限被永久拒绝，弹窗引导用户去设置页面
-                PopupUtil.createCommonPopupView(
-                    this,
-                    getString(R.string.permission_request_title),
-                    getString(R.string.permission_permanently_denied),
-                    getString(R.string.go_to_settings),
-                    object : CommonPopupListener {
-                        override fun sureClick() {
-                            openAppDetailsSettings()
-                        }
 
-                        override fun cancelClick() {}
-                    })
+                XPopup.Builder(this).dismissOnTouchOutside(false).dismissOnBackPressed(true)
+                    .moveUpToKeyboard(false).hasShadowBg(true)  //
+                    .isViewMode(true).enableDrag(false)
+
+                    .navigationBarColor(Color.TRANSPARENT)
+                    // 和baseActivity设置的导航颜色统一
+                    .isLightStatusBar(true) // 默认修改状态栏为亮色，dialog有效
+                    .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
+                    .asCustom(
+                        PermissionsPopupView(
+                            this, getString(R.string.permission_request_title),
+                            getString(R.string.permission_permanently_denied),
+                            getString(R.string.go_to_settings), object : CommonPopupListener {
+                                override fun sureClick() {
+                                    openAppDetailsSettings()
+                                }
+
+                                override fun cancelClick() {}
+                            })
+                    )
             } else {
                 // 部分权限被拒绝，给个提示
-                showToast(getString(R.string.partial_permission_denied, deniedPermissions.joinToString()))
+                Toasty.normal(this, getString(R.string.partial_permission_denied)).show()
             }
         }
     }
@@ -73,9 +83,9 @@ open class PermissionsActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val allPermissionsGranted = permissionList.all { isGrantedOne(it) }
             if (allPermissionsGranted) {
-                showToast(getString(R.string.permissions_granted))
+                Toasty.normal(this, getString(R.string.permissions_granted)).show()
             } else {
-                showToast(getString(R.string.permissions_not_granted))
+                Toasty.normal(this, getString(R.string.permissions_not_granted)).show()
             }
         }
 
@@ -99,15 +109,20 @@ open class PermissionsActivity : AppCompatActivity() {
     }
 
     private fun isGrantedOne(permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+        return ContextCompat.checkSelfPermission(
+            this, permission
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     /**
      * 判断权限是否被永久拒绝
      */
     private fun isPermissionPermanentlyDenied(permission: String): Boolean {
-        return !shouldShowRequestPermissionRationale(permission) &&
-                ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED
+        return !shouldShowRequestPermissionRationale(
+            permission
+        ) && ContextCompat.checkSelfPermission(
+            this, permission
+        ) != PackageManager.PERMISSION_GRANTED
     }
 
     /**
@@ -120,10 +135,12 @@ open class PermissionsActivity : AppCompatActivity() {
                 android.Manifest.permission.READ_MEDIA_VIDEO,
                 "android.permission.READ_MEDIA_VISUAL_USER_SELECTED"
             )
+
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> mutableListOf(
                 android.Manifest.permission.READ_MEDIA_IMAGES,
                 android.Manifest.permission.READ_MEDIA_VIDEO
             )
+
             else -> mutableListOf(
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -156,25 +173,33 @@ open class PermissionsActivity : AppCompatActivity() {
     /**
      * 跳转通知设置页面
      */
-    fun openNotificationSettings() { 
-        PopupUtil.createCommonPopupView(
-            this,
-            getString(R.string.permission_request_setting_title),
-            getString(R.string.permissions_granted_setting),
-            getString(R.string.go_to_settings),
-            object : CommonPopupListener {
-                override fun sureClick() {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        openSettingsPage(Settings.ACTION_APP_NOTIFICATION_SETTINGS) {
-                            putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-                        }
-                    } else {
-                        openAppDetailsSettings()
-                    }
-                }
+    fun openNotificationSettings() {
+        XPopup.Builder(this).dismissOnTouchOutside(false).dismissOnBackPressed(true)
+            .moveUpToKeyboard(false).hasShadowBg(true)  //
+            .isViewMode(true).enableDrag(false)
 
-                override fun cancelClick() {}
-            })
+            .navigationBarColor(Color.TRANSPARENT)
+            // 和baseActivity设置的导航颜色统一
+            .isLightStatusBar(true) // 默认修改状态栏为亮色，dialog有效
+            .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
+            .asCustom(
+                PermissionsPopupView(
+                    this, getString(R.string.permission_request_setting_title),
+                    getString(R.string.permissions_granted_setting),
+                    getString(R.string.go_to_settings), object : CommonPopupListener {
+                        override fun sureClick() {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                openSettingsPage(Settings.ACTION_APP_NOTIFICATION_SETTINGS) {
+                                    putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                                }
+                            } else {
+                                openAppDetailsSettings()
+                            }
+                        }
+
+                        override fun cancelClick() {}
+                    })
+            )
     }
 
     /**

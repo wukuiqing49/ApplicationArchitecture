@@ -8,7 +8,7 @@ android {
     compileSdk appConfig.compileSdk
 
     defaultConfig {
-        applicationId = "com.qianrun.voice"
+        applicationId = appConfig.appNamespace
         minSdk appConfig.minSdk
         targetSdk appConfig.targetSdk
         versionCode appConfig.versionCode
@@ -78,6 +78,7 @@ dependencies {
     androidTestImplementation libs.androidx.espresso.core
 
     implementation project(':core:core_base')
+    implementation project(':core:core_util')
     implementation project(':core:core_ui')
     implementation project(':core:core_network')
     implementation project(':core:core_router')
@@ -89,7 +90,6 @@ dependencies {
         }
     }
 }
-
 
 // 自动生成 RouterInit.kt
 // ========================================

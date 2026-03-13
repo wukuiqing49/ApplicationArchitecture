@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -36,31 +37,15 @@ kotlin {
 }
 
 dependencies {
-    api libs.androidx.core.ktx
-    api libs.androidx.appcompat
-    api libs.androidx.constraintlayout
-    api libs.material
-    api libs.xpopup
+    implementation( libs.androidx.appcompat)
+
     api libs.toasty
     api libs.mmkv
+
     api libs.coil
     api libs.coil3.coil.gif
-
     // 如果需要 OkHttp 网络支持：
-    api libs.coil.network.okhttp
-
-
-
-    // Network & Serialization
-    api libs.retrofit
-    api libs.retrofit.converter.gson
-    api libs.okhttp
-    api libs.okhttp.logging
-    api libs.gson
-
-    // Coroutines
-    api libs.kotlinx.coroutines.core
-    api libs.kotlinx.coroutines.android
-
-    api project(':core:core_res')
+    implementation (libs.coil.network.okhttp)
+    api libs.xpopup
+    implementation(libs.luban)
 }

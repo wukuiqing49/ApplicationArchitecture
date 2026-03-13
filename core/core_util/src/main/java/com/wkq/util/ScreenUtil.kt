@@ -1,6 +1,7 @@
 package com.wkq.util
 
 import android.content.Context
+import android.os.Build
 import android.util.DisplayMetrics
 import android.view.WindowManager
 
@@ -13,20 +14,14 @@ object ScreenUtil {
      * 获取屏幕宽度 (像素)
      */
     fun getScreenWidth(context: Context): Int {
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val metrics = DisplayMetrics()
-        wm.defaultDisplay.getRealMetrics(metrics)
-        return metrics.widthPixels
+        return getDisplayMetrics(context).widthPixels
     }
 
     /**
      * 获取屏幕高度 (像素)
      */
     fun getScreenHeight(context: Context): Int {
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val metrics = DisplayMetrics()
-        wm.defaultDisplay.getRealMetrics(metrics)
-        return metrics.heightPixels
+        return getDisplayMetrics(context).heightPixels
     }
 
     /**
@@ -49,7 +44,32 @@ object ScreenUtil {
      * sp 转 px
      */
     fun sp2px(context: Context, spValue: Float): Int {
-        val fontScale = context.resources.displayMetrics.scaledDensity
-        return (spValue * fontScale + 0.5f).toInt()
+        // 使用 configuration.fontScale 动态计算 scaledDensity，避免 deprecated
+        val configuration = context.resources.configuration
+        val density = context.resources.displayMetrics.density
+        val scaledDensity = density * configuration.fontScale
+        return (spValue * scaledDensity + 0.5f).toInt()
+    }
+
+    /**
+     * 获取 DisplayMetrics (兼容新版 API)
+     */
+    private fun getDisplayMetrics(context: Context): DisplayMetrics {
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val bounds = wm.currentWindowMetrics.bounds
+            DisplayMetrics().apply {
+                widthPixels = bounds.width()
+                heightPixels = bounds.height()
+                density = context.resources.displayMetrics.density
+                densityDpi = context.resources.displayMetrics.densityDpi
+                // 不再赋值 scaledDensity，sp2px 动态计算即可
+            }
+        } else {
+            val metrics = DisplayMetrics()
+            @Suppress("DEPRECATION")
+            wm.defaultDisplay.getRealMetrics(metrics)
+            metrics
+        }
     }
 }

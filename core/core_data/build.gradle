@@ -1,9 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
-    namespace = 'com.wkq.component.res'
+    namespace = 'com.wkq.data'
     compileSdk appConfig.compileSdk
 
     defaultConfig {
@@ -25,4 +27,15 @@ android {
     }
 }
 
-dependencies {}
+kotlin {
+    compilerOptions {
+        jvmTarget = appConfig.jvmTarget
+    }
+}
+
+dependencies {
+    api(project(':core:core_util'))
+    api(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+}

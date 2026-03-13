@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.gyf.immersionbar.ImmersionBar
 import java.lang.reflect.ParameterizedType

@@ -24,6 +24,11 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
         binding.btnMagicIndicator.setOnClickListener {
             Router.open("/test/magic_indicator", this)
         }
+
+        // 打开 PhotoPicker 演示页面
+        binding.btnPhotoPicker.setOnClickListener {
+            Router.open("/test/photo_picker", this)
+        }
     }
 
     override fun initData() {

@@ -7,10 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import com.wkq.core.res.R
 
-import com.wkq.util.pop.CommonPopupListener
-import com.wkq.util.pop.PopupUtil
 
 /**
  *
@@ -39,25 +36,25 @@ object NotificationUtil {
     * 开启通知
      */
     fun openNotificationSettings(mContext: Activity) {
-        PopupUtil.createCommonPopupView(
-            mContext,
-            mContext.resources.getString(R.string.permission_request_setting_title),
-            mContext.resources.getString(R.string.permissions_granted_setting),
-            mContext.resources. getString(R.string.go_to_settings),
-            object : CommonPopupListener {
-                override fun sureClick() {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        openSettingsPage(mContext,Settings.ACTION_APP_NOTIFICATION_SETTINGS) {
-                            putExtra(Settings.EXTRA_APP_PACKAGE,   mContext.packageName)
-                        }
-                    } else {
-                        // 低版本退回应用详情页
-                        openAppDetailsSettings(mContext)
-                    }
-                }
-
-                override fun cancelClick() {}
-            })
+//        PopupUtil.createCommonPopupView(
+//            mContext,
+//            mContext.resources.getString(R.string.permission_request_setting_title),
+//            mContext.resources.getString(R.string.permissions_granted_setting),
+//            mContext.resources. getString(R.string.go_to_settings),
+//            object : CommonPopupListener {
+//                override fun sureClick() {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                        openSettingsPage(mContext,Settings.ACTION_APP_NOTIFICATION_SETTINGS) {
+//                            putExtra(Settings.EXTRA_APP_PACKAGE,   mContext.packageName)
+//                        }
+//                    } else {
+//                        // 低版本退回应用详情页
+//                        openAppDetailsSettings(mContext)
+//                    }
+//                }
+//
+//                override fun cancelClick() {}
+//            })
 
 
     }

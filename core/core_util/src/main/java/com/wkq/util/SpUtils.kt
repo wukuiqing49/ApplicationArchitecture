@@ -90,7 +90,7 @@ object SpUtils {
     }
 
     fun getStringSet(key: String, defaultValue: Set<String> = emptySet()): Set<String> {
-        return getMMKV().decodeStringSet(key, defaultValue) as Set<String>? ?: defaultValue
+        return getMMKV().decodeStringSet(key, defaultValue) ?: defaultValue
     }
 
     inline fun <reified T : Parcelable> getParcelable(key: String, defaultValue: T? = null): T? {

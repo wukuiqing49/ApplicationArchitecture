@@ -23,6 +23,30 @@ object Router {
     // 采用 ConcurrentHashMap 避免多模块异步并发初始化注册路由时发生 ConcurrentModificationException
     private val routes = ConcurrentHashMap<String, RouteEntry>()
 
+    fun registerRouterInit(context: Context) {
+        try {
+            // 1️⃣ 获取 app 的包名
+            val basePackage = context.packageName // 比如 com.qianrun.voice
+
+            // 2️⃣ 拼接 RouterInit 完整类名
+            val routerInitClass = "$basePackage.core.router.RouterInit"
+
+            // 3️⃣ 反射获取对象并调用方法
+            val clazz = Class.forName(routerInitClass)
+            val instance = clazz.getField("INSTANCE").get(null)
+            val method = clazz.getMethod("registerAll")
+            method.invoke(instance)
+        } catch (e: ClassNotFoundException) {
+            // 类不存在，可能没有生成 RouterInit
+            Log.w("RouterInit", "RouterInit class not found, skipping registration")
+        } catch (e: Exception) {
+            // 其他异常，打印日志
+            e.printStackTrace()
+        }
+    }
+
+
+
     /**
      * 注册路由节点。
      * 建议在各业务模块初始化（如 Application 或 Startup 组件）时调用。

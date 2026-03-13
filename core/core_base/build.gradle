@@ -36,21 +36,21 @@ kotlin {
 }
 
 dependencies {
-    api libs.androidx.core.ktx
-    api libs.androidx.appcompat
-    api libs.material
-    api libs.androidx.lifecycle.viewmodel.ktx
-    api libs.androidx.lifecycle.runtime.ktx
-    api libs.androidx.activity.ktx
-    api libs.androidx.fragment.ktx
-    api libs.androidx.constraintlayout
-    api libs.androidx.recyclerview
-    api libs.androidx.viewpager2
-    api libs.immersionbar
-    api libs.immersionbar.ktx
-    api libs.smartrefresh.layout.kernel
-    api libs.smartrefresh.header.classics
-    api libs.smartrefresh.header.material
-    api project(':core:core_util')
-    api project(':core:core_res')
+    implementation(libs.androidx.core.ktx)
+    implementation( libs.androidx.appcompat)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation( libs.material)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.viewpager2)
+    implementation(libs.immersionbar)
+    implementation(libs.immersionbar.ktx)
+    implementation( libs.smartrefresh.layout.kernel)
+    implementation(libs.xpopup)
+    implementation(libs.smartrefresh.header.classics)
+    implementation(libs.smartrefresh.header.material)
+    implementation(libs.toasty)
 }

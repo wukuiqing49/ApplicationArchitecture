@@ -1,4 +1,4 @@
-package com.wkq.util.pop
+package com.wkq.base.util.pop
 
 import android.content.Context
 import android.graphics.Point
@@ -10,7 +10,7 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 
 import com.lxj.xpopup.core.CenterPopupView
-import com.wkq.core.res.databinding.DialogCommonPopBinding
+import com.wkq.base.databinding.DialogCommonPopBinding
 
 
 /**
@@ -21,18 +21,18 @@ import com.wkq.core.res.databinding.DialogCommonPopBinding
  *
  *@Desc:
  */
-internal class CommonPopupView(
+internal class PermissionsPopupView(
    var  mContext: Context, var title: String, var desc: String, var sureText: String?="",
     var listener: CommonPopupListener?=null
 ) : CenterPopupView(mContext) {
 
-    var binding = DialogCommonPopBinding.inflate(LayoutInflater.from(context))
+    var binding = DialogCommonPopBinding.inflate(LayoutInflater.from(mContext))
 
     /*重写：布局*/
     override fun addInnerContent() {
         val popupWidth = (getScreenWidth() * 650f / 960f).toInt()
 
-        val params = FrameLayout.LayoutParams(popupWidth, LayoutParams.WRAP_CONTENT)
+        val params = FrameLayout.LayoutParams(popupWidth, FrameLayout.LayoutParams.WRAP_CONTENT)
         params.gravity = Gravity.CENTER
 
         centerPopupContainer.addView(binding.root, params)

@@ -73,6 +73,7 @@ object CacheManager {
             .build()
         val loader = ImageLoader.Builder(appContext)
             .crossfade(true) // 渐入动画
+
             .components {
                 add(OkHttpNetworkFetcherFactory()) // 注册 OkHttp 网络加载器
                 add(coil3.gif.GifDecoder.Factory()) // 注册 GIF 解码器

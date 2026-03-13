@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F8F9FA">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PhotoPickerHelper 测试"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#212529"
+        android:layout_marginBottom="16dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 选择区域 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="系统 Picker 选择"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <Button
+                        android:id="@+id/btn_pick_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="单选图片"
+                        style="@style/Widget.Material3.Button.TonalButton"/>
+
+                    <Button
+                        android:id="@+id/btn_pick_multi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="多选图片 &amp; 视频 (限制10MB)"
+                        style="@style/Widget.Material3.Button.TonalButton"/>
+
+                    <Button
+                        android:id="@+id/btn_compress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="选择单张并压缩 (Luban)"
+                        style="@style/Widget.Material3.Button.TonalButton"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 相机区域 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="拍照 &amp; 录像"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <Button
+                        android:id="@+id/btn_take_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="直接拍照"
+                        app:icon="@android:drawable/ic_menu_camera"/>
+
+                    <Button
+                        android:id="@+id/btn_record_video"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="录制视频"
+                        app:icon="@android:drawable/presence_video_away"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- MediaStore 查询区域 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MediaStore 查询 (排序测试)"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <Button
+                        android:id="@+id/btn_query_size"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="按文件大小排序查询 (降序)"
+                        style="@style/Widget.Material3.Button.OutlinedButton"/>
+
+                    <Button
+                        android:id="@+id/btn_query_duration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="按视频时长排序查询 (降序)"
+                        style="@style/Widget.Material3.Button.OutlinedButton"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 结果展示 -->
+            <TextView
+                android:id="@+id/tv_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="选择结果将显示在这里..."
+                android:padding="8dp"
+                android:background="#E9ECEF"
+                android:minLines="5"
+                android:textColor="#495057"
+                android:layout_marginBottom="16dp"/>
+
+            <ImageView
+                android:id="@+id/iv_preview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerInside"
+                android:background="#DDDDDD"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

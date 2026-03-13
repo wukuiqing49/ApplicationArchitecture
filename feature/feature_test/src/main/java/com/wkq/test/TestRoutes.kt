@@ -8,6 +8,7 @@ object TestRoutes {
         Route.activity("/test/main", TestActivity::class),
         Route.activity("/test/loader_image", ImageLoaderDemoActivity::class),
         Route.activity("/test/gradient_label", GradientLabelTestActivity::class),
-        Route.activity("/test/magic_indicator", MagicIndicatorTestActivity::class)
+        Route.activity("/test/magic_indicator", MagicIndicatorTestActivity::class),
+        Route.activity("/test/photo_picker", PhotoPickerTestActivity::class)
     )
 }

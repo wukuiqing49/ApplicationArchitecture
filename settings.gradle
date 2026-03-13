@@ -24,14 +24,15 @@ include ':core:core_base'
 include ':core:core_network'
 include ':core:core_ui'
 include ':core:core_util'
-include ':core:core_res'
+include ':core:core_data'
+
 include ':core:core_router'
 
 // 模块业务组件库
 include ':component:component_live'
 include ':component:component_beauty'
 include ':component:component_pay'
-include ':component:component_res'
+
 
 
 // 具体业务层

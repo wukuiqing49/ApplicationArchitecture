@@ -43,6 +43,14 @@
         android:text="指示器测试 (MagicIndicator)"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btn_photo_picker"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:text="媒体选择测试 (PhotoPicker)"
+        android:textAllCaps="false" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -64,4 +64,49 @@ object FileUtil {
             null
         }
     }
+
+    /**
+     * 将 Uri 转换为本地 File 文件
+     * 适配 Android 10+ 作用域存储，通过将内容流复制到指定目录实现
+     * 
+     * @param destPath 可选，指定存储文件夹路径。若为 null，默认存储在内部存储的 picker 目录下。
+     */
+    fun uriToFile(context: Context, uri: Uri, destPath: String? = null): File? {
+        return when (uri.scheme) {
+            "file" -> uri.path?.let { File(it) }
+            "content" -> {
+                val contentResolver = context.contentResolver
+                val displayName = queryDisplayName(context, uri) ?: "temp_${System.currentTimeMillis()}"
+                val targetDir = if (!destPath.isNullOrEmpty()) File(destPath) else context.getDir("picker", Context.MODE_PRIVATE)
+                if (!targetDir.exists()) targetDir.mkdirs()
+                
+                val tempFile = File(targetDir, displayName)
+                try {
+                    contentResolver.openInputStream(uri)?.use { inputStream ->
+                        FileOutputStream(tempFile).use { outputStream ->
+                            inputStream.copyTo(outputStream)
+                        }
+                    }
+                    tempFile
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
+            }
+            else -> null
+        }
+    }
+
+    private fun queryDisplayName(context: Context, uri: Uri): String? {
+        return try {
+            context.contentResolver.query(uri, arrayOf(android.provider.MediaStore.MediaColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val idx = cursor.getColumnIndex(android.provider.MediaStore.MediaColumns.DISPLAY_NAME)
+                    if (idx != -1) cursor.getString(idx) else null
+                } else null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

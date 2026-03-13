@@ -3,6 +3,7 @@ package com.wkq.util.coil
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.util.Log
 import android.widget.ImageView
 import androidx.core.graphics.drawable.toBitmap
 import coil3.request.CachePolicy
@@ -45,7 +46,7 @@ object ImageLoaderUtil {
         isCircle: Boolean = false,
         isGrayscale: Boolean = false,
         radius: Float = 0f,
-        scale: Scale = Scale.FILL,
+        scale: Scale = Scale.FIT,
         memoryCachePolicy: CachePolicy = CachePolicy.ENABLED,
         diskCachePolicy: CachePolicy = CachePolicy.ENABLED,
         onSuccess: ((Drawable) -> Unit)? = null,
@@ -60,6 +61,8 @@ object ImageLoaderUtil {
         
         // 直接使用扩展函数，它会自动处理 ImageView 的生命周期并设置加载结果
         return imageView.load(data, imageLoader) {
+
+
             (placeholder as? Int)?.let { placeholder(it) }
             (placeholder as? Drawable)?.let { placeholder(it) }
             (error as? Int)?.let { error(it) }
@@ -103,7 +106,9 @@ object ImageLoaderUtil {
                     }
                 },
                 onError = { _, result ->
+                    Log.e("Coil", "load error", result.throwable)
                     onError?.invoke(result.throwable)
+
                 }
             )
             
