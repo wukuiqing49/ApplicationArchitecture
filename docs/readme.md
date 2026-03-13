@@ -1,77 +1,163 @@
-🏗️ 架构分层结构
-Code
+# 🏗️ 项目架构说明 (Project Architecture)
 
+本项目采用 **分层模块化架构（Layered Modular
+Architecture）**，通过清晰的模块划分来降低耦合、提升代码复用率，并支持业务快速扩展。
 
+该架构适用于 **中大型 Android
+项目**，能够在项目规模不断增长的情况下保持代码结构清晰、可维护性强。
 
+------------------------------------------------------------------------
 
-ApplicationArchitecture
-├── 🎯 App 层 (应用层)
-│   └── :app (主应用程序入口)
-│
-├── 🔧 Core 层 (核心基础层) - 7个核心模块
-│   ├── :core:core_aar          (AAR库支持)
-│   ├── :core:core_base         (基础库)
-│   ├── :core:core_network      (网络层)
-│   ├── :core:core_ui           (UI基础组件)
-│   ├── :core:core_util         (工具库)
-│   ├── :core:core_res          (资源库)
-│   └── :core:core_router       (路由框架)
-│
-├── 🧩 Component 层 (业务组件库) - 4个可复用组件
-│   ├── :component:component_live    (直播组件)
-│   ├── :component:component_beauty  (美颜组件)
-│   ├── :component:component_pay     (支付组件)
-│   └── :component:component_res     (资源组件)
-│
-└── ⚙️ Feature 层 (具体业务层) - 3个业务功能
-├── :feature:feature_app    (主应用业务)
-├── :feature:feature_res    (资源业务)
-└── :feature:feature_test   (测试功能)
-📊 架构特点
-1. 分层设计
-   App层: 主应用程序入口和集成点
-   Core层: 提供基础设施支持（网络、UI、路由、工具等）
-   Component层: 可复用的业务组件（直播、美颜、支付等）
-   Feature层: 具体的业务功能实现
-2. 关键技术栈
-   Code
-   ✅ 语言: Kotlin 100%
-   ✅ 编译SDK: 36 (Android 16)
-   ✅ 最小SDK: 24 (Android 7.0)
-   ✅ 目标SDK: 36
-   ✅ JVM版本: Java 17
-   ✅ 构建工具: Gradle Kotlin DSL
-3. 智能路由机制
-   您的项目实现了 自动路由注册系统：
+# 📦 模块结构
 
-✨ 自动扫描所有 *Routes.kt 文件
-✨ 动态生成 RouterInit.kt
-✨ 支持Feature和Component模块的自动注册
-✨ 实现了解耦的模块化通信
-4. 自动化构建特性
-   Gradle
-   // app/build.gradle 中的自动化实现:
-- 自动包含所有 :feature: 和 :component: 模块
-- 动态版本命名 (QdVoice_${buildType}_v${versionName}_${time}.apk)
-- 自动路由代码生成
-- Native库管理和扫描
-5. 项目配置
-   应用包名: com.qianrun.voice
-   版本号: 1001 (自动转换为 1.0.0.1)
-   签名配置: 已配置Release签名证书
-   混淆配置: Release版本启用ProGuard混淆和资源压缩
-   🎯 架构优势
-   优势	说明
-   高内聚，低耦合	各层模块独立开发，通过Router通信
-   易于扩展	添加新Feature或Component无需修改主应用
-   代码复用	Component层组件可被多个Feature复用
-   自动化构建	减少手动配置和集成成本
-   清晰的职责划分	Core负责基础，Component提供业务块，Feature实现具体功能
-   📝 核心依赖关系
-   Code
-   :app (主应用)
-   ├── 依赖 :core:core_base
-   ├── 依赖 :core:core_ui
-   ├── 依赖 :core:core_network
-   ├── 依赖 :core:core_router
-   └── 自动依赖所有 :feature:* 和 :component:*
+    ApplicationArchitecture
+    ├── app                         # 应用入口模块
+    │
+    ├── core                        # 核心基础层
+    │   ├── core_aar               # AAR库支持
+    │   ├── core_base              # 基础框架
+    │   ├── core_network           # 网络层
+    │   ├── core_ui                # UI基础组件
+    │   ├── core_util              # 工具库
+    │   ├── core_res               # 公共资源
+    │   └── core_router            # 路由框架
+    │
+    ├── component                   # 可复用业务组件层
+    │   ├── component_live         # 直播组件
+    │   ├── component_beauty       # 美颜组件
+    │   ├── component_pay          # 支付组件
+    │   └── component_res          # 组件资源
+    │
+    └── feature                     # 业务功能模块
+        ├── feature_app            # 主业务功能
+        ├── feature_res            # 资源业务
+        └── feature_test           # 测试功能
+
+------------------------------------------------------------------------
+
+# 📊 架构分层说明
+
+层级              作用
+  ----------------- ----------------------------------------
+App Layer         应用入口与模块集成
+Core Layer        提供基础能力（网络、UI、工具、路由等）
+Component Layer   可复用业务组件
+Feature Layer     具体业务功能实现
+
+依赖关系原则：
+
+    Feature  → Core
+    Component → Core
+    App → Feature + Component + Core
+
+该规则保证：
+
+-   业务模块之间不会直接耦合
+-   所有基础能力统一由 Core 提供
+-   App 只负责集成和启动
+
+------------------------------------------------------------------------
+
+# ⚙️ 技术栈
+
+技术          版本
+  ------------- ---------------------
+语言          Kotlin
+Compile SDK   36
+Min SDK       24
+Target SDK    36
+JVM           Java 17
+构建工具      Gradle (Kotlin DSL)
+
+------------------------------------------------------------------------
+
+# 🚀 自动路由机制
+
+项目实现了 **自动路由注册系统**，用于实现模块间解耦通信。
+
+工作流程：
+
+    Feature / Component
+            │
+            ▼
+          *Routes.kt
+            │
+            ▼
+       Gradle 扫描任务
+            │
+            ▼
+    生成 RouterInit.kt
+            │
+            ▼
+    应用启动时统一注册
+
+主要特性：
+
+-   自动扫描所有 `*Routes.kt`
+-   自动生成 `RouterInit.kt`
+-   自动注册 Feature / Component 模块路由
+-   模块间通过 Router 解耦通信
+
+------------------------------------------------------------------------
+
+# 🔧 构建自动化
+
+项目在 Gradle 中实现了多种自动化能力。
+
+## 自动包含模块
+
+系统会自动加载以下模块：
+
+    :feature:*
+    :component:*
+
+新增模块无需手动在 `app` 中添加依赖。
+
+------------------------------------------------------------------------
+
+## APK 自动命名
+
+构建 APK 时会自动生成带版本和时间的文件名：
+
+    QdVoice_${buildType}_v${versionName}_${time}.apk
+
+示例：
+
+    QdVoice_release_v1.0.0_20260313.apk
+
+------------------------------------------------------------------------
+
+# 🎯 架构优势
+
+### 低耦合
+
+各模块之间通过 Router 通信，避免模块直接依赖。
+
+### 高复用
+
+Component 层组件可以被多个 Feature 复用。
+
+### 易扩展
+
+新增业务只需添加新的 Feature 模块。
+
+### 自动化构建
+
+减少手动配置与依赖维护。
+
+### 职责清晰
+
+每一层只负责自己的职责。
+
+------------------------------------------------------------------------
+
+# 🧠 架构设计理念
+
+本项目结合了多种现代 Android 架构思想：
+
+-   **Modular Architecture（模块化架构）**
+-   **Layered Architecture（分层架构）**
+-   **Feature-based Development（按功能拆分模块）**
+
+这种设计可以让项目在代码规模增长到 **10万行甚至更高**
+时，依然保持清晰的结构和良好的可维护性。
