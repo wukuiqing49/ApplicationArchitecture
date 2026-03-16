@@ -11,6 +11,7 @@ fragment = "1.8.9"
 lifecycle = "2.10.0"
 constraintlayout = "2.2.1"
 recyclerview = "1.4.0"
+utilcodeVersion = "1.31.1"
 viewpager2 = "1.1.0"
 composeBom = "2026.03.00"
 activityCompose = "1.13.0"
@@ -36,6 +37,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 
+blankj-utilcode = { module = "com.blankj:utilcodex", version.ref = "utilcodeVersion" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }

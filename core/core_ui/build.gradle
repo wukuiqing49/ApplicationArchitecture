@@ -40,5 +40,8 @@ dependencies {
     implementation( libs.androidx.appcompat)
     implementation( libs.material)
     api libs.magicindicator
+    api(libs.xpopup) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-android-extensions-runtime'
+    }
 
 }

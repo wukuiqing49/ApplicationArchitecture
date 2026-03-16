@@ -38,14 +38,23 @@ kotlin {
 
 dependencies {
     implementation( libs.androidx.appcompat)
-
+    // toast
     api libs.toasty
+    //sp存储
     api libs.mmkv
-
+    // 图片加载库
     api libs.coil
     api libs.coil3.coil.gif
     // 如果需要 OkHttp 网络支持：
     implementation (libs.coil.network.okhttp)
-    api libs.xpopup
+    // 图片压缩库
     implementation(libs.luban)
+
+
+    // 工具类库
+    api(libs.blankj.utilcode) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-android-extensions-runtime'
+    }
+
+
 }

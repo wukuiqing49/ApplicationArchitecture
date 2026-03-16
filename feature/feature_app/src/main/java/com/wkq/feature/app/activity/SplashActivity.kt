@@ -1,15 +1,21 @@
 package com.wkq.feature.app.activity
 
+
 import androidx.lifecycle.lifecycleScope
 import com.wkq.base.activity.BaseFullScreenActivity
 import com.wkq.core.router.Router
+import com.wkq.data.util.UserManager
 import com.wkq.feature.app.databinding.ActivitySplashBinding
+import com.wkq.util.showToast
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashActivity : BaseFullScreenActivity<ActivitySplashBinding>() {
 
     override fun initView() {
+
+        val user =UserManager.currentUser
+        showToast("当前用户信息: $user")
 
         // 延迟 3 秒跳转到登录页
         lifecycleScope.launch {

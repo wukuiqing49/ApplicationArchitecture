@@ -1,73 +1,88 @@
 # 🏗️ 项目架构说明 (Project Architecture)
 
-本项目采用 **分层模块化架构（Layered Modular
-Architecture）**，通过清晰的模块划分来降低耦合、提升代码复用率，并支持业务快速扩展。
+本项目采用 **分层模块化架构（Layered Modular Architecture）**，通过清晰的模块划分来降低耦合、提升代码复用率，并支持业务快速扩展。
 
-该架构适用于 **中大型 Android
-项目**，能够在项目规模不断增长的情况下保持代码结构清晰、可维护性强。
+该架构适用于 **中大型 Android 项目**，能够在项目规模不断增长的情况下保持代码结构清晰、可维护性强。
 
 ------------------------------------------------------------------------
 
 # 📦 模块结构
 
-    ApplicationArchitecture
-    ├── app                         # 应用入口模块
-    │
-    ├── core                        # 核心基础层
-    │   ├── core_aar               # AAR库支持
-    │   ├── core_base              # 基础框架
-    │   ├── core_network           # 网络层
-    │   ├── core_ui                # UI基础组件
-    │   ├── core_util              # 工具库
-    │   ├── core_res               # 公共资源
-    │   └── core_router            # 路由框架
-    │
-    ├── component                   # 可复用业务组件层
-    │   ├── component_live         # 直播组件
-    │   ├── component_beauty       # 美颜组件
-    │   ├── component_pay          # 支付组件
-    │   └── component_res          # 组件资源
-    │
-    └── feature                     # 业务功能模块
-        ├── feature_app            # 主业务功能
-        ├── feature_res            # 资源业务
-        └── feature_test           # 测试功能
+```text
+ApplicationArchitecture
+├── app                         # 应用入口模块
+│
+├── core                        # 核心基础层
+│   ├── core_aar                # AAR库支持
+│   ├── core_base               # 基础框架
+│   ├── core_data               # 数据管理层 (UserInfo等)
+│   ├── core_network            # 网络层
+│   ├── core_ui                 # UI基础组件
+│   ├── core_util               # 工具库
+│   ├── core_res                # 公共资源
+│   └── core_router             # 路由框架
+│
+├── component                   # 可复用业务组件层
+│   ├── component_live          # 直播组件
+│   ├── component_beauty        # 美颜组件
+│   ├── component_pay           # 支付组件
+│   └── component_res           # 组件资源
+│
+└── feature                     # 业务功能模块
+    ├── feature_app             # 主业务功能
+    ├── feature_res             # 资源业务
+    └── feature_test            # 测试功能
+```
 
 ------------------------------------------------------------------------
 
 # 📊 架构分层说明
 
-层级              作用
-  ----------------- ----------------------------------------
-App Layer         应用入口与模块集成
-Core Layer        提供基础能力（网络、UI、工具、路由等）
-Component Layer   可复用业务组件
-Feature Layer     具体业务功能实现
+| 层级 | 作用 |
+| :--- | :--- |
+| **App Layer** | 应用入口、配置文件、全局初始化与模块集成 |
+| **Feature Layer** | 具体业务功能实现，互不依赖 |
+| **Component Layer** | 可复用业务组件，可被多个 Feature 依赖 |
+| **Core Layer** | 提供基础能力（数据、网络、UI、工具、路由等） |
 
-依赖关系原则：
+**依赖关系原则**：
+- `Feature` → `Core`
+- `Component` → `Core`
+- `App` → `Feature` + `Component` + `Core`
 
-    Feature  → Core
-    Component → Core
-    App → Feature + Component + Core
+---
 
-该规则保证：
+# 📜 开发规范 (Conventions)
 
--   业务模块之间不会直接耦合
--   所有基础能力统一由 Core 提供
--   App 只负责集成和启动
+### 1. 资源命名规范
+所有资源文件必须使用蛇形命名法（snake_case），且 **Layout 文件** 必须包含以下前缀：
+- `activity_*`: Activity 布局
+- `fragment_*`: Fragment 布局
+- `view_*`: 自定义 View 布局
+- `item_*`: 列表项布局
+- `dialog_*`: 对话框布局
+
+### 2. 依赖管理
+项目强制使用 `gradle/libs.versions.toml` (Version Catalog) 管理所有第三方依赖和插件版本，严禁在 `build.gradle` 中硬编码版本号。
+
+### 3. 异步与存储
+- **异步**: 优先使用 **Kotlin Coroutines** 和 **Flow**。
+- **存储**: 键值对存储优先使用 **MMKV**。
+- **图片**: 统一使用 **Coil 3**。
 
 ------------------------------------------------------------------------
 
 # ⚙️ 技术栈
 
-技术          版本
-  ------------- ---------------------
-语言          Kotlin
-Compile SDK   36
-Min SDK       24
-Target SDK    36
-JVM           Java 17
-构建工具      Gradle (Kotlin DSL)
+| 技术 | 说明 |
+| :--- | :--- |
+| **语言** | Kotlin 2.x |
+| **UI** | ViewBinding + Jetpack Compose (可选) |
+| **异步** | Kotlin Coroutines & Flow |
+| **网络** | Retrofit 3 + OkHttp 5 |
+| **持久化** | MMKV (高性能 KV 存储) |
+| **依赖注入** | Hilt (推荐) |
+| **静态分析** | Lint, Detekt |
 
 ------------------------------------------------------------------------
 
@@ -75,33 +90,31 @@ JVM           Java 17
 
 项目实现了 **自动路由注册系统**，用于实现模块间解耦通信。
 
-工作流程：
+**工作流程**：
+1. 在 `feature` 或 `component` 模块定义 `*Routes.kt`。
+2. Gradle 任务自动扫描并生成 `RouterInit.kt`。
+3. 应用启动时调用 `RouterInit.registerAll()` 完成注册。
 
-    Feature / Component
-            │
-            ▼
-          *Routes.kt
-            │
-            ▼
-       Gradle 扫描任务
-            │
-            ▼
-    生成 RouterInit.kt
-            │
-            ▼
-    应用启动时统一注册
+---
 
-主要特性：
+# 🔧 提效工作流 (Workflows)
 
--   自动扫描所有 `*Routes.kt`
--   自动生成 `RouterInit.kt`
--   自动注册 Feature / Component 模块路由
--   模块间通过 Router 解耦通信
+通过 AI Assistant 提供的快捷命令（Slash Commands）快速完成日常开发任务：
+
+- `/check-rules`: 检查项目是否符合命名规范、资源规则和架构约束。
+- `/new-page`: 快速创建新的 Android 页面（含 ViewModel + Layout + 注册）。
+- `/code-analysis`: 运行静态代码扫描并生成质量报告。
 
 ------------------------------------------------------------------------
 
-# 🔧 构建自动化
+# 🎯 架构设计理念
 
+本项目结合了多种现代 Android 架构思想：
+- **Modular Architecture**: 通过模块拆分实现并行开发和快速编译。
+- **Decoupled by Router**: 物理隔离，逻辑连接，实现真正的业务解耦。
+- **Automated Infrastructure**: 通过 Gradle 自动化任务减少人工出错率。
+
+这种设计让项目在代码规模增长时，依然保持良好的可维护性和可扩展性。
 项目在 Gradle 中实现了多种自动化能力。
 
 ## 自动包含模块

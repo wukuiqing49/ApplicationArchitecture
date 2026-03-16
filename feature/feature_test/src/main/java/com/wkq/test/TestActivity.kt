@@ -29,6 +29,11 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
         binding.btnPhotoPicker.setOnClickListener {
             Router.open("/test/photo_picker", this)
         }
+
+        // 打开粒子加载演示页面
+        binding.btnParticleLoading.setOnClickListener {
+            Router.open("/test/particle_loading", this)
+        }
     }
 
     override fun initData() {

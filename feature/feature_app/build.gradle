@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.recyclerview)
+    implementation project(':core:core_data')
     implementation project(':core:core_base')
     implementation project(':core:core_util')
     implementation project(':core:core_router')

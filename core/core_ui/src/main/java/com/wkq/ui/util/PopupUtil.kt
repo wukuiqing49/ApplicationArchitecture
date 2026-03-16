@@ -1,4 +1,4 @@
-package com.wkq.util
+package com.wkq.ui.util
 
 import android.content.Context
 import android.graphics.Color
@@ -46,6 +46,19 @@ import com.lxj.xpopup.impl.LoadingPopupView
         return XPopup.Builder(context).dismissOnBackPressed(true).dismissOnTouchOutside(false)
             .isLightNavigationBar(false).asLoading(content, LoadingPopupView.Style.ProgressBar)
             .show();
+    }
+
+    /**
+     * 显示粒子加载弹窗
+     */
+    fun showParticleLoading(context: Context, msg: String = "Loading..."): com.wkq.ui.dialog.ParticleLoadingPopup {
+        val popup = com.wkq.ui.dialog.ParticleLoadingPopup(context, msg)
+        XPopup.Builder(context)
+            .dismissOnTouchOutside(false)
+            .dismissOnBackPressed(true)
+            .asCustom(popup)
+            .show()
+        return popup
     }
 
 

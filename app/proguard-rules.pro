@@ -21,7 +21,7 @@
 # ==============================================================================
 
 # 1. 保护 Router 核心实现类，防止其 public 方法被混淆或移除
--keep object com.wkq.core.router.Router { *; }
+-keep class com.wkq.core.router.Router { *; }
 -keep class com.wkq.core.router.RouteEntry { *; }
 -keep class com.wkq.core.router.RouteEntry$* { *; }
 
