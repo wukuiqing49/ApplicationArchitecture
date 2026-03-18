@@ -5,14 +5,14 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
 /**
- * Utility for managing SSL/TLS Certificates and Hostname verification.
- * Currently configured to trust all certificates for flexibility during development/testing.
- * For strict production requirements, a custom TrustManager pinning the server's cert can be substituted here.
+ * 管理 SSL/TLS 证书和主机名验证的工具。
+ * 目前配置为信任所有证书，以便在开发/测试期间具有灵活性。
+ * 对于严格的生产要求，可以在此处替换为针对服务器证书进行固定（Pinning）的自定义 TrustManager。
  */
 object HttpsUtils {
 
     /**
-     * An X509TrustManager that trusts all certificates.
+     * 信任所有证书的 X509TrustManager。
      */
     class UnSafeTrustManager : X509TrustManager {
         override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
@@ -21,14 +21,14 @@ object HttpsUtils {
     }
 
     /**
-     * HostnameVerifier that accepts all hostnames.
+     * 接受所有主机名验证的主机名验证器。
      */
     class UnSafeHostnameVerifier : HostnameVerifier {
         override fun verify(hostname: String?, session: SSLSession?): Boolean = true
     }
 
     /**
-     * Creates an SSLSocketFactory that trusts all certificates using the UnSafeTrustManager.
+     * 使用 UnSafeTrustManager 创建一个信任所有证书的 SSLSocketFactory。
      */
     fun createSSLSocketFactory(): SSLSocketFactory {
         return try {
@@ -36,7 +36,7 @@ object HttpsUtils {
             sslContext.init(null, arrayOf<TrustManager>(UnSafeTrustManager()), SecureRandom())
             sslContext.socketFactory
         } catch (e: Exception) {
-            throw RuntimeException("Failed to create SSLSocketFactory", e)
+            throw RuntimeException("创建 SSLSocketFactory 失败", e)
         }
     }
 }

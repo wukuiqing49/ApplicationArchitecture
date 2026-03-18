@@ -82,6 +82,7 @@ dependencies {
     implementation project(':core:core_ui')
     implementation project(':core:core_network')
     implementation project(':core:core_router')
+    implementation project(':core:core_user')
 
     // Auto-include all feature and component modules
     rootProject.subprojects { proj ->

@@ -2,7 +2,7 @@
 agp = "8.13.2"
 
 
-kotlin = "2.3.10"
+kotlin = "2.1.10"
 coreKtx = "1.18.0"
 appcompat = "1.7.1"
 material = "1.13.0"
@@ -30,6 +30,8 @@ gson = "2.13.2"
 coroutines = "1.10.2"
 magicindicator = "1.7.0"
 luban = "2.0.1"
+room = "2.8.4"
+ksp = "2.1.10-1.0.30"
 
 
 [libraries]
@@ -87,10 +89,15 @@ kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 luban = { group = "top.zibin", name = "luban", version.ref = "luban" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "2.3.10" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

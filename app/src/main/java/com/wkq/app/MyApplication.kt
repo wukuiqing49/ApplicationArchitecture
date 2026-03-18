@@ -3,6 +3,7 @@ package com.wkq.app
 import android.app.Application
 import android.util.Log
 import com.wkq.core.router.Router
+import com.wkq.user.manager.UserManager
 import com.wkq.util.SpUtils
 import com.wkq.util.coil.CacheManager
 
@@ -22,6 +23,9 @@ class MyApplication : Application() {
         // 初始化主题
         // 初始化路由 (自动生成的 RouterInit 位于 app 模块)
         Router.registerRouterInit(this)
+        // 初始化用户管理模块
+        UserManager.init(this)
+
     }
 
     companion object {

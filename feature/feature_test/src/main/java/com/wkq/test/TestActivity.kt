@@ -10,6 +10,8 @@ import com.wkq.core.router.Router
 class TestActivity : BaseActivity<ActivityTestBinding>() {
 
     override fun initView() {
+
+
         // 打开图片加载演示页面
         binding.btnImageLoader.setOnClickListener {
             Router.open("/test/loader_image", this)
@@ -33,6 +35,11 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
         // 打开粒子加载演示页面
         binding.btnParticleLoading.setOnClickListener {
             Router.open("/test/particle_loading", this)
+        }
+
+        // 打开协议与账号管理演示页面
+        binding.btnProtocolDemo.setOnClickListener {
+            Router.open("/test/protocol_demo", this)
         }
     }
 

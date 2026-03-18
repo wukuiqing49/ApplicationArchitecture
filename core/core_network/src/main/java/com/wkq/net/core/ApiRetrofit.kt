@@ -28,7 +28,7 @@ object ApiRetrofit {
             .addInterceptor(NetManager.headerInterceptor)
             .addInterceptor(LoggingInterceptor.create(config.isDebugLogsEnabled))
 
-        // Configure HTTPS
+        // 配置 HTTPS
         val sslSocketFactory = HttpsUtils.createSSLSocketFactory()
         okHttpClientBuilder.sslSocketFactory(sslSocketFactory, HttpsUtils.UnSafeTrustManager())
         okHttpClientBuilder.hostnameVerifier(HttpsUtils.UnSafeHostnameVerifier())
@@ -58,7 +58,13 @@ suspend inline fun <T> safeApiCall(crossinline apiCall: suspend () -> BaseRespon
         if (response.isSuccess()) {
             ApiResponse.Success(response.data)
         } else {
-            ApiResponse.Error(response.code, response.message ?: "Server logic error: ${response.code}")
+            // 触发全局 Code 处理器（如 Token 失效判断）
+            val handled = NetManager.getConfig().globalHandler?.onHandleBusinessCode(response.code, response.message) ?: false
+            if (handled) {
+                // 如果全局拦截器处理了此 Code（如跳转登录），这里仍返回 Error 状态以便调用方感知，
+                // 但具体的全局交互逻辑已在拦截器中完成。
+            }
+            ApiResponse.Error(response.code, response.message ?: "服务器业务逻辑错误: ${response.code}")
         }
     } catch (e: Exception) {
         val (code, msg) = ExceptionHelper.handleException(e)
@@ -80,7 +86,10 @@ suspend fun <T> Call<BaseResponse<T>>.awaitResult(): ApiResponse<T> {
             if (body != null && body.isSuccess()) {
                 ApiResponse.Success(body.data)
             } else {
-                ApiResponse.Error(body?.code ?: response.code(), body?.message ?: "Server error: ${body?.code}")
+                val code = body?.code ?: response.code()
+                val message = body?.message ?: "Server error: $code"
+                NetManager.getConfig().globalHandler?.onHandleBusinessCode(code, message)
+                ApiResponse.Error(code, message)
             }
         } else {
             ApiResponse.Error(response.code(), response.message().ifEmpty { "HTTP Error ${response.code()}" })

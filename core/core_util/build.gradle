@@ -33,6 +33,9 @@ android {
 kotlin {
     compilerOptions {
         jvmTarget = appConfig.jvmTarget
+        // Luban 2.0.1 is compiled with Kotlin 2.3 metadata; suppressing the check
+        // to allow our Kotlin 2.1.x compiler to work with it.
+        freeCompilerArgs.addAll(["-Xskip-metadata-version-check"])
     }
 }
 

@@ -1,10 +1,11 @@
 package com.wkq.net.config
 
+import com.wkq.net.core.GlobalNetHandler
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Configuration class for the Advanced Network Framework.
- * Intended to be passed during initialization from the Application class.
+ * 高级网络框架配置类。
+ * 旨在由 Application 类在初始化期间传递。
  */
 class NetConfig private constructor(
     val baseUrl: String,
@@ -12,7 +13,8 @@ class NetConfig private constructor(
     val readTimeout: Long,
     val writeTimeout: Long,
     val defaultHeaders: Map<String, String>,
-    val isDebugLogsEnabled: Boolean
+    val isDebugLogsEnabled: Boolean,
+    val globalHandler: GlobalNetHandler? = null
 ) {
     class Builder {
         private var baseUrl: String = ""
@@ -21,6 +23,7 @@ class NetConfig private constructor(
         private var writeTimeout: Long = 20L
         private var defaultHeaders = ConcurrentHashMap<String, String>()
         private var isDebugLogsEnabled: Boolean = false
+        private var globalHandler: GlobalNetHandler? = null
 
         fun setBaseUrl(url: String) = apply { this.baseUrl = url }
         fun setConnectTimeout(seconds: Long) = apply { this.connectTimeout = seconds }
@@ -28,16 +31,18 @@ class NetConfig private constructor(
         fun setWriteTimeout(seconds: Long) = apply { this.writeTimeout = seconds }
         fun addDefaultHeader(key: String, value: String) = apply { this.defaultHeaders[key] = value }
         fun setDebugLogsEnabled(enabled: Boolean) = apply { this.isDebugLogsEnabled = enabled }
+        fun setGlobalHandler(handler: GlobalNetHandler) = apply { this.globalHandler = handler }
 
         fun build(): NetConfig {
-            require(baseUrl.isNotEmpty()) { "Base URL cannot be empty in NetConfig" }
+            require(baseUrl.isNotEmpty()) { "NetConfig 中的 Base URL 不能为空" }
             return NetConfig(
                 baseUrl = baseUrl,
                 connectTimeout = connectTimeout,
                 readTimeout = readTimeout,
                 writeTimeout = writeTimeout,
                 defaultHeaders = defaultHeaders,
-                isDebugLogsEnabled = isDebugLogsEnabled
+                isDebugLogsEnabled = isDebugLogsEnabled,
+                globalHandler = globalHandler
             )
         }
     }

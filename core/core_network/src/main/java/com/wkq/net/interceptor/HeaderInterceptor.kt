@@ -5,15 +5,15 @@ import okhttp3.Response
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Interceptor responsible for globally injecting headers into every OkHttp Request.
- * Supports adding or removing headers dynamically at runtime.
+ * 负责全局将请求头注入到每个 OkHttp 请求中的拦截器。
+ * 支持在运行时动态添加或移除请求头。
  */
 class HeaderInterceptor(defaultHeaders: Map<String, String>) : Interceptor {
 
     private val dynamicHeaders = ConcurrentHashMap<String, String>()
 
     init {
-        // Initialize with default headers provided by NetConfig
+        // 使用 NetConfig 提供的默认请求头初始化
         dynamicHeaders.putAll(defaultHeaders)
     }
 
@@ -21,7 +21,7 @@ class HeaderInterceptor(defaultHeaders: Map<String, String>) : Interceptor {
         val originalRequest = chain.request()
         val requestBuilder = originalRequest.newBuilder()
 
-        // Apply all dynamic headers
+        // 应用所有动态请求头
         dynamicHeaders.forEach { (key, value) ->
             requestBuilder.header(key, value)
         }
@@ -30,21 +30,21 @@ class HeaderInterceptor(defaultHeaders: Map<String, String>) : Interceptor {
     }
 
     /**
-     * Dynamically add a header
+     * 动态添加请求头
      */
     fun addHeader(key: String, value: String) {
         dynamicHeaders[key] = value
     }
 
     /**
-     * Dynamically remove a header
+     * 动态移除请求头
      */
     fun removeHeader(key: String) {
         dynamicHeaders.remove(key)
     }
 
     /**
-     * Clear all headers
+     * 清空所有请求头
      */
     fun clearHeaders() {
         dynamicHeaders.clear()

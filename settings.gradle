@@ -25,6 +25,7 @@ include ':core:core_network'
 include ':core:core_ui'
 include ':core:core_util'
 include ':core:core_data'
+include ':core:core_user'
 
 include ':core:core_router'
 

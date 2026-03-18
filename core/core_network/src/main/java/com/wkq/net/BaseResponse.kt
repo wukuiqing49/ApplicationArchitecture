@@ -1,8 +1,8 @@
 package com.wkq.net
 
 /**
- * Standard HTTP response wrapper class.
- * Ensures that all server responses use a consistent structure.
+ * 标准的 HTTP 响应包装类。
+ * 确保所有服务器响应都使用一致的结构。
  */
 data class BaseResponse<T>(
     val code: Int = -1,
@@ -10,8 +10,8 @@ data class BaseResponse<T>(
     val data: T? = null
 ) {
     /**
-     * Determine whether the request is successful based on the code.
-     * Normally, 200 denotes success, but this can be adjusted.
+     * 根据 code 判断请求是否成功。
+     * 通常 200 表示成功，但可以根据具体业务调整。
      */
     fun isSuccess(): Boolean = code == 200
 }

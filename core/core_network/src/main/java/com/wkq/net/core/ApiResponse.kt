@@ -1,28 +1,28 @@
 package com.wkq.net.core
 
 /**
- * A sealed class representing a safe network response utilizing Kotlin Coroutines.
- * Allows exhaustive `when` statements for handling successful data or errors without throwing exceptions.
+ * 使用 Kotlin 协程的安全网络响应密封类。
+ * 允许使用带有 when 语句的全面处理成功数据或错误，而无需抛出异常。
  */
 sealed class ApiResponse<out T> {
 
     /**
-     * Represents a successful network response where the server logic also indicated success.
-     * @param data The payload returned by the server, can be null.
+     * 表示成功的网络响应，且服务器业务逻辑也指示成功。
+     * @param data 服务器返回的有效负载，可以为 null。
      */
     data class Success<out T>(val data: T?) : ApiResponse<T>()
 
     /**
-     * Represents a failed network response, either due to HTTP errors, connection timeouts, or server logic errors.
-     * @param code The standardized or HTTP error code.
-     * @param message The user-friendly error message.
+     * 表示失败的网络响应，可能是由于 HTTP 错误、连接超时或服务器业务逻辑错误。
+     * @param code 标准化或 HTTP 错误代码。
+     * @param message 用户友好的错误消息。
      */
     data class Error(val code: Int, val message: String) : ApiResponse<Nothing>()
 }
 
 /**
- * Extension to run a block of code if the [ApiResponse] represents a success.
- * Returns the current [ApiResponse] instance to allow chaining, e.g. `.onSuccess {}.onError {}`.
+ * 如果 [ApiResponse] 表示成功，则运行代码块的扩展函数。
+ * 返回当前 [ApiResponse] 实例以便链式调用，例如 `.onSuccess {}.onError {}`。
  */
 inline fun <T> ApiResponse<T>.onSuccess(action: (T?) -> Unit): ApiResponse<T> {
     if (this is ApiResponse.Success) {
@@ -32,8 +32,8 @@ inline fun <T> ApiResponse<T>.onSuccess(action: (T?) -> Unit): ApiResponse<T> {
 }
 
 /**
- * Extension to run a block of code if the [ApiResponse] represents an error.
- * Returns the current [ApiResponse] instance to allow chaining.
+ * 如果 [ApiResponse] 表示错误，则运行代码块的扩展函数。
+ * 返回当前 [ApiResponse] 实例以便链式调用。
  */
 inline fun <T> ApiResponse<T>.onError(action: (Int, String) -> Unit): ApiResponse<T> {
     if (this is ApiResponse.Error) {
