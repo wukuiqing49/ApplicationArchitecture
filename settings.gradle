@@ -33,11 +33,12 @@ include ':core:core_router'
 include ':component:component_live'
 include ':component:component_beauty'
 include ':component:component_pay'
-
+include ':component:component_common'
 
 
 // 具体业务层
 include ':feature:feature_app'
 include ':feature:feature_res'
 include ':feature:feature_test'
+
 

@@ -1,16 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.serialization)
-}
-
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 android {
-    namespace = 'com.wkq.user'
+    namespace 'com.wkq.common'
     compileSdk appConfig.compileSdk
 
     defaultConfig {
@@ -30,6 +24,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 kotlin {
@@ -38,19 +35,8 @@ kotlin {
     }
 }
 
-
-
 dependencies {
-
-    api(libs.kotlinx.coroutines.android)
-    api(libs.gson)
-    
-    // Room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.kotlinx.serialization.json)
-    
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
+    implementation libs.androidx.core.ktx
+    implementation project(':core:core_router')
+    implementation project(':core:core_base')
 }
