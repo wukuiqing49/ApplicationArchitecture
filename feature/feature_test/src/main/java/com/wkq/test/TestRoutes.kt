@@ -4,6 +4,7 @@ import com.wkq.core.router.Route
 
 
 object TestRoutes {
+
     val routes = listOf(
         Route.activity("/test/main", TestActivity::class),
         Route.activity("/test/loader_image", ImageLoaderDemoActivity::class),

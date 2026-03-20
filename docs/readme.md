@@ -51,9 +51,10 @@ ApplicationArchitecture
 - **详尽备注**: 全模块支持详尽的中文备注，方便快速上手。
 
 ### 👤 core_user (用户/账号管理)
-- **多账号体系**: 支持本地多账号存储与快速切换，并确保全局仅有一个当前激活账号。
-- **实时同步**: 利用 `StateFlow` 实现内存缓存与数据库状态的实时联动，UI 自动感知。
-- **存储方案**: 采用 `Room` 持久化用户列表 + `MMKV` 缓存基础信息，兼顾性能与安全。
+- **多账号体系**: 支持本地多账号存储与快速切换，确保并行请求下的互斥读取（使用 `Mutex` 锁预防缓存击穿）。
+- **实时同步**: 利用 `StateFlow` (+ `stateIn`) 实现内存缓存与数据库状态的实时联动，全局单例响应式监听。
+- **存储方案**: 采用 `Room` (支持 Schema 导出验证) + `MMKV` 缓存基础信息，并使用 `ConcurrentHashMap` 确保内存操作的线程安全。
+- **高内聚封装**: 严格控制类可见性，仅公开 `UserManager` 和 `UserEntity`，其余实现逻辑标记为 `internal`。
 
 ---
 
@@ -81,6 +82,7 @@ ApplicationArchitecture
 - **异步**: 优先使用 **Kotlin Coroutines** 和 **Flow**。
 - **存储**: 键值对存储优先使用 **MMKV**。
 - **图片**: 统一使用 **Coil 3**。
+- **数据库**: 使用 **Room** 并开启 `schemaLocation` 导出功能，以便进行版本追踪和迁移测试。
 
 ------------------------------------------------------------------------
 
@@ -92,8 +94,8 @@ ApplicationArchitecture
 | **UI** | ViewBinding + Jetpack Compose (可选) |
 | **异步** | Kotlin Coroutines & Flow |
 | **网络** | Retrofit 3 + OkHttp 5 |
-| **持久化** | MMKV (高性能 KV 存储) |
-| **依赖注入** | Hilt (推荐) |
+| **持久化** | MMKV + Room |
+| **依赖注入** | 手动单例 (Manual Singleton) |
 | **静态分析** | Lint, Detekt |
 
 ------------------------------------------------------------------------

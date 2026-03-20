@@ -5,10 +5,10 @@ import com.wkq.user.data.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
- * 用户数据库操作接口
+ * UserDao：用户数据库访问接口
  */
 @Dao
-interface UserDao {
+internal interface UserDao {
 
     /**
      * 插入或更新用户

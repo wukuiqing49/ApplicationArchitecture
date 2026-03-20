@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.wkq.net.core.ApiResponse
-import com.wkq.net.core.awaitResult
 import com.wkq.test.databinding.ActivityProtocolDemoBinding
 import com.wkq.user.data.entity.UserEntity
 import com.wkq.user.manager.UserManager
@@ -24,9 +22,9 @@ class ProtocolDemoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProtocolDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initView()
         observeData()
+
     }
 
     private fun initView() {
@@ -37,8 +35,6 @@ class ProtocolDemoActivity : AppCompatActivity() {
         binding.btnLoginUser2.setOnClickListener {
             userManager.saveUser(UserEntity("002", "测试用户B", isCurrent = true))
         }
-
-        userManager.currentUser?.userName?:""
         binding.btnSimulate401.setOnClickListener {
             simulateNetwork401()
         }
@@ -55,6 +51,8 @@ class ProtocolDemoActivity : AppCompatActivity() {
                 }
             }
         }
+
+
     }
 
     /**
@@ -74,11 +72,7 @@ class ProtocolDemoActivity : AppCompatActivity() {
              
              // 检查拦截器是否生效 (逻辑上应该在 ApiRetrofit 内部触发，此处直接调用 UserManager 退出表示结果)
              if (code == 401) {
-                 val currentId = userManager.currentUser?.userId
-                 if (currentId != null) {
-                     userManager.logout(currentId)
-                     Toast.makeText(this@ProtocolDemoActivity, "全局拦截成功：用户已自动退出", Toast.LENGTH_LONG).show()
-                 }
+
              }
         }
     }
