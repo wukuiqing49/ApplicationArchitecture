@@ -12,6 +12,7 @@ object TestRoutes {
         Route.activity("/test/magic_indicator", MagicIndicatorTestActivity::class),
         Route.activity("/test/photo_picker", PhotoPickerTestActivity::class),
         Route.activity("/test/particle_loading", ParticleLoadingDemoActivity::class),
-        Route.activity("/test/protocol_demo", ProtocolDemoActivity::class)
+        Route.activity("/test/protocol_demo", ProtocolDemoActivity::class),
+        Route.activity("/test/webview", WebViewTestActivity::class)
     )
 }

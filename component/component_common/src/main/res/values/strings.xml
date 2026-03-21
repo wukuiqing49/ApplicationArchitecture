@@ -1,0 +1,9 @@
+<resources>
+    <string name="common_webview_error_msg">加载失败，请检查网络设置</string>
+    <string name="common_webview_reload">重新加载</string>
+
+    <string name="common_web_choose_action">选择操作</string>
+    <string name="common_web_camera">拍照</string>
+    <string name="common_web_gallery">去相册选择</string>
+    <string name="common_web_cancel">取消</string>
+</resources>

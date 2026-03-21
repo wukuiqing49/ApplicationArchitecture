@@ -5,7 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
-import androidx.appcompat.widget.AppCompatTextView
+import com.google.android.material.textview.MaterialTextView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 
 /**
@@ -19,7 +19,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
  */
 class GradientRoundPagerTitleView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : AppCompatTextView(context, attrs), IPagerTitleView {
+) : MaterialTextView(context, attrs), IPagerTitleView {
 
     // ========== 1. 文字样式配置 ==========
     var normalTextColor = Color.parseColor("#999999")

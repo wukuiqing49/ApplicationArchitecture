@@ -7,30 +7,52 @@ import androidx.room.*
  */
 @Entity(tableName = "user_accounts")
 data class UserEntity(
+
     @PrimaryKey
-    val userId: String, // 用户 ID (唯一标识)
-    
-    val userName: String?="", // 用户名
-    
-    val avatar: String? = "", // 头像地址
-    
-    /**
-     * 是否为当前激活状态的账号
-     */
+    val userId: String,
+
+    // 基础
+    val userName: String = "",
+    val nickName: String = "",
+    val avatar: String = "",
+
+    val gender: Int = 0,
+    val birthday: Long = 0L,
+    val country: String = "",
+    val city: String = "",
+
+    // 登录核心
+    val token: String = "",
+    val refreshToken: String = "",
+    val loginType: Int = 0,
+
+    val bindPhone: String = "",
+    val bindEmail: String = "",
+
+    // 状态
+    val isVip: Boolean = false,
+    val vipExpireTime: Long = 0L,
+
+    val level: Int = 0,
+    val exp: Long = 0L,
+
+    val status: Int = 0,
+
+    // 统计
+    val followCount: Int = 0,
+    val fansCount: Int = 0,
+    val likeCount: Int = 0,
+    val postCount: Int = 0,
+
+    // 当前账号标记
     val isCurrent: Boolean = false,
-    
-    /**
-     * 扩展字段 (JSON 字符串)，用于存储非结构化的额外信息
-     */
-    val extraJson: String? = null,
-    
-    /**
-     * 账号过期时间（毫秒时间戳）
-     */
-    val expireTime: Long? = null,
-    
-    /**
-     * 最后一次活跃时间（毫秒时间戳）
-     */
-    val lastActiveTime: Long? = System.currentTimeMillis()
+
+    // 时间
+    val lastActiveTime: Long = 0L,
+    val lastLoginTime: Long = 0L,
+
+    // 扩展
+    val extraJson: String? = null
 )
+
+

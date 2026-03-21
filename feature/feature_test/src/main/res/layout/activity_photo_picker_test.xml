@@ -28,7 +28,7 @@
             android:orientation="vertical">
 
             <!-- 选择区域 -->
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="2dp"
@@ -54,27 +54,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="单选图片"
-                        style="@style/Widget.Material3.Button.TonalButton"/>
+                        />
 
                     <Button
                         android:id="@+id/btn_pick_multi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="多选图片 &amp; 视频 (限制10MB)"
-                        style="@style/Widget.Material3.Button.TonalButton"/>
+                        />
 
                     <Button
                         android:id="@+id/btn_compress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="选择单张并压缩 (Luban)"
-                        style="@style/Widget.Material3.Button.TonalButton"/>
+                       />
 
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
             <!-- 相机区域 -->
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="2dp"
@@ -110,10 +110,10 @@
                         app:icon="@android:drawable/presence_video_away"/>
 
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
             <!-- MediaStore 查询区域 -->
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="2dp"
@@ -139,17 +139,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="按文件大小排序查询 (降序)"
-                        style="@style/Widget.Material3.Button.OutlinedButton"/>
+                        />
 
                     <Button
                         android:id="@+id/btn_query_duration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="按视频时长排序查询 (降序)"
-                        style="@style/Widget.Material3.Button.OutlinedButton"/>
+                        />
 
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
             <!-- 结果展示 -->
             <TextView

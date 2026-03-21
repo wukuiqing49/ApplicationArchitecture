@@ -37,6 +37,11 @@ kotlin {
 
 dependencies {
     implementation libs.androidx.core.ktx
+    implementation( libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.xpopup)
     implementation project(':core:core_router')
     implementation project(':core:core_base')
+    implementation project(':core:core_user')
+    implementation project(':core:core_util')
 }

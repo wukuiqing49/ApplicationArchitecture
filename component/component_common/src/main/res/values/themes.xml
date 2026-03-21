@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- WebView 专用主题，通过设置窗口背景颜色来消除子进程启动时的白屏闪烁 -->
+    <style name="Theme.App.WebActivity" parent="Theme.ApplicationArchitecture">
+        <item name="android:windowBackground">#F5F5F5</item>
+        <item name="android:windowDisablePreview">false</item>
+    </style>
+</resources>

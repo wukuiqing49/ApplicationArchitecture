@@ -57,5 +57,6 @@ dependencies {
     implementation project(':core:core_router')
     implementation project(':core:core_user')
     implementation project(':core:core_network')
+    implementation project(':component:component_common')
 
 }

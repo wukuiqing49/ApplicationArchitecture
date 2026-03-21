@@ -46,11 +46,16 @@ abstract class BaseTitleActivity<ContentVB : ViewBinding> : BaseActivity<ViewTit
 
     @Suppress("UNCHECKED_CAST")
     override fun initViewBinding() {
-        super.initViewBinding()
+        // 1. 手动初始化基类的容器布局，避免 super.initViewBinding() 的反射错位
+        binding = ViewTitleContentContainerBinding.inflate(layoutInflater)
+
+        // 2. 通过反射初始化子类指定的内容布局 ContentVB
         val type = javaClass.genericSuperclass as ParameterizedType
         val clazz = type.actualTypeArguments[0] as Class<ContentVB>
         val method = clazz.getMethod("inflate", LayoutInflater::class.java)
         contentBinding = method.invoke(null, layoutInflater) as ContentVB
+
+        // 3. 将内容布局添加到容器的 fl_content 中
         binding.flContent.addView(contentBinding.root)
     }
 

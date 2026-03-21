@@ -43,7 +43,7 @@ enum class MediaSortType {
 /**
  * 媒体选择类型枚举
  */
-enum class PickMediaType {
+public enum class PickMediaType {
     IMAGE_ONLY,
     VIDEO_ONLY,
     IMAGE_AND_VIDEO
@@ -63,6 +63,8 @@ class PhotoPickerHelper private constructor(
     private val activity: ComponentActivity? = null,
     private val fragment: Fragment? = null
 ) {
+
+
     private val context: Context
         get() = activity ?: fragment?.requireContext() ?: throw IllegalStateException("Context not available")
 

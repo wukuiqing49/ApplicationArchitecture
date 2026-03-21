@@ -41,6 +41,16 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
         binding.btnProtocolDemo.setOnClickListener {
             Router.open("/test/protocol_demo", this)
         }
+
+        // 打开原生 WebView 演示页面
+        binding.btnWebview.setOnClickListener {
+
+            Router.open("/common/webview", this){
+                putExtra("url", "https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_file")
+                putExtra("title", "")
+            }
+
+        }
     }
 
     override fun initData() {

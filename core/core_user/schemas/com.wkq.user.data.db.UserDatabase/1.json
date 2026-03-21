@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6fbdefcf57f262a24f7e953115a7a1d1",
+    "identityHash": "44728f7d13253bbdc9727186df5d49d6",
     "entities": [
       {
         "tableName": "user_accounts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `userName` TEXT, `avatar` TEXT, `isCurrent` INTEGER NOT NULL, `extraJson` TEXT, `expireTime` INTEGER, `lastActiveTime` INTEGER, PRIMARY KEY(`userId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `userName` TEXT NOT NULL, `nickName` TEXT NOT NULL, `avatar` TEXT NOT NULL, `gender` INTEGER NOT NULL, `birthday` INTEGER NOT NULL, `country` TEXT NOT NULL, `city` TEXT NOT NULL, `token` TEXT NOT NULL, `refreshToken` TEXT NOT NULL, `loginType` INTEGER NOT NULL, `bindPhone` TEXT NOT NULL, `bindEmail` TEXT NOT NULL, `isVip` INTEGER NOT NULL, `vipExpireTime` INTEGER NOT NULL, `level` INTEGER NOT NULL, `exp` INTEGER NOT NULL, `status` INTEGER NOT NULL, `followCount` INTEGER NOT NULL, `fansCount` INTEGER NOT NULL, `likeCount` INTEGER NOT NULL, `postCount` INTEGER NOT NULL, `isCurrent` INTEGER NOT NULL, `lastActiveTime` INTEGER NOT NULL, `lastLoginTime` INTEGER NOT NULL, `extraJson` TEXT, PRIMARY KEY(`userId`))",
         "fields": [
           {
             "fieldPath": "userId",
@@ -17,12 +17,128 @@
           {
             "fieldPath": "userName",
             "columnName": "userName",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nickName",
+            "columnName": "nickName",
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "avatar",
             "columnName": "avatar",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "birthday",
+            "columnName": "birthday",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "token",
+            "columnName": "token",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "refreshToken",
+            "columnName": "refreshToken",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "loginType",
+            "columnName": "loginType",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bindPhone",
+            "columnName": "bindPhone",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bindEmail",
+            "columnName": "bindEmail",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isVip",
+            "columnName": "isVip",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vipExpireTime",
+            "columnName": "vipExpireTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "level",
+            "columnName": "level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exp",
+            "columnName": "exp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followCount",
+            "columnName": "followCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fansCount",
+            "columnName": "fansCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "likeCount",
+            "columnName": "likeCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "postCount",
+            "columnName": "postCount",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "isCurrent",
@@ -31,19 +147,21 @@
             "notNull": true
           },
           {
+            "fieldPath": "lastActiveTime",
+            "columnName": "lastActiveTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastLoginTime",
+            "columnName": "lastLoginTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "extraJson",
             "columnName": "extraJson",
             "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "expireTime",
-            "columnName": "expireTime",
-            "affinity": "INTEGER"
-          },
-          {
-            "fieldPath": "lastActiveTime",
-            "columnName": "lastActiveTime",
-            "affinity": "INTEGER"
           }
         ],
         "primaryKey": {
@@ -56,7 +174,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6fbdefcf57f262a24f7e953115a7a1d1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '44728f7d13253bbdc9727186df5d49d6')"
     ]
   }
 }
