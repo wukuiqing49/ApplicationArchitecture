@@ -140,8 +140,11 @@ class CommonWebView @JvmOverloads constructor(
     }
 
     // ---- 基础操作 ----
-    fun loadUrl(url: String) = webView.loadUrl(url)
+    fun loadUrl(url: String){
+        webView.loadUrl(url)
+    }
     fun reload() = webView.reload()
+    fun getLoadUrl()=webView.getLoadUrl()
 
     private fun showProgress(progress: Int) {
         binding.progressBar.animate().cancel()
@@ -180,6 +183,9 @@ class CommonWebView @JvmOverloads constructor(
     fun setJavaScriptInterface(isOpen: Boolean) {
         settings.setJavaScriptEnabled(isOpen)
     }
+
+    fun canGoBack()=webView.canGoBack()
+    fun goBack()=webView.goBack()
 
 
     /**
@@ -224,6 +230,7 @@ class CommonWebView @JvmOverloads constructor(
             binding.webviewContainer.removeAllViews()
             webView.removeAllViews()
             webView.destroy()
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

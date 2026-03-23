@@ -13,15 +13,21 @@ import android.webkit.WebViewClient
  */
 class DefaultWebView(context: Context) : IWebView {
 
-    private val webView: WebView = WebView(context)
+    private var webView: WebView = WebView(context)
     private val settingsProxy = DefaultWebSettings(webView.settings)
 
     override fun loadUrl(url: String) {
         webView.loadUrl(url)
     }
 
+    override fun getLoadUrl(): String{
+       return webView.url?:""
+    }
+
+
     override fun reload() {
         webView.reload()
+
     }
 
     override fun stopLoading() {
@@ -46,6 +52,7 @@ class DefaultWebView(context: Context) : IWebView {
 
     override fun destroy() {
         webView.destroy()
+
     }
 
     @SuppressLint("JavascriptInterface")
@@ -80,6 +87,12 @@ class DefaultWebView(context: Context) : IWebView {
     override fun getSettings(): IWebSettings = settingsProxy
 
     override fun getView(): View = webView
+    override fun canGoBack(): Boolean {
+       return webView.canGoBack()
+    }
+    override fun goBack() {
+        webView.goBack()
+    }
 }
 
 class DefaultWebSettings(private val settings: WebSettings) : IWebSettings {

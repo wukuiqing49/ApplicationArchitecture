@@ -4,6 +4,8 @@ import android.net.Uri
 import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.ValueCallback
+import android.window.OnBackInvokedDispatcher
+import androidx.activity.addCallback
 import androidx.annotation.DrawableRes
 import com.lxj.xpopup.XPopup
 import com.wkq.base.activity.BaseTitleActivity
@@ -55,6 +57,17 @@ class CommonWebActivity : BaseTitleActivity<ActivityCommonWebBinding>() {
         binding.titleBar.setOnClickListener {
             showPhotoChooseDialog()
         }
+
+
+        onBackPressedDispatcher.addCallback(this) {
+            if (contentBinding.commonWebview.canGoBack() && contentBinding.commonWebview.getLoadUrl() != url) {
+                contentBinding.commonWebview.goBack()
+                return@addCallback
+            }
+            finish()
+
+        }
+
     }
 
     override fun initData() {

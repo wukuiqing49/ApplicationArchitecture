@@ -13,6 +13,7 @@ interface IWebView {
      * 加载 URL
      */
     fun loadUrl(url: String)
+    fun getLoadUrl(): String?
 
     /**
      * 重新加载
@@ -83,6 +84,8 @@ interface IWebView {
      * 获取真实的 View 实例用于添加进布局
      */
     fun getView(): View
+    fun canGoBack(): Boolean
+    fun goBack()
 }
 
 /**
