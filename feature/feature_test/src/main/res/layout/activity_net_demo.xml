@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="动态 BaseUrl 切换演示"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"
+        android:textColor="#333333"/>
+
+    <Button
+        android:id="@+id/btn_request_default"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="请求默认地址 (api.example.com)"
+        android:textAllCaps="false"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btn_request_google"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="请求 Google (google.com)"
+        android:textAllCaps="false"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btn_request_github"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="请求 GitHub (api.github.com)"
+        android:textAllCaps="false"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btn_request_raw"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="请求非标准接口 (返回 Any)"
+        android:textAllCaps="false"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请求结果："
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="8dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#F0F0F0"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:text="等待请求..."
+            android:textColor="#333333"
+            android:textSize="12sp" />
+    </ScrollView>
+
+</LinearLayout>

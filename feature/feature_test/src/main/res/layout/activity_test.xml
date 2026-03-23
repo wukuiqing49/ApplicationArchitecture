@@ -75,6 +75,14 @@
         android:text="原生 Web 演示 (Custom WebView)"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btn_net_dynamic"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:text="动态 BaseUrl 演示 (Net Dynamic)"
+        android:textAllCaps="false" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

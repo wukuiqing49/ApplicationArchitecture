@@ -27,6 +27,9 @@
         <activity
             android:name="com.wkq.test.WebViewTestActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.NetDynamicBaseUrlActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

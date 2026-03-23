@@ -1,5 +1,7 @@
 package com.wkq.net.interceptor
 
+import com.wkq.net.core.NetManager
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.util.concurrent.ConcurrentHashMap
@@ -7,8 +9,13 @@ import java.util.concurrent.ConcurrentHashMap
 /**
  * 负责全局将请求头注入到每个 OkHttp 请求中的拦截器。
  * 支持在运行时动态添加或移除请求头。
+ * 同时支持通过 "BaseUrl-Key" 请求头动态切换 BaseUrl。
  */
 class HeaderInterceptor(defaultHeaders: Map<String, String>) : Interceptor {
+
+    companion object {
+        const val HEADER_BASE_URL_KEY = "BaseUrl-Key"
+    }
 
     private val dynamicHeaders = ConcurrentHashMap<String, String>()
 
@@ -24,6 +31,27 @@ class HeaderInterceptor(defaultHeaders: Map<String, String>) : Interceptor {
         // 应用所有动态请求头
         dynamicHeaders.forEach { (key, value) ->
             requestBuilder.header(key, value)
+        }
+
+        // --- 动态切换 BaseUrl 逻辑 ---
+        val domainKey = originalRequest.header(HEADER_BASE_URL_KEY)
+        if (!domainKey.isNullOrEmpty()) {
+            val baseUrls = NetManager.getConfig().baseUrls
+            val newBaseUrl = baseUrls[domainKey]
+            if (!newBaseUrl.isNullOrEmpty()) {
+                val newHttpUrl = newBaseUrl.toHttpUrlOrNull()
+                if (newHttpUrl != null) {
+                    val oldHttpUrl = originalRequest.url
+                    val finalUrl = oldHttpUrl.newBuilder()
+                        .scheme(newHttpUrl.scheme)
+                        .host(newHttpUrl.host)
+                        .port(newHttpUrl.port)
+                        .build()
+                    requestBuilder.url(finalUrl)
+                }
+            }
+            // 移除用于切换的辅助 Header，避免发送到服务端
+            requestBuilder.removeHeader(HEADER_BASE_URL_KEY)
         }
 
         return chain.proceed(requestBuilder.build())

@@ -7,9 +7,11 @@ import com.wkq.net.core.NetManager
 import com.wkq.net.core.downloadFileFlow
 import com.wkq.net.core.ApiResponse
 import com.wkq.net.core.DownloadState
+import com.wkq.net.core.awaitRawResult
 import com.wkq.net.core.onSuccess
 import com.wkq.net.core.onError
 import com.wkq.net.core.awaitResult
+import com.wkq.net.interceptor.HeaderInterceptor
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import okhttp3.ResponseBody
@@ -64,39 +66,41 @@ class AdvancedNetworkExample {
      */
     fun initFramework() {
         val config = NetConfig.Builder()
-            .setBaseUrl("https://api.example.com/")
-            .setConnectTimeout(15L) // 15秒连接超时
-            .setReadTimeout(20L)    // 20秒读取超时
-            .setWriteTimeout(20L)   // 20秒写入超时
-            .setDebugLogsEnabled(true) // 开启详细日志，拦截器自动格式化
-            .addDefaultHeader("Global-Version", "1.0.0") // 配置默认 Header
-            // 注册全局业务响应处理器 (核心演示)
-            .setGlobalHandler(object : com.wkq.net.core.GlobalNetHandler {
-                override fun onHandleBusinessCode(code: Int, message: String?): Boolean {
-                    return when (code) {
-                        401 -> {
-                            // 示例：处理登录过期
-                            println("★ [全局拦截] 检测到 Token 过期 (401)，正在跳转登录页...")
-                            // 此处通常执行：ARouter.getInstance().build("/app/login").navigation()
-                            true // 返回 true 表示该 code 已由全局处理，业务层不再需要弹窗或逻辑处理
-                        }
-                        500 -> {
-                            // 示例：处理服务器内部错误
-                            println("★ [全局拦截] 服务器开小差了 (500)，正在上报错误日志...")
-                            false // 返回 false 表示仍希望具体的业务调用方收到 Error 回调并进一步处理
-                        }
-                        else -> false
-                    }
-                }
-            })
+            .setBaseUrl("https://api.example.com/") // 主的
+            .putBaseUrl("google", "https://google.com/") // 演示动态域名
+            .putBaseUrl("github", "https://api.github.com/") // 演示动态域名
+            .setConnectTimeout(15L)
+            .setReadTimeout(20L)
+            .setWriteTimeout(20L)
+            .setDebugLogsEnabled(true)
+            .addDefaultHeader("Global-Version", "1.0.0")
             .build()
             
         NetManager.init(config)
     }
 
-    // 初始化后，可以懒加载 ApiRetrofit 和 DownloadRetrofit 代理
+    /**
+     * 示例接口定义，演示如何使用 @Headers 切换 BaseUrl
+     */
+    interface ThirdPartyService {
+        @Headers("${HeaderInterceptor.HEADER_BASE_URL_KEY}:google")
+        @GET("search")
+        fun searchGoogle(@Query("q") query: String): Call<ResponseBody>
+
+        @Headers("${HeaderInterceptor.HEADER_BASE_URL_KEY}:github")
+        @GET("users/{user}/repos")
+        fun getGithubRepos(@Path("user") user: String): Call<ResponseBody>
+
+        // 5. 演示返回非 BaseResponse 格式 (例如直接返回 Any 或自定义 Bean)
+        @Headers("${HeaderInterceptor.HEADER_BASE_URL_KEY}:google")
+        @GET("search")
+        fun searchGoogleAny(@Query("q") query: String): Call<Any>
+    }
+
+    // 初始化后，可以懒加载代理
     private val apiService by lazy { ApiRetrofit.create(ApiService::class.java) }
     private val downloadService by lazy { DownloadRetrofit.create(DownloadService::class.java) }
+    private val thirdPartyService by lazy { ApiRetrofit.create(ThirdPartyService::class.java) }
 
     // 用于保存当前的协程 Job 以便取消
     private var currentJob: Job? = null
@@ -250,6 +254,27 @@ class AdvancedNetworkExample {
             } else {
                 println("部分接口失败。")
             }
+        }
+    }
+
+    /**
+     * 7. 演示请求非标准格式的接口 (不使用 BaseResponse 包装)
+     * 场景：请求第三方 API (如 Google/GitHub)，其返回结构不符合我们的 BaseResponse。
+     */
+    @OptIn(DelicateCoroutinesApi::class)
+    fun testNonStandardApi() {
+        GlobalScope.launch(Dispatchers.Main) {
+            println("▶ 开始请求非标准接口 (返回 Any)...")
+            
+            // 使用 awaitRawResult() 代替 awaitResult()，它不会校验 body.code
+            thirdPartyService.searchGoogleAny("Kotlin").awaitRawResult()
+                .onSuccess { data ->
+                    // 这里的 data 类型是 Any (对于 JSON 来说通常是 Map 或 List)
+                    println("★ 非标准接口请求成功！返回数据: $data")
+                }
+                .onError { code, message ->
+                    println("★ 非标准接口请求失败: [$code] $message")
+                }
         }
     }
 }

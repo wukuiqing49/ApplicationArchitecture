@@ -73,6 +73,20 @@ suspend inline fun <T> safeApiCall(crossinline apiCall: suspend () -> BaseRespon
 }
 
 /**
+ * 针对非 BaseResponse 格式的接口，直接将数据内容映射为 ApiResponse.Success。
+ * 没有任何业务 Code 校验逻辑。
+ */
+suspend inline fun <T> safeRawApiCall(crossinline apiCall: suspend () -> T): ApiResponse<T> {
+    return try {
+        val response = apiCall()
+        ApiResponse.Success(response)
+    } catch (e: Exception) {
+        val (code, msg) = ExceptionHelper.handleException(e)
+        ApiResponse.Error(code, msg)
+    }
+}
+
+/**
  * 扩展方法：将标准的 Retrofit [Call] 作为挂起协程块执行。
  * 模仿了旧版的 `.request(Callback)` 风格，但使用协程进行线性、同步的代码书写。
  *
@@ -91,6 +105,24 @@ suspend fun <T> Call<BaseResponse<T>>.awaitResult(): ApiResponse<T> {
                 NetManager.getConfig().globalHandler?.onHandleBusinessCode(code, message)
                 ApiResponse.Error(code, message)
             }
+        } else {
+            ApiResponse.Error(response.code(), response.message().ifEmpty { "HTTP Error ${response.code()}" })
+        }
+    } catch (e: Exception) {
+        val (code, msg) = ExceptionHelper.handleException(e)
+        ApiResponse.Error(code, msg)
+    }
+}
+
+/**
+ * 针对非 BaseResponse 格式的接口，直接将 ResponseBody 映射为 ApiResponse。
+ */
+suspend fun <T> Call<T>.awaitRawResult(): ApiResponse<T> {
+    return try {
+        val response = this.awaitResponse()
+        if (response.isSuccessful) {
+            val body = response.body()
+            ApiResponse.Success(body)
         } else {
             ApiResponse.Error(response.code(), response.message().ifEmpty { "HTTP Error ${response.code()}" })
         }

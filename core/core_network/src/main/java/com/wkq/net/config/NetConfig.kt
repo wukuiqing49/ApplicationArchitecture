@@ -13,6 +13,7 @@ class NetConfig private constructor(
     val readTimeout: Long,
     val writeTimeout: Long,
     val defaultHeaders: Map<String, String>,
+    val baseUrls: Map<String, String>,
     val isDebugLogsEnabled: Boolean,
     val globalHandler: GlobalNetHandler? = null
 ) {
@@ -22,6 +23,7 @@ class NetConfig private constructor(
         private var readTimeout: Long = 20L
         private var writeTimeout: Long = 20L
         private var defaultHeaders = ConcurrentHashMap<String, String>()
+        private var baseUrls = ConcurrentHashMap<String, String>()
         private var isDebugLogsEnabled: Boolean = false
         private var globalHandler: GlobalNetHandler? = null
 
@@ -30,6 +32,7 @@ class NetConfig private constructor(
         fun setReadTimeout(seconds: Long) = apply { this.readTimeout = seconds }
         fun setWriteTimeout(seconds: Long) = apply { this.writeTimeout = seconds }
         fun addDefaultHeader(key: String, value: String) = apply { this.defaultHeaders[key] = value }
+        fun putBaseUrl(key: String, url: String) = apply { this.baseUrls[key] = url }
         fun setDebugLogsEnabled(enabled: Boolean) = apply { this.isDebugLogsEnabled = enabled }
         fun setGlobalHandler(handler: GlobalNetHandler) = apply { this.globalHandler = handler }
 
@@ -41,6 +44,7 @@ class NetConfig private constructor(
                 readTimeout = readTimeout,
                 writeTimeout = writeTimeout,
                 defaultHeaders = defaultHeaders,
+                baseUrls = baseUrls,
                 isDebugLogsEnabled = isDebugLogsEnabled,
                 globalHandler = globalHandler
             )

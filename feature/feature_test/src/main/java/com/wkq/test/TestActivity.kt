@@ -51,6 +51,11 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
             }
 
         }
+
+        // 打开动态 BaseUrl 演示页面
+        binding.btnNetDynamic.setOnClickListener {
+            startActivity(android.content.Intent(this, NetDynamicBaseUrlActivity::class.java))
+        }
     }
 
     override fun initData() {

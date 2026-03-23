@@ -3,6 +3,8 @@ package com.wkq.app
 import android.app.Application
 import com.wkq.common.web.util.WebPreLoader
 import com.wkq.core.router.Router
+import com.wkq.net.config.NetConfig
+import com.wkq.net.core.NetManager
 import com.wkq.user.manager.UserManager
 import com.wkq.util.ProcessUtils
 import com.wkq.util.SpUtils
@@ -23,7 +25,18 @@ class MyApplication : Application() {
         SpUtils.init(this)
         // 初始化路由 (确保子进程也能跨模块跳转)
         Router.registerRouterInit(this)
+        val config = NetConfig.Builder()
+            .setBaseUrl("https://api.example.com/") // 主的
+            .putBaseUrl("google", "https://google.com/") // 演示动态域名
+            .putBaseUrl("github", "https://api.github.com/") // 演示动态域名
+            .setConnectTimeout(15L)
+            .setReadTimeout(20L)
+            .setWriteTimeout(20L)
+            .setDebugLogsEnabled(true)
+            .addDefaultHeader("Global-Version", "1.0.0")
+            .build()
 
+        NetManager.init(config)
         // --- 仅主进程初始化 ---
         if (ProcessUtils.isMainProcess(this)) {
             // 初始化图片加载缓存 (仅主进程管理)
