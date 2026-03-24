@@ -2,7 +2,7 @@ package com.wkq.feature.app.activity
 
 import androidx.lifecycle.lifecycleScope
 import com.wkq.base.activity.BaseFullScreenActivity
-import com.wkq.router.annotation.Route
+
 import com.wkq.router.api.Router
 import com.wkq.feature.app.databinding.ActivitySplashBinding
 import com.wkq.user.manager.UserManager

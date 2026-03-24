@@ -1,10 +1,8 @@
 package com.wkq.router.api
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -32,6 +30,46 @@ class Postcard(val path: String) {
 
     fun withInt(key: String, value: Int): Postcard {
         extras.putInt(key, value)
+        return this
+    }
+
+    fun withLong(key: String, value: Long): Postcard {
+        extras.putLong(key, value)
+        return this
+    }
+
+    fun withBoolean(key: String, value: Boolean): Postcard {
+        extras.putBoolean(key, value)
+        return this
+    }
+
+    fun withFloat(key: String, value: Float): Postcard {
+        extras.putFloat(key, value)
+        return this
+    }
+
+    fun withDouble(key: String, value: Double): Postcard {
+        extras.putDouble(key, value)
+        return this
+    }
+
+    fun withSerializable(key: String, value: java.io.Serializable?): Postcard {
+        extras.putSerializable(key, value)
+        return this
+    }
+
+    fun withParcelable(key: String, value: android.os.Parcelable?): Postcard {
+        extras.putParcelable(key, value)
+        return this
+    }
+
+    fun withIntArray(key: String, value: IntArray?): Postcard {
+        extras.putIntArray(key, value)
+        return this
+    }
+
+    fun withLongArray(key: String, value: LongArray?): Postcard {
+        extras.putLongArray(key, value)
         return this
     }
 

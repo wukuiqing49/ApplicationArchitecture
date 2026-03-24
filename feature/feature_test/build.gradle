@@ -53,7 +53,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
 
     androidTestImplementation libs.androidx.espresso.core
-    androidTestImplementation libs.compose.ui
+//    androidTestImplementation libs.compose.ui
 
 //    androidTestImplementation libs.compose.material3
     implementation project(':core:core_ui')
