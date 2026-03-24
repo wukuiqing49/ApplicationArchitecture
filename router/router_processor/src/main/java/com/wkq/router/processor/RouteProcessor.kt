@@ -58,15 +58,16 @@ class RouteProcessor(
                                 .addModifiers(KModifier.OVERRIDE)
                                 .addParameter("target", Any::class)
                                 .addStatement("val t = target as %T", ClassName(targetPackage, targetClassName))
-                                .addStatement("val extras = when {")
                                 .apply {
+                                    val isFragment = clazz.superTypes.any { it.resolve().declaration.qualifiedName?.asString()?.contains("Fragment") == true }
                                     if (isActivity) {
-                                        addStatement("    t is android.app.Activity -> t.intent?.extras")
+                                        addStatement("val extras = t.intent?.extras ?: return")
+                                    } else if (isFragment) {
+                                        addStatement("val extras = t.arguments ?: return")
+                                    } else {
+                                        addStatement("val extras = android.os.Bundle() // 默认空 Bundle")
                                     }
-                                    addStatement("    t is androidx.fragment.app.Fragment -> t.arguments")
-                                    addStatement("    else -> null")
                                 }
-                                .addStatement("} ?: return")
                                 .apply {
                                     params.forEach { param ->
                                         val paramName = param.simpleName.asString()

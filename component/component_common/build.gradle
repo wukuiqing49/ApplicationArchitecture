@@ -9,7 +9,7 @@ ksp {
 }
 
 android {
-    namespace 'com.wkq.common'
+    namespace ='com.wkq.common'
     compileSdk appConfig.compileSdk
 
     defaultConfig {
@@ -45,9 +45,11 @@ dependencies {
     implementation( libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.xpopup)
-    implementation project(':router:router_api')
+
     implementation project(':core:core_base')
     implementation project(':core:core_user')
     implementation project(':core:core_util')
+
+    implementation project(':router:router_api')
     ksp project(':router:router_processor')
 }
