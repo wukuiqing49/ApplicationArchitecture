@@ -19,7 +19,9 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
+import com.wkq.router.annotation.Route
 
+@Route(path = "/test/magic_indicator")
 class MagicIndicatorTestActivity : BaseActivity<ActivityMagicIndicatorTestBinding>() {
 
     private val mDataList = listOf("推荐", "音乐", "游戏", "生活", "科技", "娱乐", "萌宠")

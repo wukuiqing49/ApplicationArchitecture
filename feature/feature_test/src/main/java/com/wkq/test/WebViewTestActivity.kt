@@ -5,10 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.wkq.test.databinding.ActivityWebviewTestBinding
 
+import com.wkq.router.annotation.Route
+
 /**
  * WebView 测试页面
  * 用于验证 CommonWebView 的自定义进度条效果
  */
+@Route(path = "/test/webview_internal")
 class WebViewTestActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWebviewTestBinding

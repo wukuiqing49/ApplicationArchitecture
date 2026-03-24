@@ -1,6 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+}
+
+ksp {
+    arg("moduleName", "FeatureTest")
 }
 
 android {
@@ -50,13 +55,15 @@ dependencies {
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation libs.compose.ui
 
-    androidTestImplementation libs.compose.material3
+//    androidTestImplementation libs.compose.material3
     implementation project(':core:core_ui')
     implementation project(':core:core_base')
     implementation project(':core:core_util')
-    implementation project(':core:core_router')
     implementation project(':core:core_user')
     implementation project(':core:core_network')
     implementation project(':component:component_common')
 
+    // 新路由系统
+    implementation project(':router:router_api')
+    ksp project(":router:router_processor")
 }

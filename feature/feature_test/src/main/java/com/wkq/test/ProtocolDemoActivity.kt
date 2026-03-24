@@ -9,10 +9,12 @@ import com.wkq.user.data.entity.UserEntity
 import com.wkq.user.manager.UserManager
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import com.wkq.router.annotation.Route
 
 /**
  * 协议与账号管理核心功能演示页面
  */
+@Route(path = "/test/protocol_demo")
 class ProtocolDemoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProtocolDemoBinding

@@ -1,6 +1,7 @@
 package com.wkq.test
 
 import com.wkq.base.activity.BaseActivity
+import com.wkq.router.annotation.Route
 import com.wkq.test.databinding.ActivityImageLoaderDemoBinding
 import com.wkq.util.coil.ImageLoaderUtil
 import com.wkq.util.coil.loadUrl
@@ -8,6 +9,7 @@ import com.wkq.util.coil.loadUrl
 /**
  * ImageLoaderUtil 优化测试 Demo
  */
+@Route(path = "/test/loader_image")
 class ImageLoaderDemoActivity : BaseActivity<ActivityImageLoaderDemoBinding>() {
 
     private val testImg = "https://bpic.588ku.com/element_pic/23/07/25/ac0eff9c8e8ed3780d194bd48d106d70.jpg!/fw/300/unsharp/true" // 稳定图片源

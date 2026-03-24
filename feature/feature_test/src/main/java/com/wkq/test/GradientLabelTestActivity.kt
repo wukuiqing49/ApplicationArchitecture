@@ -1,11 +1,13 @@
 package com.wkq.test
 
 import com.wkq.base.activity.BaseActivity
+import com.wkq.router.annotation.Route
 import com.wkq.test.databinding.ActivityGradientLabelTestBinding
 
 /**
  * GradientShapeLabelView 功能测试页面
  */
+@Route(path = "/test/gradient_label")
 class GradientLabelTestActivity : BaseActivity<ActivityGradientLabelTestBinding>() {
 
     override fun initView() {

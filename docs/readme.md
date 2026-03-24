@@ -16,11 +16,12 @@ ApplicationArchitecture
 │   ├── core_aar                # AAR库支持
 │   ├── core_base               # 基础框架
 │   ├── core_data               # 数据管理层 (UserInfo等)
-│   ├── core_network            # 网络层
-│   ├── core_ui                 # UI基础组件
-│   ├── core_util               # 工具库
-│   ├── core_res                # 公共资源
-│   └── core_router             # 路由框架
+│   └── core_network            # 网络层
+│
+├── router                      # Router X 路由组件 (New)
+│   ├── router_annotation       # 路由注解协议
+│   ├── router_api              # 运行时核心库
+│   └── router_processor        # KSP 编译期插件
 │
 ├── component                   # 可复用业务组件层
 │   ├── component_live          # 直播组件
@@ -58,10 +59,18 @@ ApplicationArchitecture
 
 ---
 
+### 🚀 Router X (组件化路由框架)
+- **router_annotation**: 纯 Kotlin 模块，定义 `@Route`, `@Param`, `@ProvideService`, `@Interceptor` 等通用接口，支持多端复用。
+- **router_processor**: 基于 KSP 的代码生成引擎，在编译期扫描注解并输出路由表与注入类，确保零反射、高性能。
+- **router_api**: 运行时外观类，提供拦截器链路、属性自动注入、分组懒加载及跨模块服务发现等高级特性。
+
+---
+
 **依赖关系原则**：
-- `Feature` → `Core`
-- `Component` → `Core`
-- `App` → `Feature` + `Component` + `Core`
+- `Feature` → `Core` & `router_api`
+- `Component` → `Core` & `router_api`
+- `App` → `Feature` + `Component` + `Core` + `router_api`
+- `All` → `router_processor` (via KSP)
 
 ---
 
@@ -100,14 +109,17 @@ ApplicationArchitecture
 
 ------------------------------------------------------------------------
 
-# 🚀 自动路由机制
+# 🚀 自动路由机制 (Router X)
 
-项目实现了 **自动路由注册系统**，用于实现模块间解耦通信。
+项目采用基于 **KSP (Kotlin Symbol Processing)** 和 **SPI (Service Provider Interface)** 机制的 **Router X** 路由库，实现极致的解耦与性能：
 
-**工作流程**：
-1. 在 `feature` 或 `component` 模块定义 `*Routes.kt`。
-2. Gradle 任务自动扫描并生成 `RouterInit.kt`。
-3. 应用启动时调用 `RouterInit.registerAll()` 完成注册。
+**主要特性**：
+- **编译时扫描**：利用 KSP 在编译期生成注册表，零反射开销。
+- **SPI 自动注册**：各模块路由表通过 ServiceLoader 自动发现，无需手动配置模块依赖。
+- **分组懒加载**：按需加载路由信息，优化启动速度。
+- **自动属性注入**：通过 `@Param` 实现 Intent 参数的自动化赋值。
+
+详细使用说明请参考：[Router X 使用指南](file:///c:/work/AI/ApplicationArchitecture/docs/ROUTER_GUIDE.md)
 
 ---
 

@@ -12,7 +12,7 @@ plugins {
 }
 
 subprojects {
-    configurations.all {
+    configurations.configureEach {
         resolutionStrategy {
             force "org.jetbrains.kotlin:kotlin-stdlib:${libs.versions.kotlin.get()}"
             force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${libs.versions.kotlin.get()}"

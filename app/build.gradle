@@ -81,7 +81,7 @@ dependencies {
     implementation project(':core:core_util')
     implementation project(':core:core_ui')
     implementation project(':core:core_network')
-    implementation project(':core:core_router')
+    implementation project(':router:router_api')
     implementation project(':core:core_user')
     implementation project(':component:component_common')
 
@@ -93,74 +93,7 @@ dependencies {
     }
 }
 
-// 自动生成 RouterInit.kt
-// ========================================
-tasks.register("generateRouterInit") {
 
-    // 1️⃣ 动态获取 namespace
-    def basePackage = android.namespace ?: "com.wkq.test"
-
-    // 2️⃣ 输出目录，路径跟包名一致
-    def outputDir = file("$buildDir/generated/source/router/${basePackage.replace('.', '/')}/core/router")
-    def outputFile = file("$outputDir/RouterInit.kt")
-
-    // 3️⃣ 收集 feature/component 模块的源码目录
-    def sourceDirs = []
-    rootProject.subprojects { proj ->
-        if (proj.path.startsWith(':feature:') || proj.path.startsWith(':component:')) {
-            sourceDirs.add(proj.file("src/main/java"))
-        }
-    }
-
-    def routeFiles = files(sourceDirs).asFileTree.matching {
-        include "**/*Routes.kt"
-    }
-
-    // 4️⃣ 增量构建输入输出
-    inputs.files(routeFiles)
-    outputs.file(outputFile)
-
-    // 5️⃣ 生成逻辑
-    doLast {
-        outputDir.mkdirs()
-        def routerClasses = []
-
-        routeFiles.each { file ->
-            def text = file.text
-            def pkgMatch = text =~ /package\s+([a-zA-Z0-9_.]+)/
-            def objMatch = text =~ /object\s+([a-zA-Z0-9_]+Routes)/
-
-            if (pkgMatch.find() && objMatch.find()) {
-                routerClasses.add("${pkgMatch.group(1)}.${objMatch.group(1)}")
-            }
-        }
-
-        // 6️⃣ 拼接 RouterInit.kt 内容
-        def sb = new StringBuilder()
-        sb.append("package ${basePackage}.core.router\n\n")
-        sb.append("import com.wkq.core.router.Router\n\n")
-        sb.append("object RouterInit {\n")
-        sb.append("    fun registerAll() {\n")
-        routerClasses.each { clazz ->
-            sb.append("        ${clazz}.routes.forEach { Router.add(it) }\n")
-        }
-        sb.append("    }\n")
-        sb.append("}\n")
-
-        // 7️⃣ 写入文件
-        outputFile.text = sb.toString()
-        println("✅ RouterInit.kt generated at ${outputFile.absolutePath}")
-    }
-}
-
-android.sourceSets {
-    main {
-        java.srcDirs += "$buildDir/generated/source/router/${android.namespace.replace('.', '/')}/core/router"
-    }
-}
-
-
-preBuild.dependsOn("generateRouterInit")
 
 tasks.whenTaskAdded { task ->
     // 匹配所有 merge<Flavor><BuildType>NativeLibs 任务

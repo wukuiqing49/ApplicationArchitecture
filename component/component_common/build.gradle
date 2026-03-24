@@ -1,6 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+}
+
+ksp {
+    arg("moduleName", "ComponentCommon")
 }
 
 android {
@@ -40,8 +45,9 @@ dependencies {
     implementation( libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.xpopup)
-    implementation project(':core:core_router')
+    implementation project(':router:router_api')
     implementation project(':core:core_base')
     implementation project(':core:core_user')
     implementation project(':core:core_util')
+    ksp project(':router:router_processor')
 }

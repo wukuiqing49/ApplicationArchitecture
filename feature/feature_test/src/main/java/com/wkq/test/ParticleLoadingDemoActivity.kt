@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.wkq.test.databinding.ActivityParticleLoadingDemoBinding
 import com.wkq.ui.util.PopupUtil
 
+import com.wkq.router.annotation.Route
+
 /**
  * 粒子加载动画演示页面
  */
+@Route(path = "/test/particle_loading")
 class ParticleLoadingDemoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityParticleLoadingDemoBinding

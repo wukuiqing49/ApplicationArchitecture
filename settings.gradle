@@ -27,7 +27,8 @@ include ':core:core_util'
 include ':core:core_data'
 include ':core:core_user'
 
-include ':core:core_router'
+//include ':core:core_router_api'
+//include ':core:core_router_processor'
 
 // 模块业务组件库
 include ':component:component_live'
@@ -42,3 +43,6 @@ include ':feature:feature_res'
 include ':feature:feature_test'
 
 
+include ':router:router_annotation'
+include ':router:router_api'
+include ':router:router_processor'

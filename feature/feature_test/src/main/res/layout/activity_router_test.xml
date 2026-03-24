@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Router X"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#1A73E8"/>
+                
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全场景路由功能演示 (Overall Test)"
+                android:textSize="14sp"
+                android:textColor="#5F6368"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+        <!-- Section 1: Navigation -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="核心导航 (Core Navigation)"
+                    android:textStyle="bold"
+                    android:textColor="#202124"
+                    android:layout_marginBottom="12dp"/>
+                    
+                <Button
+                    android:id="@+id/btn_nav_basic"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="基础跳转 (Basic)"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="8dp"/>
+                    
+                <Button
+                    android:id="@+id/btn_nav_anim"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="自定义动画 (Animation)"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="8dp"/>
+                    
+                <Button
+                    android:id="@+id/btn_nav_interceptor"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="拦截器测试 (Interceptor)"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section 2: Data & Result -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="数据与回调 (Data &amp; Result)"
+                    android:textStyle="bold"
+                    android:textColor="#202124"
+                    android:layout_marginBottom="12dp"/>
+                    
+                <Button
+                    android:id="@+id/btn_data_params"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="携带参数跳转 (With Params)"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="8dp"/>
+                    
+                <Button
+                    android:id="@+id/btn_data_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Activity Result 回调"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section 3: UI Components -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="组件获取 (UI Components)"
+                    android:textStyle="bold"
+                    android:textColor="#202124"
+                    android:layout_marginBottom="12dp"/>
+                    
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    
+                    <Button
+                        android:id="@+id/btn_get_fragment"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="获取 Fragment"
+                        android:textAllCaps="false"/>
+                        
+                    <Button
+                        android:id="@+id/btn_get_view"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:text="获取 View"
+                        android:textAllCaps="false"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section 4: Services -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="服务发现 (Services &amp; Utils)"
+                    android:textStyle="bold"
+                    android:textColor="#202124"
+                    android:layout_marginBottom="12dp"/>
+                    
+                <Button
+                    android:id="@+id/btn_service_test"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="测试业务服务 (Service)"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="8dp"/>
+                    
+                <Button
+                    android:id="@+id/btn_util_test"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="测试通用工具 (Util)"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Preview Container -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="预览区域 (Preview Container)"
+            android:textSize="12sp"
+            android:textColor="#9AA0A6"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center_horizontal"/>
+            
+        <FrameLayout
+            android:id="@+id/preview_container"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="#FFFFFF"
+            android:elevation="1dp"
+            android:layout_marginBottom="32dp"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

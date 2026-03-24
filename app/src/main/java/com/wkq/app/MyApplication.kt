@@ -2,7 +2,7 @@ package com.wkq.app
 
 import android.app.Application
 import com.wkq.common.web.util.WebPreLoader
-import com.wkq.core.router.Router
+import com.wkq.router.api.Router
 import com.wkq.net.config.NetConfig
 import com.wkq.net.core.NetManager
 import com.wkq.user.manager.UserManager
@@ -24,7 +24,7 @@ class MyApplication : Application() {
         // 初始化 MMKV 本地存储 (支持多进程)
         SpUtils.init(this)
         // 初始化路由 (确保子进程也能跨模块跳转)
-        Router.registerRouterInit(this)
+        Router.init(this)
         val config = NetConfig.Builder()
             .setBaseUrl("https://api.example.com/") // 主的
             .putBaseUrl("google", "https://google.com/") // 演示动态域名

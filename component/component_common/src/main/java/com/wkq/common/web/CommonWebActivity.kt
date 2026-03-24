@@ -9,6 +9,7 @@ import androidx.activity.addCallback
 import androidx.annotation.DrawableRes
 import com.lxj.xpopup.XPopup
 import com.wkq.base.activity.BaseTitleActivity
+import com.wkq.router.annotation.Route
 import com.wkq.common.R
 import com.wkq.common.databinding.ActivityCommonWebBinding
 import com.wkq.common.web.util.JsBridge
@@ -22,6 +23,7 @@ import com.wkq.util.PickMediaType
  * 通用 WebView Activity
  * 基于 BaseTitleActivity，支持标题栏文字、右侧菜单（文字/图标）的动态设置
  */
+@Route(path = "/common/webview")
 class CommonWebActivity : BaseTitleActivity<ActivityCommonWebBinding>() {
 
     companion object {

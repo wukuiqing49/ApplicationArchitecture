@@ -14,10 +14,12 @@ import com.wkq.util.ImageCompressUtil
 import com.wkq.util.coil.loadFile
 import kotlinx.coroutines.launch
 import java.io.File
+import com.wkq.router.annotation.Route
 
 /**
  * PhotoPickerHelper 功能测试页面
  */
+@Route(path = "/test/photo_picker")
 class PhotoPickerTestActivity : BaseActivity<ActivityPhotoPickerTestBinding>() {
 
     // 标记当前是否处于压缩模式测试

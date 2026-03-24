@@ -43,7 +43,7 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_network_error"
+            android:src="@mipmap/ic_network_error"
             android:contentDescription="@string/common_webview_error_msg" />
 
         <TextView

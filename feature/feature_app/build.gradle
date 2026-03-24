@@ -41,7 +41,7 @@ dependencies {
     implementation project(':core:core_data')
     implementation project(':core:core_base')
     implementation project(':core:core_util')
-    implementation project(':core:core_router')
+    implementation project(':router:router_api')
     implementation project(':core:core_user')
     api('com.github.yyued:SVGAPlayer-Android:2.6.1') {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-android-extensions-runtime'

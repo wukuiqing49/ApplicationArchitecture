@@ -51,8 +51,9 @@ class DefaultWebView(context: Context) : IWebView {
     }
 
     override fun destroy() {
-        webView.destroy()
-
+        webView.post {
+            webView.destroy()
+        }
     }
 
     @SuppressLint("JavascriptInterface")

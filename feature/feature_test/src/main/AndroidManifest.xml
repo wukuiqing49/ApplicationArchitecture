@@ -25,10 +25,17 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.wkq.test.ProtocolDemoActivity" />
         <activity
-            android:name="com.wkq.test.WebViewTestActivity"
+            android:name="com.wkq.test.router.RouterTestActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.wkq.test.NetDynamicBaseUrlActivity"
+            android:name="com.wkq.test.TestActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.wkq.test.router.NetDynamicBaseUrlActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.router.TargetActivity"
             android:screenOrientation="portrait" />
     </application>
 
