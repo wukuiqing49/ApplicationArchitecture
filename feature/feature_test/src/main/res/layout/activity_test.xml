@@ -1,171 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginTop="20dp"
-        android:text="测试入口 (Test Portal)"
-        android:textColor="#333333"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btn_router_overall"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginBottom="24dp"
-        android:text="🚀 路由全场景演示 (Overall)"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:textAllCaps="false"
-        android:backgroundTint="#1A73E8"
-        android:textColor="#FFFFFF"/>
-
-    <Button
-        android:id="@+id/btn_image_loader"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:text="图片加载测试 (ImageLoader)"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn_gradient_label"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:text="渐变标签测试 (GradientLabel)"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn_magic_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:text="指示器测试 (MagicIndicator)"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn_photo_picker"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:text="媒体选择测试 (PhotoPicker)"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn_particle_loading"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:text="粒子加载测试 (ParticleLoading)"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn_protocol_demo"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:text="协议及账号演示 (ProtocolDemo)"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn_webview"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:text="原生 Web 演示 (Custom WebView)"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn_net_dynamic"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:text="动态 BaseUrl 演示 (Net Dynamic)"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn_router_advanced"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:text="高级路由演示 (Result + Interceptor)"
-        android:textAllCaps="false" />
+    android:fillViewport="true"
+    android:background="#F5F5F5">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="20dp"
+            android:text="测试入口 (Test Portal)"
+            android:textColor="#333333"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btn_router_fragment"
-            android:layout_width="0dp"
+            android:id="@+id/btn_router_overall"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="24dp"
+            android:text="🚀 路由全场景演示 (Overall)"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:backgroundTint="#1A73E8"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/btn_image_loader"
+            android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:text="获取 Fragment"
+            android:layout_marginBottom="16dp"
+            android:text="图片加载测试 (ImageLoader)"
             android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/btn_router_view"
-            android:layout_width="0dp"
+            android:id="@+id/btn_gradient_label"
+            android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:text="获取 View"
+            android:layout_marginBottom="16dp"
+            android:text="渐变标签测试 (GradientLabel)"
             android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/btn_router_util"
-            android:layout_width="0dp"
+            android:id="@+id/btn_magic_indicator"
+            android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_weight="1"
-            android:text="获取 Util"
+            android:layout_marginBottom="16dp"
+            android:text="指示器测试 (MagicIndicator)"
             android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_photo_picker"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="媒体选择测试 (PhotoPicker)"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_particle_loading"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="粒子加载测试 (ParticleLoading)"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_protocol_demo"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="协议及账号演示 (ProtocolDemo)"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_webview"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="原生 Web 演示 (Custom WebView)"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_net_dynamic"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="动态 BaseUrl 演示 (Net Dynamic)"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_camera_test"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="📷 相机控制测试 (Camera Control)"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_url_resolve"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="URL 还原测试 (Url Resolve)"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_router_advanced"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:text="高级路由演示 (Result + Interceptor)"
+            android:textAllCaps="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_router_fragment"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="获取 Fragment"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_router_view"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="获取 View"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_router_util"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="获取 Util"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
+            android:background="#EEEEEE" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="预览效果 (Preview Components)"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
+        <com.wkq.ui.widget.GradientShapeLabelView
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:label_bg_end_color="#FF80AB"
+            app:label_bg_orientation="left_right"
+            app:label_bg_radius="18dp"
+            app:label_bg_start_color="#FF4081"
+            app:label_left_icon="@android:drawable/ic_menu_gallery"
+            app:label_text="Gradient Label Sample"
+            app:label_text_color="#FFFFFF"
+            app:label_text_size="13sp"
+            app:label_icon_padding="4dp"
+            app:label_icon_size="16dp" />
+
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginBottom="16dp"
-        android:background="#EEEEEE" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="预览效果 (Preview Components)"
-        android:textColor="#666666"
-        android:textSize="14sp" />
-
-    <com.wkq.ui.widget.GradientShapeLabelView
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_marginTop="16dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:label_bg_end_color="#FF80AB"
-        app:label_bg_orientation="left_right"
-        app:label_bg_radius="18dp"
-        app:label_bg_start_color="#FF4081"
-        app:label_left_icon="@android:drawable/ic_menu_gallery"
-        app:label_text="Gradient Label Sample"
-        app:label_text_color="#FFFFFF"
-        app:label_text_size="13sp"
-        app:label_icon_padding="4dp"
-        app:label_icon_size="16dp" />
-
-</LinearLayout>
+</ScrollView>

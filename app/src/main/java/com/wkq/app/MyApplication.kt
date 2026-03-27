@@ -10,11 +10,13 @@ import com.wkq.util.ProcessUtils
 import com.wkq.util.SpUtils
 import com.wkq.util.coil.CacheManager
 
+import com.wkq.app.base.BaseApplication
+
 /**
  * 全局 Application
  * 负责初始化全局组件（如 SpUtils）
  */
-class MyApplication : Application() {
+class MyApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()

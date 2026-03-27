@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Android 11+ 软件包可见性声明 -->
+    <queries>
+        <!-- 淘宝 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="taobao" />
+        </intent>
+        <!-- 京东 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="openapp.jdmobile" />
+        </intent>
+        <!-- 拼多多 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="pinduoduo" />
+        </intent>
+        <!-- 抖音 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="snssdk1128" />
+        </intent>
+        <!-- 闲鱼 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="fleamarket" />
+        </intent>
+        <!-- 通用浏览器支持 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
     <application>
     </application>
 </manifest>

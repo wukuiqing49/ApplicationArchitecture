@@ -3,11 +3,9 @@
 
     <application>
         <activity
-            android:name="com.wkq.test.TestActivity"
+            android:name="com.wkq.test.SmartJumpTestActivity"
+            android:screenOrientation="portrait" />
 
-            android:screenOrientation="portrait">
-
-        </activity>
         <activity
             android:name="com.wkq.test.GradientLabelTestActivity"
 
@@ -29,8 +27,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.wkq.test.TestActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.wkq.test.router.NetDynamicBaseUrlActivity"
             android:screenOrientation="portrait" />

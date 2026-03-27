@@ -72,6 +72,16 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
             Router.open("/test/net_demo", this)
         }
 
+        // 打开相机控制测试页面
+        binding.btnCameraTest.setOnClickListener {
+            Router.open("/test/camera_control", this)
+        }
+
+        // 打开 URL 智能跳转测试页面
+        binding.btnUrlResolve.setOnClickListener {
+            Router.open("/test/smart_jump", this)
+        }
+
         // 3. 高级路由测试 (Postcard + Result + Interceptor)
         binding.btnRouterAdvanced.setOnClickListener {
             Router.build("/test/target")
