@@ -13,7 +13,8 @@ class IdlefishJumpHandler : BaseJumpHandler() {
     }
 
     override fun convertToScheme(url: String): String? {
-        val itemId = getParam(url, "id") ?: getParam(url, "item_id")
+        val realUrl = cleanUrl(url)
+        val itemId = getParam(realUrl, "id") ?: getParam(realUrl, "item_id")
         return if (itemId != null) {
             "fleamarket://item?id=$itemId"
         } else {

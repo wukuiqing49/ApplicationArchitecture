@@ -13,7 +13,8 @@ class PDDJumpHandler : BaseJumpHandler() {
     }
 
     override fun convertToScheme(url: String): String? {
-        val goodsId = getParam(url, "goods_id")
+        val realUrl = cleanUrl(url)
+        val goodsId = getParam(realUrl, "goods_id")
         return if (goodsId != null) {
             "pinduoduo://com.xunmeng.pinduoduo/goods_detail.html?goods_id=$goodsId"
         } else {

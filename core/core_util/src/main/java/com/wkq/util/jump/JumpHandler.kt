@@ -36,4 +36,26 @@ abstract class BaseJumpHandler : JumpHandler {
             null
         }
     }
+
+    /**
+     * 通用 URL 清洗器：尝试从风控页、中间跳转页中提取真实的目标 URL
+     * 适用于解决京东 RiskHandler、淘宝拦截页等问题
+     */
+    protected fun cleanUrl(url: String): String {
+        // 常见的中间跳转参数名
+        val redirectParams = listOf(
+            "returnurl", "returnUrl", "url", "target", "targetUrl",
+            "biz_url", "origin_url", "redirect_url", "jumpUrl"
+        )
+
+        for (paramName in redirectParams) {
+            val extracted = getParam(url, paramName)
+            // 校验提取出的内容：必须是非空的 http/https 链接
+            if (extracted != null && extracted.startsWith("http") && extracted.length > 10) {
+                // 递归清洗，防止多层嵌套
+                return cleanUrl(extracted)
+            }
+        }
+        return url
+    }
 }

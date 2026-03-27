@@ -13,8 +13,9 @@ class DouyinJumpHandler : BaseJumpHandler() {
     }
 
     override fun convertToScheme(url: String): String? {
-        val lowUrl = url.lowercase()
-        val promotionId = getParam(url, "promotion_id") ?: getParam(url, "id")
+        val realUrl = cleanUrl(url)
+        val lowUrl = realUrl.lowercase()
+        val promotionId = getParam(realUrl, "promotion_id") ?: getParam(realUrl, "id")
         return if (promotionId != null && lowUrl.contains("detail")) {
             "snssdk1128://ec_goods_detail?promotion_id=$promotionId"
         } else {

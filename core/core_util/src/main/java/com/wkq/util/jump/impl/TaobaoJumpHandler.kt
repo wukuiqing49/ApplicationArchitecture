@@ -13,6 +13,7 @@ class TaobaoJumpHandler : BaseJumpHandler() {
     }
 
     override fun convertToScheme(url: String): String? {
-        return url.replace("https://", "taobao://").replace("http://", "taobao://")
+        val realUrl = cleanUrl(url)
+        return realUrl.replace("https://", "taobao://").replace("http://", "taobao://")
     }
 }

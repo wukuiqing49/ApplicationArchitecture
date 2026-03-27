@@ -100,13 +100,6 @@
             android:text="动态 BaseUrl 演示 (Net Dynamic)"
             android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btn_camera_test"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="📷 相机控制测试 (Camera Control)"
-            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_url_resolve"
@@ -124,53 +117,6 @@
             android:text="高级路由演示 (Result + Interceptor)"
             android:textAllCaps="false" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_router_fragment"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:text="获取 Fragment"
-                android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/btn_router_view"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:text="获取 View"
-                android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/btn_router_util"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_weight="1"
-                android:text="获取 Util"
-                android:textAllCaps="false" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginBottom="16dp"
-            android:background="#EEEEEE" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="预览效果 (Preview Components)"
-            android:textColor="#666666"
-            android:textSize="14sp" />
 
         <com.wkq.ui.widget.GradientShapeLabelView
             android:layout_width="wrap_content"

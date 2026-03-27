@@ -13,14 +13,8 @@ class JDJumpHandler : BaseJumpHandler() {
     }
 
     override fun convertToScheme(url: String): String? {
-        var realUrl = url
-        // 1. 尝试从风险验证页提取真实 URL
-        if (url.contains("risk_handler") && url.contains("returnurl=")) {
-            val returnUrl = getParam(url, "returnurl")
-            if (returnUrl != null) {
-                realUrl = returnUrl
-            }
-        }
+        // 1. 通用清洗：提取真实 URL (解决风险验证页等问题)
+        val realUrl = cleanUrl(url)
 
         // 2. 尝试提取 SKU ID (京东 App 需要 skuId 才能精准直达详情页)
         // 支持两种形式：https://item.m.jd.com/product/123.html 或 URL 参数中的 id/skuId
