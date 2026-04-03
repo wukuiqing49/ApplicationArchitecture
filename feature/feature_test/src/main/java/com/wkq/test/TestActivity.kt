@@ -72,10 +72,6 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
             Router.open("/test/net_demo", this)
         }
 
-        // 打开相机控制测试页面
-        binding.btnCameraTest.setOnClickListener {
-            Router.open("/test/camera_control", this)
-        }
 
         // 打开 URL 智能跳转测试页面
         binding.btnUrlResolve.setOnClickListener {
@@ -93,36 +89,8 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
                 }
         }
 
-        // 4. 获取 Fragment 演示
-        binding.btnRouterFragment.setOnClickListener {
-            val bundle = Bundle().apply { putString("info", "来自 TestActivity 的参数") }
-            val fragment = Router.getFragment("/test/fragment", bundle)
-            if (fragment != null) {
-                supportFragmentManager.beginTransaction()
-                    .replace(binding.container.id, fragment)
-                    .commit()
-            } else {
-                Toast.makeText(this, "Fragment not found", Toast.LENGTH_SHORT).show()
-            }
-        }
 
-        // 5. 获取 View 演示
-        binding.btnRouterView.setOnClickListener {
-            val customView = Router.getView("/test/view", this)
-            if (customView != null) {
-                binding.container.removeAllViews()
-                binding.container.addView(customView)
-            } else {
-                Toast.makeText(this, "View not found", Toast.LENGTH_SHORT).show()
-            }
-        }
 
-        // 6. 获取 Util 演示
-        binding.btnRouterUtil.setOnClickListener {
-            val util = Router.getService(ITestUtil::class)
-            val result = util?.doSomething("hello router") ?: "Util not found"
-            Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun initData() {

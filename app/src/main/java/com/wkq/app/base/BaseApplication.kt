@@ -40,28 +40,39 @@ open class BaseApplication : Application() {
                 ALog.d("Lifecycle", "创建: ${activity.javaClass.simpleName}")
             }
 
+            override fun onActivityPostResumed(activity: Activity) {
+                super.onActivityPostResumed(activity)
+                ALog.d("Lifecycle", "onActivityPostResumed: ${activity.javaClass.simpleName}")
+            }
+
+
+            override fun onActivityPostCreated(activity: Activity, savedInstanceState: Bundle?) {
+                super.onActivityPostCreated(activity, savedInstanceState)
+                ALog.d("Lifecycle", "onActivityPostCreated: ${activity.javaClass.simpleName}")
+            }
+
             override fun onActivityStarted(activity: Activity) {
-                ALog.d("Lifecycle", "启动: ${activity.javaClass.simpleName}")
+                ALog.d("Lifecycle", "onActivityStarted: ${activity.javaClass.simpleName}")
             }
 
             override fun onActivityResumed(activity: Activity) {
-                ALog.d("Lifecycle", "恢复: ${activity.javaClass.simpleName}")
+                ALog.d("Lifecycle", "onActivityResumed: ${activity.javaClass.simpleName}")
             }
 
             override fun onActivityPaused(activity: Activity) {
-                ALog.d("Lifecycle", "暂停: ${activity.javaClass.simpleName}")
+                ALog.d("Lifecycle", "onActivityPaused: ${activity.javaClass.simpleName}")
             }
 
             override fun onActivityStopped(activity: Activity) {
-                ALog.d("Lifecycle", "停止: ${activity.javaClass.simpleName}")
+                ALog.d("Lifecycle", "onActivityStopped: ${activity.javaClass.simpleName}")
             }
 
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-                ALog.d("Lifecycle", "保存状态: ${activity.javaClass.simpleName}")
+                ALog.d("Lifecycle", "onActivitySaveInstanceState: ${activity.javaClass.simpleName}")
             }
 
             override fun onActivityDestroyed(activity: Activity) {
-                ALog.d("Lifecycle", "销毁: ${activity.javaClass.simpleName}")
+                ALog.d("Lifecycle", "onActivityDestroyed: ${activity.javaClass.simpleName}")
             }
         })
     }
