@@ -16,3 +16,5 @@ local.properties
 .settings/
 !gradle/wrapper/gradle-wrapper.jar
 .idea/misc.xml
+router/router_processor/bin
+

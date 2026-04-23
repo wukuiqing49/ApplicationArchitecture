@@ -38,7 +38,7 @@ abstract class BaseFullScreenActivity<VB : ViewBinding> : BaseActivity<VB>() {
 
     override fun initImmersionBar() {
         // 让 Window 扩展到系统边栏区域
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+
 
         val controller = WindowCompat.getInsetsController(window, window.decorView)
         controller.run {

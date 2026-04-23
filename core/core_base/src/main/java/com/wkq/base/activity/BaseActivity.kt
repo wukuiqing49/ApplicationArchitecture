@@ -53,7 +53,7 @@ abstract class BaseActivity<VB : ViewBinding> : PermissionsActivity() {
 
     protected open fun initImmersionBar() {
         // 强制 Window 延伸到状态栏和导航栏区域 (全屏沉浸)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+//        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         ImmersionBar.with(this)
             .transparentStatusBar() // 透明状态栏
@@ -66,32 +66,32 @@ abstract class BaseActivity<VB : ViewBinding> : PermissionsActivity() {
      * 自动从顶部增加 statusBarHeight 到 PaddingTop 中，保持 Toolbar 颜色延伸到状态栏。
      */
     protected open fun setViewBelowStatusBar(view: android.view.View) {
-        val originalPaddingTop = view.paddingTop
-        val lp = view.layoutParams
-        val originalHeight = lp.height
-
-       ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-            val statusBarHeight = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.statusBars()).top
-
-            // 1. 设置 PaddingTop 让内容下移
-            v.setPadding(
-                v.paddingLeft,
-                originalPaddingTop + statusBarHeight,
-                v.paddingRight,
-                v.paddingBottom
-            )
-
-            // 2. 如果 Toolbar 有固定高度，则将状态栏高度追加进去
-            if (originalHeight > 0) {
-                val layoutParams = v.layoutParams
-                layoutParams.height = originalHeight + statusBarHeight
-                v.layoutParams = layoutParams
-            }
-
-            insets
-        }
-
-        view.requestApplyInsets()
+//        val originalPaddingTop = view.paddingTop
+//        val lp = view.layoutParams
+//        val originalHeight = lp.height
+//
+//       ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+//            val statusBarHeight = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.statusBars()).top
+//
+//            // 1. 设置 PaddingTop 让内容下移
+//            v.setPadding(
+//                v.paddingLeft,
+//                originalPaddingTop + statusBarHeight,
+//                v.paddingRight,
+//                v.paddingBottom
+//            )
+//
+//            // 2. 如果 Toolbar 有固定高度，则将状态栏高度追加进去
+//            if (originalHeight > 0) {
+//                val layoutParams = v.layoutParams
+//                layoutParams.height = originalHeight + statusBarHeight
+//                v.layoutParams = layoutParams
+//            }
+//
+//            insets
+//        }
+//
+//        view.requestApplyInsets()
     }
 
    open fun setStatusBarDarkFont(): Boolean {

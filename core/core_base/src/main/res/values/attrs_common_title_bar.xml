@@ -10,7 +10,8 @@
             <enum name="bold" value="1"/>
             <enum name="italic" value="2"/>
         </attr>
-
+        <!-- 是否自动适配状态栏高度 -->
+        <attr name="titleBar_fitStatusBar" format="boolean" />
         <!-- 左侧区域 -->
         <attr name="titleBar_leftIcon" format="reference" />
         <attr name="titleBar_leftIconVisible" format="boolean" />

@@ -39,11 +39,39 @@ class CommonTitleBar @JvmOverloads constructor(
     // 鐐瑰嚮浜嬩欢鐩戝惉
     var onLeftClickListener: (() -> Unit)? = null
     var onRightClickListener: (() -> Unit)? = null
+    var fitStatusBar = true
 
+    private fun getStatusBarHeight(context: Context): Int {
+        val resId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+        return if (resId > 0) context.resources.getDimensionPixelSize(resId) else 0
+    }
     init {
         // 鍔犺浇甯冨眬
         LayoutInflater.from(context).inflate(R.layout.view_common_title_bar, this, true)
+        val initialLeft = paddingLeft
+        val initialTop = paddingTop
+        val initialRight = paddingRight
+        val initialBottom = paddingBottom
 
+        if (attrs != null) {
+            val ta = context.obtainStyledAttributes(attrs, R.styleable.CommonTitleBar)
+
+            fitStatusBar = ta.getBoolean(
+                R.styleable.CommonTitleBar_titleBar_fitStatusBar,
+                true
+            )
+
+            ta.recycle()
+        }
+
+        if (fitStatusBar) {
+            val top = getStatusBarHeight(context)
+            if (paddingTop != top) {
+                setPadding(initialLeft, top, initialRight, initialBottom)
+            }
+        } else {
+            setPadding(initialLeft, initialTop, initialRight, initialBottom)
+        }
         // 缁戝畾 ID
         llLeft = findViewById(R.id.ll_left_container)
         ivLeft = findViewById(R.id.iv_left_icon)

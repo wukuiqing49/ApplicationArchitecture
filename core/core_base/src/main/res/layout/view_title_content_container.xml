@@ -9,7 +9,7 @@
     <com.wkq.base.widget.CommonTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/color_title_bar_bg"
         app:titleBar_leftIconVisible="true" />
 
