@@ -48,9 +48,7 @@ object DownloadRetrofit {
             // 继承标准请求头
             .addInterceptor(NetManager.headerInterceptor)
             // 下载过程中仅保留请求头日志，避免控制台被大量字节数据刷新
-            .addInterceptor(LoggingInterceptor.create(config.isDebugLogsEnabled).apply {
-                level = if (config.isDebugLogsEnabled) okhttp3.logging.HttpLoggingInterceptor.Level.HEADERS else okhttp3.logging.HttpLoggingInterceptor.Level.NONE
-            })
+            .addInterceptor(LoggingInterceptor.create(config.isDebugLogsEnabled))
 
         // 配置 HTTPS
         val sslSocketFactory = HttpsUtils.createSSLSocketFactory()
