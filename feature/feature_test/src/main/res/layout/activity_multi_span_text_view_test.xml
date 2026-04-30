@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F7FB"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:text="MultiSpanTextView 测试页"
+            android:textColor="#202124"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="支持多个关键词分别着色、点击和下划线。"
+            android:textColor="#5F6368"
+            android:textSize="14sp" />
+
+        <com.wkq.base.widget.MultiSpanTextView
+            android:id="@+id/multi_span_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:lineSpacingExtra="6dp"
+            android:padding="16dp"
+            android:textColor="#202124"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_reset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="重置示例"
+                android:textAllCaps="false" />
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="1dp" />
+
+            <Button
+                android:id="@+id/btn_plain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="普通文本"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="点击上面的彩色词条，或者切到普通文本模式。"
+            android:textColor="#5F6368"
+            android:textSize="13sp" />
+    </LinearLayout>
+</ScrollView>
