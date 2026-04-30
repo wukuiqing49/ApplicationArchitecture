@@ -3,11 +3,9 @@ package com.wkq.base.activity
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.DrawableRes
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.wkq.base.databinding.ViewTitleContentContainerBinding
-import java.lang.reflect.ParameterizedType
+import com.wkq.base.reflect.resolveGenericClass
 
 /**
  * 带标题栏的基础 Activity
@@ -50,8 +48,7 @@ abstract class BaseTitleActivity<ContentVB : ViewBinding> : BaseActivity<ViewTit
         binding = ViewTitleContentContainerBinding.inflate(layoutInflater)
 
         // 2. 通过反射初始化子类指定的内容布局 ContentVB
-        val type = javaClass.genericSuperclass as ParameterizedType
-        val clazz = type.actualTypeArguments[0] as Class<ContentVB>
+        val clazz = resolveGenericClass<ContentVB>(this, 0)
         val method = clazz.getMethod("inflate", LayoutInflater::class.java)
         contentBinding = method.invoke(null, layoutInflater) as ContentVB
 
