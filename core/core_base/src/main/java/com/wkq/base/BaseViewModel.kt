@@ -1,5 +1,6 @@
 package com.wkq.base
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 /**
@@ -7,4 +8,5 @@ import androidx.lifecycle.ViewModel
  */
 abstract class BaseViewModel : ViewModel() {
     // 在此处添加公共逻辑（例如加载状态的 LiveData）
+    val errorMutableLiveData= MutableLiveData<String>()
 }

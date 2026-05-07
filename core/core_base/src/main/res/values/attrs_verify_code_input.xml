@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="VerifyCodeInputView">
+        <!-- 验证码位数 -->
+        <attr name="verifyCode_length" format="integer" />
+
+        <!-- 单个输入框尺寸 -->
+        <attr name="verifyCode_cellWidth" format="dimension" />
+        <attr name="verifyCode_cellHeight" format="dimension" />
+
+        <!-- 输入框之间的间距 -->
+        <attr name="verifyCode_cellSpacing" format="dimension" />
+
+        <!-- 输入框圆角 -->
+        <attr name="verifyCode_cornerRadius" format="dimension" />
+
+        <!-- 输入框边框粗细 -->
+        <attr name="verifyCode_borderWidth" format="dimension" />
+
+        <!-- 文字颜色 / 文字大小 -->
+        <attr name="verifyCode_textColor" format="color" />
+        <attr name="verifyCode_textSize" format="dimension" />
+
+        <!-- 默认态边框 / 输入态边框 / 已填充态边框 -->
+        <attr name="verifyCode_normalBorderColor" format="color" />
+        <attr name="verifyCode_focusedBorderColor" format="color" />
+        <attr name="verifyCode_filledBorderColor" format="color" />
+
+        <!-- 默认态背景 / 输入态背景 / 已填充态背景 -->
+        <attr name="verifyCode_normalBgColor" format="color" />
+        <attr name="verifyCode_focusedBgColor" format="color" />
+        <attr name="verifyCode_filledBgColor" format="color" />
+
+        <!-- 是否只允许数字 -->
+        <attr name="verifyCode_numericOnly" format="boolean" />
+    </declare-styleable>
+</resources>

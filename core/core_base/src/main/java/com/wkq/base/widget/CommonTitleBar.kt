@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.annotation.ColorInt
 import com.wkq.base.R
 
 
@@ -90,9 +91,9 @@ class CommonTitleBar @JvmOverloads constructor(
             // 1. 涓棿鏍囬
             val title = typedArray.getString(R.styleable.CommonTitleBar_titleBar_title)
             val titleColor = typedArray.getColor(R.styleable.CommonTitleBar_titleBar_titleColor, ContextCompat.getColor(context, R.color.color_title_bar_text))
-            val titleSize = typedArray.getDimensionPixelSize(R.styleable.CommonTitleBar_titleBar_titleSize, sp2px(18f))
+            val titleSize = typedArray.getDimensionPixelSize(R.styleable.CommonTitleBar_titleBar_titleSize, 18)
             val titleStyle = typedArray.getInt(R.styleable.CommonTitleBar_titleBar_titleStyle, 0)
-            
+
             setTitle(title)
             setTitleColor(titleColor)
             setTitleSize(titleSize)
@@ -132,6 +133,8 @@ class CommonTitleBar @JvmOverloads constructor(
         llRight.setOnClickListener { onRightClickListener?.invoke() }
     }
 
+
+
     // --- 涓棿鏍囬寮€鏀炬柟娉?---
     fun setTitle(title: String?) {
         tvCenter.text = title ?: ""
@@ -142,7 +145,11 @@ class CommonTitleBar @JvmOverloads constructor(
     }
 
     fun setTitleSize(sizePx: Int) {
-        tvCenter.setTextSize(TypedValue.COMPLEX_UNIT_PX, sizePx.toFloat())
+        tvCenter.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizePx.toFloat())
+    }
+
+    fun setTitleSizeSp(sizeSp: Float) {
+        tvCenter.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeSp)
     }
 
     fun setTitleStyle(style: Int) {
@@ -157,6 +164,11 @@ class CommonTitleBar @JvmOverloads constructor(
     fun setLeftIcon(resId: Int) {
         ivLeft.setImageResource(resId)
         setLeftIconVisible(true)
+    }
+
+    fun clearLeftIcon() {
+        ivLeft.setImageDrawable(null)
+        setLeftIconVisible(false)
     }
 
     fun setLeftIconVisible(visible: Boolean) {
@@ -180,10 +192,19 @@ class CommonTitleBar @JvmOverloads constructor(
         tvLeft.setTextSize(TypedValue.COMPLEX_UNIT_PX, sizePx.toFloat())
     }
 
+    fun setLeftTextSizeSp(sizeSp: Float) {
+        tvLeft.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeSp)
+    }
+
     // --- 鍙充晶寮€鏀炬柟娉?---
     fun setRightIcon(resId: Int) {
         ivRight.setImageResource(resId)
         setRightIconVisible(true)
+    }
+
+    fun clearRightIcon() {
+        ivRight.setImageDrawable(null)
+        setRightIconVisible(false)
     }
 
     fun setRightIconVisible(visible: Boolean) {
@@ -205,6 +226,10 @@ class CommonTitleBar @JvmOverloads constructor(
 
     fun setRightTextSize(sizePx: Int) {
         tvRight.setTextSize(TypedValue.COMPLEX_UNIT_PX, sizePx.toFloat())
+    }
+
+    fun setRightTextSizeSp(sizeSp: Float) {
+        tvRight.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeSp)
     }
 
     // DP/SP 杞?PX 宸ュ叿

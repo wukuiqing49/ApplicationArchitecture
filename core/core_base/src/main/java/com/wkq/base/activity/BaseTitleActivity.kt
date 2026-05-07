@@ -2,99 +2,219 @@ package com.wkq.base.activity
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.DrawableRes
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.viewbinding.ViewBinding
 import com.wkq.base.databinding.ViewTitleContentContainerBinding
-import com.wkq.base.reflect.resolveGenericClass
+import java.lang.reflect.ParameterizedType
 
-/**
- * 带标题栏的基础 Activity
- *
- * 使用方式：
- *  - 继承本类，声明 **内容区域的 ViewBinding** 和 **ViewModel** 两个泛型
- *  - 实现 [initView] 和 [initData]，通过 [contentBinding] 访问页面内容
- *  - 无需自己处理返回键、沉浸式状态栏、标题栏
- *
- * 常用 API：
- *  - [setPageTitle]      设置标题文字
- *  - [setRightText]      设置右侧文字按钮（含点击回调）
- *  - [setRightIcon]      设置右侧图标按钮（含点击回调）
- *  - [setLeftVisible]    控制左侧返回箭头的显示隐藏
- *
- * ```kotlin
- * class MyActivity : BaseTitleActivity<ActivityMyBinding, MyViewModel>() {
- *     override fun initView() {
- *         setPageTitle("我的页面")
- *         setRightText("完成") { viewModel.save() }
- *         contentBinding.tvHello.text = "Hello"
- *     }
- *     override fun initData() { viewModel.load() }
- * }
- * ```
- */
-/**
- * 带标题栏的基础 Activity (无 ViewModel)
- */
-abstract class BaseTitleActivity<ContentVB : ViewBinding> : BaseActivity<ViewTitleContentContainerBinding>() {
+abstract class BaseTitleActivity<ContentVB : ViewBinding> :
+    BaseActivity<ViewTitleContentContainerBinding>() {
 
-    /** 内容区域的 ViewBinding，供子类直接访问 */
+    protected enum class TitleContentLayoutMode {
+        VERTICAL,
+        OVERLAY
+    }
+
     protected lateinit var contentBinding: ContentVB
-
-    // ─── 重写 initViewBinding：固定注入容器布局 + 内容布局 ──────────────
 
     @Suppress("UNCHECKED_CAST")
     override fun initViewBinding() {
-        // 1. 手动初始化基类的容器布局，避免 super.initViewBinding() 的反射错位
         binding = ViewTitleContentContainerBinding.inflate(layoutInflater)
 
-        // 2. 通过反射初始化子类指定的内容布局 ContentVB
-        val clazz = resolveGenericClass<ContentVB>(this, 0)
+        val type = javaClass.genericSuperclass as ParameterizedType
+        val clazz = type.actualTypeArguments[0] as Class<ContentVB>
         val method = clazz.getMethod("inflate", LayoutInflater::class.java)
         contentBinding = method.invoke(null, layoutInflater) as ContentVB
 
-        // 3. 将内容布局添加到容器的 fl_content 中
         binding.flContent.addView(contentBinding.root)
     }
 
-    // ─── 沉浸式：自动让标题栏适配状态栏高度 ──────────────────────────────
+    protected fun setTitleContentLayoutMode(mode: TitleContentLayoutMode) {
+        val set = ConstraintSet()
+        set.clone(binding.root)
+
+        if (mode == TitleContentLayoutMode.OVERLAY) {
+            set.connect(
+                binding.flContent.id,
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP,
+                0
+            )
+        } else {
+            set.connect(
+                binding.flContent.id,
+                ConstraintSet.TOP,
+                binding.titleBar.id,
+                ConstraintSet.BOTTOM,
+                0
+            )
+        }
+
+        set.applyTo(binding.root)
+    }
+
+    protected fun setContentOverlapTitleBar(overlap: Boolean) {
+        setTitleContentLayoutMode(
+            if (overlap) TitleContentLayoutMode.OVERLAY else TitleContentLayoutMode.VERTICAL
+        )
+    }
+
+    /**
+     * 让内容区域位于 title_bar 下方，属于普通竖排布局。
+     */
+    protected fun setContentBelowTitleBar() {
+        setTitleContentLayoutMode(TitleContentLayoutMode.VERTICAL)
+    }
+
+    /**
+     * Keep the whole page full-screen and transparent, but push one child view below the title bar.
+     */
+    protected fun setViewBelowTitleBar(view: View, extraTopMarginPx: Int = 0) {
+        view.post {
+            val titleBarBottom = binding.titleBar.bottom + extraTopMarginPx
+            val params = view.layoutParams
+            when (params) {
+                is ViewGroup.MarginLayoutParams -> {
+                    if (params.topMargin != titleBarBottom) {
+                        params.topMargin = titleBarBottom
+                        view.layoutParams = params
+                    }
+                }
+                else -> {
+                    view.setPadding(
+                        view.paddingLeft,
+                        titleBarBottom,
+                        view.paddingRight,
+                        view.paddingBottom
+                    )
+                }
+            }
+        }
+    }
 
     override fun initImmersionBar() {
         super.initImmersionBar()
         setViewBelowStatusBar(binding.titleBar)
+        setTitleContentLayoutMode(TitleContentLayoutMode.VERTICAL)
     }
-
-    // ─── 默认左侧点击 = finish() ──────────────────────────────────────────
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         binding.titleBar.onLeftClickListener = { finish() }
     }
 
-    // ─── 公开 API ─────────────────────────────────────────────────────────
-
-    /** 设置顶部标题文字 */
     protected fun setPageTitle(title: String) {
         binding.titleBar.setTitle(title)
     }
 
-    /** 设置右侧文字按钮（可选点击回调） */
+    protected fun setPageTitleColor(color: Int) {
+        binding.titleBar.setTitleColor(color)
+    }
+
+    protected fun setPageTitleSize(sizePx: Int) {
+        binding.titleBar.setTitleSize(sizePx)
+    }
+
+    protected fun setPageTitleSizeSp(sizeSp: Float) {
+        binding.titleBar.setTitleSizeSp(sizeSp)
+    }
+
+    protected fun setPageTitle(
+        title: String,
+        color: Int? = null,
+        sizePx: Int? = null
+    ) {
+        binding.titleBar.setTitle(title)
+        color?.let { binding.titleBar.setTitleColor(it) }
+        sizePx?.let { binding.titleBar.setTitleSize(it) }
+    }
+
     protected fun setRightText(text: String, onClick: (() -> Unit)? = null) {
         binding.titleBar.setRightText(text)
         onClick?.let { binding.titleBar.onRightClickListener = it }
     }
 
-    /** 设置右侧图标按钮（可选点击回调） */
+    protected fun setRightTextColor(color: Int) {
+        binding.titleBar.setRightTextColor(color)
+    }
+
+    protected fun setRightTextSize(sizePx: Int) {
+        binding.titleBar.setRightTextSize(sizePx)
+    }
+
+    protected fun setRightTextSizeSp(sizeSp: Float) {
+        binding.titleBar.setRightTextSizeSp(sizeSp)
+    }
+
+    protected fun setRightText(
+        text: String,
+        color: Int? = null,
+        sizePx: Int? = null,
+        onClick: (() -> Unit)? = null
+    ) {
+        binding.titleBar.setRightText(text)
+        color?.let { binding.titleBar.setRightTextColor(it) }
+        sizePx?.let { binding.titleBar.setRightTextSize(it) }
+        onClick?.let { binding.titleBar.onRightClickListener = it }
+    }
+
     protected fun setRightIcon(@DrawableRes resId: Int, onClick: (() -> Unit)? = null) {
         binding.titleBar.setRightIcon(resId)
         onClick?.let { binding.titleBar.onRightClickListener = it }
     }
 
-    /** 控制左侧返回箭头显隐（默认显示） */
+    protected fun clearRightIcon() {
+        binding.titleBar.clearRightIcon()
+    }
+
+    protected fun setRightIconVisible(visible: Boolean) {
+        binding.titleBar.setRightIconVisible(visible)
+    }
+
+    protected fun setLeftText(text: String) {
+        binding.titleBar.setLeftText(text)
+    }
+
+    protected fun setLeftTextColor(color: Int) {
+        binding.titleBar.setLeftTextColor(color)
+    }
+
+    protected fun setLeftTextSize(sizePx: Int) {
+        binding.titleBar.setLeftTextSize(sizePx)
+    }
+
+    protected fun setLeftTextSizeSp(sizeSp: Float) {
+        binding.titleBar.setLeftTextSizeSp(sizeSp)
+    }
+
+    protected fun setLeftText(
+        text: String,
+        color: Int? = null,
+        sizePx: Int? = null,
+        onClick: (() -> Unit)? = null
+    ) {
+        binding.titleBar.setLeftText(text)
+        color?.let { binding.titleBar.setLeftTextColor(it) }
+        sizePx?.let { binding.titleBar.setLeftTextSize(it) }
+        onClick?.let { binding.titleBar.onLeftClickListener = it }
+    }
+
+    protected fun setLeftIcon(@DrawableRes resId: Int, onClick: (() -> Unit)? = null) {
+        binding.titleBar.setLeftIcon(resId)
+        onClick?.let { binding.titleBar.onLeftClickListener = it }
+    }
+
+    protected fun clearLeftIcon() {
+        binding.titleBar.clearLeftIcon()
+    }
+
     protected fun setLeftVisible(visible: Boolean) {
         binding.titleBar.setLeftIconVisible(visible)
     }
 
-    /** 自定义左侧点击行为（默认是 finish()） */
     protected fun setLeftClickListener(block: () -> Unit) {
         binding.titleBar.onLeftClickListener = block
     }
