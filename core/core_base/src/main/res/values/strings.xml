@@ -13,6 +13,7 @@
     <string name="partial_permission_denied">部分权限被拒绝: %1$s</string>
     
     <string name="base_empty_no_data">暂无数据</string>
+    <string name="hello_from_base">Hello from core_base resources!</string>
     <string name="base_dialog_common_title">title</string>
     <string name="base_dialog_common_content">content</string>
 </resources>

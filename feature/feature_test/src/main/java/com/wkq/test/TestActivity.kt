@@ -53,6 +53,20 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
             }
         }
 
+        binding.btnJsBridge.setOnClickListener {
+            Router.open("/common/webview", this) {
+                putExtra(
+                    "url",
+                    "file:///android_asset/test.html" +
+                            "?bridge=ThirdPlatformBridge" +
+                            "&method=invoke" +
+                            "&mode=api_params_callback"
+                )
+                putExtra("title", "JSBridge Test")
+                putExtra("open_js", true)
+            }
+        }
+
         binding.btnNetDynamic.setOnClickListener {
             val testService = Router.getService(ITestService::class)
             val helloMsg = testService?.sayHello("Antigravity") ?: "Service not found"

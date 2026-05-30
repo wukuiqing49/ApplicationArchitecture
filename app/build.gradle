@@ -1,23 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
+    id 'wkq.android.application'
 }
 
 android {
-    namespace = appConfig.appNamespace
-    compileSdk appConfig.compileSdk
-
-    defaultConfig {
-        applicationId = appConfig.appNamespace
-        minSdk appConfig.minSdk
-        targetSdk appConfig.targetSdk
-        versionCode appConfig.versionCode
-        versionName appConfig.versionName
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
     signingConfigs {
         release {
             storeFile = file('test.jks')
@@ -29,23 +14,11 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled = true
-            shrinkResources = true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig = signingConfigs.release
         }
         debug {
             signingConfig = signingConfigs.release
-
         }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-    buildFeatures {
-        viewBinding = true
-        buildConfig = true
     }
 
     applicationVariants.all { variant ->
@@ -55,71 +28,36 @@ android {
                 def buildType = variant.buildType.name
                 def versionName = variant.versionName
                 def time = new Date().format("yyyyMMdd_HHmm")
-                def fileName = appConfig.appNamespace+ "_${buildType}_v${versionName}_${time}.apk"
+                def fileName = appConfig.appNamespace + "_${buildType}_v${versionName}_${time}.apk"
                 outputFileName = fileName
             }
-        }
-    }
-
-    sourceSets {
-        main {
-            java.srcDirs += "$buildDir/generated/source/router"
         }
     }
 }
 
 dependencies {
-
-    implementation libs.androidx.core.ktx
-    implementation libs.androidx.appcompat
-    implementation libs.material
-    implementation libs.androidx.constraintlayout
-    testImplementation libs.junit
-    androidTestImplementation libs.androidx.junit
-    androidTestImplementation libs.androidx.espresso.core
-
-    implementation project(':core:core_base')
-    implementation project(':core:core_util')
-    implementation project(':core:core_ui')
-    implementation project(':core:core_network')
-    implementation project(':router:router_api')
-    implementation project(':core:core_user')
-    implementation project(':component:component_common')
-
-    // Auto-include all feature and component modules
-    rootProject.subprojects { proj ->
-        if (proj.path.startsWith(':feature:') || proj.path.startsWith(':component:')) {
-            implementation project(proj.path)
-        }
-    }
+    // 壳工程只显式装配启动链路需要的 feature/component。
+    implementation project(':component:component_web')
+    implementation project(':feature:feature_app')
+    implementation project(':feature:feature_test')
 }
 
-
-
 tasks.whenTaskAdded { task ->
-    // 匹配所有 merge<Flavor><BuildType>NativeLibs 任务
     if (task.name.matches(/merge.*NativeLibs/)) {
-        // 在“配置阶段”提前读取属性，避免在“执行阶段”（doFirst）调用 project 对象，
-        // 防止破坏 Gradle 8.0+ 的 Configuration Cache 特性。
         def shouldPrintSo = project.hasProperty("printSo")
-        
+
         task.doFirst {
-            // 通过附加参数 -PprintSo 来手动开启打印，避免每次编译都刷屏
             if (shouldPrintSo) {
                 println("------- [${task.name}] start scanning so files -------")
-
-                // 遍历所有输入文件
                 it.inputs.files.each { file ->
                     printSoFiles(file)
                 }
-
                 println("------- [${task.name}] end scanning so files -------")
             }
         }
     }
 }
 
-// 递归查找 .so 文件
 def printSoFiles(File file) {
     if (file == null || !file.exists()) return
 

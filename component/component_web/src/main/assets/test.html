@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>JSBridge Test</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 14px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        h3 {
+            margin: 0 0 12px;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 8px;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 90px;
+            font-family: monospace;
+        }
+
+        button {
+            border: none;
+            border-radius: 6px;
+            color: white;
+            background: #1677ff;
+        }
+
+        button:active {
+            background: #0958d9;
+        }
+
+        .box {
+            background: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .ok {
+            color: green;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+
+        pre {
+            margin: 0;
+            padding: 10px;
+            min-height: 120px;
+            background: #111;
+            color: #00ff66;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+
+<h3>JSBridge Test</h3>
+
+<div class="box">
+    <input
+            id="bridgeName"
+            value="ThirdPlatformBridge"
+            placeholder="桥对象名，例如 ThirdPlatformBridge"/>
+
+    <input
+            id="methodName"
+            value="invoke"
+            placeholder="方法名，例如 invoke"/>
+
+    <input
+            id="apiParam"
+            value=""
+            placeholder="第一个参数 api，例如 getUserInfo / login / recharge"/>
+
+    <textarea
+            id="paramsText"
+            placeholder="第二个参数 params，JSON 字符串">{}</textarea>
+
+    <button onclick="checkBridge()">检测桥</button>
+    <button onclick="callBridge()">调用桥</button>
+</div>
+
+<div class="box">
+    <div>检测结果：<span id="status">未检测</span></div>
+</div>
+
+<div class="box">
+    <div>回调结果：</div>
+    <pre id="result">暂无</pre>
+</div>
+
+<div class="box">
+    <div>日志：</div>
+    <pre id="log"></pre>
+</div>
+
+<script>
+    let timer = null;
+    let callbackName = "";
+
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    function log(msg) {
+        const text = "[" + new Date().toLocaleTimeString() + "] " + msg;
+        $("log").textContent += text + "\n";
+        $("log").scrollTop = $("log").scrollHeight;
+        console.log(text);
+    }
+
+    function setStatus(text, ok) {
+        $("status").textContent = text;
+        $("status").className = ok ? "ok" : "fail";
+    }
+
+    function getBridgeInfo() {
+        return {
+            bridgeName: $("bridgeName").value.trim(),
+            methodName: $("methodName").value.trim(),
+            apiParam: $("apiParam").value.trim(),
+            paramsText: $("paramsText").value.trim() || "{}"
+        };
+    }
+
+    function checkBridge() {
+        const info = getBridgeInfo();
+
+        if (!info.bridgeName) {
+            setStatus("桥对象名为空", false);
+            log("❌ 桥对象名为空");
+            return null;
+        }
+
+        if (!info.methodName) {
+            setStatus("方法名为空", false);
+            log("❌ 方法名为空");
+            return null;
+        }
+
+        const bridge = window[info.bridgeName];
+
+        if (!bridge) {
+            setStatus("桥对象不存在: window." + info.bridgeName, false);
+            log("❌ 桥对象不存在: window." + info.bridgeName);
+            return null;
+        }
+
+        const method = bridge[info.methodName];
+
+        if (typeof method !== "function") {
+            setStatus("桥方法不存在: " + info.methodName, false);
+            log("❌ 桥方法不存在: window." + info.bridgeName + "." + info.methodName);
+            return null;
+        }
+
+        setStatus("桥可用: window." + info.bridgeName + "." + info.methodName, true);
+        log("✅ 桥可用: window." + info.bridgeName + "." + info.methodName);
+
+        return {
+            bridge: bridge,
+            method: method,
+            info: info
+        };
+    }
+
+    function callBridge() {
+        const checked = checkBridge();
+
+        if (!checked) {
+            return;
+        }
+
+        const bridge = checked.bridge;
+        const method = checked.method;
+        const info = checked.info;
+
+        if (!info.apiParam) {
+            setStatus("第一个参数 api 不能为空", false);
+            log("❌ 第一个参数 api 不能为空");
+            return;
+        }
+
+        clearOldCallback();
+
+        callbackName = "bridge_callback_" + Date.now();
+
+        window[callbackName] = function (response) {
+            clearTimeout(timer);
+
+            log("✅ 收到回调: " + callbackName);
+
+            const resultText = formatResult(response);
+            $("result").textContent = resultText;
+            log("回调结果:");
+            log(resultText);
+
+            delete window[callbackName];
+            callbackName = "";
+        };
+
+        log("准备调用:");
+        log("桥对象 = window." + info.bridgeName);
+        log("方法名 = " + info.methodName);
+        log("第一个参数 api = " + info.apiParam);
+        log("第二个参数 params = " + info.paramsText);
+        log("第三个参数 callback = " + callbackName);
+
+        try {
+            /*
+             * 实际调用格式：
+             *
+             * window[bridgeName][methodName](
+             *     api,
+             *     params,
+             *     callback
+             * )
+             *
+             * 对应 Android：
+             *
+             * @JavascriptInterface
+             * fun invoke(api: String, params: String, callback: String)
+             */
+            method.call(
+                bridge,
+                info.apiParam,
+                info.paramsText,
+                callbackName
+            );
+
+            setStatus("调用已发出，等待回调", true);
+            $("result").textContent = "等待回调...";
+
+            timer = setTimeout(function () {
+                setStatus("调用已发出，但回调超时", false);
+
+                $("result").textContent =
+                    "超过 5000ms 未收到回调。\n\n" +
+                    "说明：\n" +
+                    "1. 桥对象和方法可能已经通了\n" +
+                    "2. Android 可能没有执行 JS 回调\n" +
+                    "3. callback 参数可能没有被 Android 正确使用\n" +
+                    "4. Android 内部方法可能异常\n" +
+                    "5. 当前接口本身可能没有回调";
+
+                log("❌ 回调超时");
+
+                if (window[callbackName]) {
+                    delete window[callbackName];
+                }
+
+                callbackName = "";
+            }, 5000);
+
+        } catch (e) {
+            setStatus("调用异常: " + e.message, false);
+            $("result").textContent = e.stack || e.message;
+            log("❌ 调用异常: " + e.message);
+
+            if (window[callbackName]) {
+                delete window[callbackName];
+            }
+
+            callbackName = "";
+        }
+    }
+
+    function clearOldCallback() {
+        if (timer) {
+            clearTimeout(timer);
+            timer = null;
+        }
+
+        if (callbackName && window[callbackName]) {
+            delete window[callbackName];
+        }
+
+        callbackName = "";
+    }
+
+    function formatResult(response) {
+        try {
+            if (typeof response === "string") {
+                try {
+                    return JSON.stringify(JSON.parse(response), null, 2);
+                } catch (e) {
+                    return response;
+                }
+            }
+
+            return JSON.stringify(response, null, 2);
+        } catch (e) {
+            return String(response);
+        }
+    }
+
+    window.onload = function () {
+        log("页面加载完成");
+
+        setTimeout(function () {
+            checkBridge();
+        }, 300);
+    };
+</script>
+
+</body>
+</html>

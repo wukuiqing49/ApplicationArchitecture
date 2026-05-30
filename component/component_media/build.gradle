@@ -1,0 +1,13 @@
+plugins {
+    id 'wkq.android.component'
+}
+
+android {
+    namespace = 'com.wkq.component.media'
+}
+
+dependencies {
+    implementation libs.androidx.activity.ktx
+    implementation libs.androidx.fragment.ktx
+    implementation project(':core:core_util')
+}

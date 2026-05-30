@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-
 }
 
 android {
@@ -10,7 +9,6 @@ android {
 
     defaultConfig {
         minSdk appConfig.minSdk
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -25,9 +23,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 kotlin {
@@ -38,24 +33,12 @@ kotlin {
 }
 
 dependencies {
-    implementation( libs.androidx.appcompat)
-    // toast
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.fragment.ktx
+
+    // Toast 和纯工具能力保留在 core_util，图片、相册、存储已拆到独立模块。
     api libs.toasty
-    //sp存储
-    api libs.mmkv
-    // 图片加载库
-    api libs.coil
-    api libs.coil3.coil.gif
-    // 如果需要 OkHttp 网络支持：
-    implementation (libs.coil.network.okhttp)
-    // 图片压缩库
-    implementation(libs.luban)
-
-
-    // 工具类库
     api(libs.blankj.utilcode) {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-android-extensions-runtime'
     }
-
-
 }

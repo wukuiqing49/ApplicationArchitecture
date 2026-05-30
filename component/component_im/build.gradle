@@ -1,0 +1,12 @@
+plugins {
+    id 'wkq.android.component'
+}
+
+android {
+    namespace = 'com.wkq.component.im'
+}
+
+dependencies {
+    implementation project(':core:core_network')
+    implementation project(':core:core_user')
+}

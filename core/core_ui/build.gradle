@@ -39,6 +39,7 @@ dependencies {
     implementation( libs.androidx.core.ktx)
     implementation( libs.androidx.appcompat)
     implementation( libs.material)
+    implementation project(':core:core_storage')
     api libs.magicindicator
     api(libs.xpopup) {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-android-extensions-runtime'

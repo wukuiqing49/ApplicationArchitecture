@@ -1,8 +1,5 @@
 package com.wkq.test.router
 
-import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.wkq.base.activity.BaseActivity
 import com.wkq.net.config.NetConfig
@@ -13,7 +10,6 @@ import com.wkq.net.core.onError
 import com.wkq.net.core.onSuccess
 import com.wkq.net.interceptor.HeaderInterceptor
 import com.wkq.test.databinding.ActivityNetDemoBinding
-import com.wkq.util.showToast
 
 
 import kotlinx.coroutines.launch

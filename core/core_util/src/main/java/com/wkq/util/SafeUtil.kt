@@ -3,22 +3,22 @@ package com.wkq.util
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.graphics.Color
 import android.view.View
+import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
-
+import androidx.core.content.ContextCompat
 import es.dmoral.toasty.Toasty
-import kotlin.let
-import kotlin.text.isNullOrEmpty
 
 /**
- * @author yyf
- *
+ * 安全工具扩展。
  */
 fun Context.showToast(msg: String?) {
     if (this.isFinishing()) return
     if (!msg.isNullOrEmpty()) {
         Toasty.Config.getInstance()
-            .allowQueue(false) // 可选（阻止多个吐司排队显示）
+            .allowQueue(false)
             .apply()
         Toasty.normal(this, msg).show()
     }
@@ -29,7 +29,7 @@ fun Fragment.showToast(msg: String?) {
     context?.let {
         if (!msg.isNullOrEmpty()) {
             Toasty.Config.getInstance()
-                .allowQueue(false) // 可选（阻止多个吐司排队显示）
+                .allowQueue(false)
                 .apply()
             Toasty.normal(it, msg).show()
         }
@@ -41,45 +41,150 @@ fun View.showToast(msg: String?) {
     context?.let {
         if (!msg.isNullOrEmpty()) {
             Toasty.Config.getInstance()
-                .allowQueue(false) // 可选（阻止多个吐司排队显示）
+                .allowQueue(false)
                 .apply()
             Toasty.normal(it, msg).show()
         }
     }
 }
 
-
-
 /**
- * 安全判断 Context 关联的 Activity 是否处于无效状态（已销毁/即将销毁）
- * 同时处理 Context 为 null 或非 Activity 的情况
- * @return true：上下文无效（null/非Activity/Activity已销毁）；false：上下文有效（Activity正常存活）
+ * 安全判断 Context 关联的 Activity 是否处于无效状态。
  */
 fun Context?.isFinishing(): Boolean {
-    // 1. 处理 Context 为 null 的情况
     if (this == null) {
         return true
     }
 
-    // 2. 从 Context 中获取最底层的 Activity（处理 ContextWrapper 包装的情况）
-    val activity = this.unwrapActivity() ?: return true  // 非 Activity 上下文视为无效（如 Service/Application）
-
-    // 3. 检查 Activity 是否处于销毁状态
+    val activity = this.unwrapActivity() ?: return true
     return activity.isFinishing || activity.isDestroyed
 }
 
 /**
- * 从 Context 中解析出底层的 Activity（处理 ContextWrapper 嵌套包装的情况）
- * @return 解析到的 Activity，若无法解析（非 Activity 类型）则返回 null
+ * 从 Context 中解析出底层的 Activity。
  */
 private fun Context.unwrapActivity(): Activity? {
-    var context = this
-    // 循环解开 ContextWrapper 包装，直到找到 Activity 或无法继续解开
-    while (context is ContextWrapper) {
-        if (context is Activity) {
-            return context
+    var current = this
+    while (current is ContextWrapper) {
+        if (current is Activity) {
+            return current
         }
-        context = context.baseContext
+        current = current.baseContext
     }
-    return null  // 非 Activity 类型的 Context（如 Application/Service）
+    return null
+}
+
+/**
+ * 安全获取字符串资源，支持格式化参数，失败返回默认值。
+ */
+fun Context?.safeString(resId: Int, vararg formatArgs: Any, default: String = ""): String {
+    if (this == null || resId == 0) return default
+    return try {
+        if (formatArgs.isEmpty()) {
+            getString(resId)
+        } else {
+            getString(resId, *formatArgs)
+        }
+    } catch (_: Exception) {
+        default
+    }
+}
+
+/**
+ * 安全获取 Fragment 的字符串资源，失败返回默认值。
+ */
+fun Fragment?.safeString(resId: Int, vararg formatArgs: Any, default: String = ""): String {
+    return this?.context.safeString(resId, *formatArgs, default = default)
+}
+
+/**
+ * 安全获取 View 的字符串资源，失败返回默认值。
+ */
+fun View?.safeString(resId: Int, vararg formatArgs: Any, default: String = ""): String {
+    return this?.context.safeString(resId, *formatArgs, default = default)
+}
+
+/**
+ * 安全获取颜色资源，失败返回默认颜色。
+ */
+fun Context?.safeColor(@ColorRes resIdColor: Int, defaultColor: Int = Color.TRANSPARENT): Int {
+    if (this == null || resIdColor == 0) return defaultColor
+    return try {
+        ContextCompat.getColor(this, resIdColor)
+    } catch (_: Exception) {
+        defaultColor
+    }
+}
+
+/**
+ * 安全获取 Fragment 的颜色资源，失败返回默认颜色。
+ */
+fun Fragment?.safeColor(
+    @ColorRes resIdColor: Int,
+    defaultColor: Int = Color.TRANSPARENT
+): Int {
+    return this?.context.safeColor(resIdColor, defaultColor) ?: defaultColor
+}
+
+/**
+ * 安全获取 View 的颜色资源，失败返回默认颜色。
+ */
+fun View?.safeColor(
+    @ColorRes resIdColor: Int,
+    defaultColor: Int = Color.TRANSPARENT
+): Int {
+    return this?.context.safeColor(resIdColor, defaultColor) ?: defaultColor
+}
+/**
+ * 处理误触
+ */
+fun View.setSafeClickListener(interval: Long = 500L, action: (View) -> Unit) {
+    var lastClickTime = 0L
+    setOnClickListener {
+        val now = System.currentTimeMillis()
+        if (now - lastClickTime > interval) {
+            lastClickTime = now
+            action(it)
+        }
+    }
+}
+
+
+fun  TextView.textSafe(text: String?) {
+    text?.let {
+        this.text = it
+    }
+}
+
+/**
+ * 安全转换为 Int，支持默认值、范围限制、异常打印
+ */
+fun String?.toSafeInt(
+    default: Int = 0,
+    min: Int? = null,
+    max: Int? = null,
+    logError: Boolean = false
+): Int {
+    return try {
+        val value = this?.toIntOrNull() ?: return default
+        if ((min != null && value < min) || (max != null && value > max)) default else value
+    } catch (e: Exception) {
+        if (logError) e.printStackTrace()
+        default
+    }
+}
+
+fun String?.toSafeLong(
+    default: Long = 0L,
+    min: Long? = null,
+    max: Long? = null,
+    logError: Boolean = false
+): Long {
+    return try {
+        val value = this?.toDoubleOrNull()?.toLong() ?: default ?: return default
+        if ((min != null && value < min) || (max != null && value > max)) default else value
+    } catch (e: Exception) {
+        if (logError) e.printStackTrace()
+        default
+    }
 }
