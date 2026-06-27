@@ -53,7 +53,8 @@ mindmap
 - **:app**: 组合所有业务模块，负责 Application 的初始化、全局配置及打包配置。
 
 ### 🛰️ 核心基础层 (Core Layer)
-- **:core:core_base**: 提供 MVVM 基础类、标题页、列表页、弹框、权限、Insets、通用 View 等基础能力。使用说明见 [core_base 使用说明](core_base_usage.md)。
+- **:core:core_base**: 提供 MVVM 基础类、标题页、列表页、弹框、权限、Insets、通用 View 等基础能力。使用说明见 [core_base 使用说明](../core/core_base/docs/core_base_usage.md)。
+  - 网络版本发布流程见 [core_base 网络版本发布手册](../core/core_base/docs/core_base_publish.md)。
 - **:core:core_network**: 深度封装 Retrofit 3。主要特性：
     - **协程化 API**: 通过 `awaitResult()` 实现线性代码书写。
     - **全局拦截**: `GlobalNetHandler` 统一处理业务 Code（如 Token 失效）。

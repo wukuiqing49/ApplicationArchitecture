@@ -42,7 +42,7 @@ implementation project(':core:core_base')
 详细发布和引用方式见：
 
 ```text
-docs/core_base_publish.md
+core/core_base/docs/core_base_publish.md
 ```
 
 ## 基类选择
