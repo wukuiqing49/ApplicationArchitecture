@@ -1,6 +1,4 @@
 pluginManagement {
-    includeBuild("build-logic")
-
     repositories {
         maven { url = "https://jitpack.io" }
         google()
@@ -26,13 +24,19 @@ include ':core:core_base'
 include ':core:core_network'
 include ':core:core_ui'
 include ':core:core_util'
+include ':core:core_camera'
 include ':core:core_storage'
-include ':core:core_data'
+include ':core:core_exif'
+include ':core:core_google'
+include ':core:core_location'
 include ':core:core_user'
 include ':core:core_media'
+include ':core:core_pdf'
+include ':core:core_report'
 include ':core:core_router_annotation'
 include ':core:core_router_api'
 include ':core:core_router_processor'
+include ':core:core_upload'
 
 // 可复用业务组件层
 include ':component:component_web'

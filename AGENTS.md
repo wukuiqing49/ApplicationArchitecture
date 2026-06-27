@@ -62,6 +62,22 @@
 - 不要用硬编码去控制状态栏高度。
 - 修改背景时注意：`setBackgroundColor()` 可能会覆盖 shape drawable。
 
+## UI 基础能力约定
+
+- Tab + 列表/分页类页面优先使用 `MagicIndicator + ViewPager2 + Fragment` 组合实现，不要在业务页面重复手写一套联动逻辑。
+- `MagicIndicator + ViewPager2` 的联动逻辑优先沉到 `core_ui`；业务页面只负责提供标题、Fragment 和样式配置。
+- `ViewPager2 + Fragment` 优先使用 `BaseFragmentStateAdapter` 或后续统一封装的 Tab Adapter，不要在业务页面重复写匿名 `FragmentStateAdapter`。
+- 圆形、圆角图片统一使用 Material `ShapeableImageView`，优先复用 `core_ui` 中的 `ShapeableImageView_R5/R10/R15/R20/Circle` 等样式，不要用 Bitmap 裁剪或自定义 ImageView 重复实现。
+- 隐藏滑动条/滚动条这类视觉行为必须走统一工具或统一控件封装，避免在页面里到处散写 `isVerticalScrollBarEnabled = false`、`isHorizontalScrollBarEnabled = false`、`overScrollMode = never` 等临时代码。
+- RecyclerView 默认应隐藏滚动条并按需关闭边缘回弹效果，但不能禁止内容滑动，也不能影响 Adapter 数据刷新和 Item 点击。
+- ScrollView / NestedScrollView 默认应隐藏滚动条并按需关闭边缘回弹效果，不能破坏子 View 点击、输入框聚焦和无障碍事件。
+- WebView 默认应隐藏滚动条并按需关闭边缘回弹效果，相关封装应放在 `component_web` 或公共工具中，不能破坏 WebView 生命周期、文件选择、JSBridge 和页面销毁流程。
+- ViewPager2 / 老 ViewPager 默认应隐藏滚动条/滑动指示器；只有业务明确要求禁止用户切页时，ViewPager2 才使用 `isUserInputEnabled = false`，不要把“隐藏滑动条”误实现成“禁止滑动”。
+- 隐藏滚动条是默认视觉规范；长文阅读、PDF、Web 内容页等确实需要滚动位置提示的场景，可以按业务保留滚动条。
+- 文档中提到的统一封装如果当前项目尚未实现，不要在业务页面假装调用不存在的 API；应先把通用能力沉到合适模块并增加 demo，再在业务页面使用。
+- `core_base` 负责 Activity、Fragment、Adapter、Insets、权限、通用弹框、空布局等基础结构；`core_ui` 负责 MagicIndicator、ShapeableImageView 样式、滑动控制工具、自定义 View 和纯 UI helper。
+- `component_web` 负责 WebView 生命周期、文件选择、JSBridge、安全策略和 WebView 默认 UI 行为；`feature_test` 只放测试入口和 demo，不承载可复用基础封装。
+
 ## Gradle 规范
 
 - 不要直接在 `build.gradle.kts` 里写死版本号。

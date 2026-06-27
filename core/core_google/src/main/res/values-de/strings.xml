@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">Gefällt Ihnen %1$s?</string>
+    <string name="rate_dialog_default_desc">Tippen Sie auf einen Stern, um im Store zu bewerten, oder senden Sie uns Ihre Meinung.</string>
+    <string name="rate_dialog_desc_good">Das freut uns sehr! Bitte hinterlassen Sie eine 5-Sterne-Bewertung im Store, um die Entwicklung zu unterstützen.</string>
+    <string name="rate_dialog_desc_bad">Es tut uns leid, dass die Erfahrung nicht gut war. Teilen Sie uns Ihre Vorschläge mit, damit wir uns verbessern können.</string>
+    <string name="rate_dialog_btn_cancel">Später</string>
+    <string name="rate_dialog_btn_action_default">Bewerten</string>
+    <string name="rate_dialog_btn_action_good">Im Store bewerten</string>
+    <string name="rate_dialog_btn_action_bad">Feedback senden</string>
+    <string name="rate_star_header_desc">Bewertungsstern-Symbol</string>
+    <string name="rate_star_1_desc">1 Stern</string>
+    <string name="rate_star_2_desc">2 Sterne</string>
+    <string name="rate_star_3_desc">3 Sterne</string>
+    <string name="rate_star_4_desc">4 Sterne</string>
+    <string name="rate_star_5_desc">5 Sterne</string>
+    
+    <string name="rate_feedback_email_subject">Feedback zu %1$s (Android)</string>
+    <string name="rate_feedback_email_body">Hallo, hier ist mein Feedback zu %1$s:\n\n</string>
+    <string name="rate_feedback_no_email_client">Kein E-Mail-Client installiert. Bitte senden Sie Feedback an %1$s.</string>
+    <string name="rate_feedback_email_empty">Feedback-E-Mail ist nicht konfiguriert.</string>
+    <string name="rate_feedback_store_failed">Der App Store konnte nicht geöffnet werden.</string>
+
+    <string name="google_billing_status_active">Abonnement aktiv</string>
+    <string name="google_billing_status_lifetime">Lifetime-Zugriff aktiv</string>
+    <string name="google_billing_status_inactive">Kostenloser Tarif</string>
+    <string name="google_billing_status_free_desc">Es wurde keine aktive kostenpflichtige Berechtigung gefunden.</string>
+    <string name="google_billing_status_unknown">Kaufstatus kann nicht abgefragt werden.</string>
+    <string name="google_billing_products_title">Verfügbare Tarife</string>
+    <string name="google_billing_products_desc">Wählen Sie einen Tarif, um fortzufahren.</string>
+    <string name="google_billing_empty">Keine Abrechnungstarife konfiguriert.</string>
+    <string name="google_billing_restore">Kaeufe wiederherstellen</string>
+    <string name="google_billing_restore_success">Kaufstatus wurde aktualisiert.</string>
+    <string name="google_billing_redeem_code">Code einloesen</string>
+    <string name="google_billing_redeem_refresh_hint">Code in Google Play einloesen und dann hier den Kaufstatus aktualisieren.</string>
+    <string name="google_billing_redeem_open_failed">Google Play Einloeseseite konnte nicht geoeffnet werden.</string>
+    <string name="google_billing_redeem_page_title">Google Play Code einloesen</string>
+    <string name="google_billing_redeem_page_desc">Gib einen Aktionscode ein oder oeffne Google Play direkt. Die endgueltige Einloesung erfolgt in Google Play.</string>
+    <string name="google_billing_redeem_code_hint">Aktionscode</string>
+    <string name="google_billing_redeem_open_google_play">Google Play oeffnen</string>
+    <string name="google_billing_redeem_refresh_status">Kaufstatus aktualisieren</string>
+    <string name="google_billing_redeem_page_note">Nach dem Einloesen zu SiteReport zurueckkehren und den Kaufstatus aktualisieren. Gueltige Codes koennen ein kostenloses In-App-Produkt oder eine Abo-Testphase aus der Google Play Console freischalten.</string>
+    <string name="google_billing_purchase">Kaufen</string>
+    <string name="google_billing_purchase_success">Kauf erfolgreich abgeschlossen.</string>
+    <string name="google_billing_purchase_canceled">Kauf abgebrochen.</string>
+    <string name="google_billing_purchase_failed">Kauf fehlgeschlagen.</string>
+    <string name="google_billing_plan_unavailable">Nicht verfügbar</string>
+    <string name="google_billing_load_failed">Abrechnungsprodukte konnten nicht geladen werden.</string>
+</resources>

@@ -1,18 +1,36 @@
 <resources>
-    <string name="string_cancel" translatable="false">取消</string>
-    <string name="string_sure">Yes</string>
-    <string name="permission_request_title">权限申请</string>
-    <string name="permission_request_setting_title">权限申请</string>
-    <string name="permission_permanently_denied">以下权限被永久拒绝，是否前往设置页面进行授权？</string>
-    <string name="go_to_settings">前往设置</string>
-    <string name="cancel">取消</string>
-    <string name="permissions_granted_setting">请前往系统设置开启应用通知</string>
-    <string name="permissions_granted">权限已在设置中开启</string>
-    <string name="permissions_not_granted">权限仍未全部开启，请再次检查设置</string>
-    <string name="partial_permission_denied">部分权限被拒绝: %1$s</string>
+    <string name="string_cancel">Cancel</string>
+    <string name="string_sure">OK</string>
+    <string name="base_cancel">Cancel</string>
+    <string name="base_confirm">OK</string>
+    <string name="base_loading">Loading...</string>
+    <string name="permission_request_title">Permission request</string>
+    <string name="permission_request_setting_title">Permission request</string>
+    <string name="permission_permanently_denied">The following permissions were permanently denied. Open Settings to grant them?</string>
+    <string name="go_to_settings">Open settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="permissions_granted_setting">Please open system settings and enable app notifications</string>
+    <string name="permissions_granted">Permissions have been enabled in Settings</string>
+    <string name="permissions_not_granted">Some permissions are still disabled. Please review Settings again</string>
+    <string name="partial_permission_denied">Partially denied permissions: %1$s</string>
 
-    <string name="base_empty_no_data">暂无数据</string>
-    <string name="base_dialog_common_title">title</string>
-    <string name="base_dialog_common_content">content</string>
+    <string name="base_empty_no_data">No data</string>
+    <string name="base_dialog_common_title">Notice</string>
+    <string name="base_dialog_common_content">Content</string>
+    <string name="srl_header_failed">Refresh failed</string>
+    <string name="srl_header_finish">Refresh complete</string>
+    <string name="srl_header_loading">Waiting for loading...</string>
+    <string name="srl_header_pulling">Pull down to refresh</string>
+    <string name="srl_header_refreshing">Refreshing...</string>
+    <string name="srl_header_release">Release to refresh</string>
+    <string name="srl_header_secondary">Release to second floor</string>
+    <string name="srl_header_update">Last update M-d HH:mm</string>
+    <string name="srl_footer_failed">Load failed</string>
+    <string name="srl_footer_finish">Load complete</string>
+    <string name="srl_footer_loading">Loading...</string>
+    <string name="srl_footer_nothing">No more data</string>
+    <string name="srl_footer_pulling">Pull up to load more</string>
+    <string name="srl_footer_refreshing">Waiting for refresh...</string>
+    <string name="srl_footer_release">Release to load</string>
 
 </resources>

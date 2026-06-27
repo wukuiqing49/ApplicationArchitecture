@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="test_chip_height">32dp</dimen>
+    <dimen name="test_chip_min_width">56dp</dimen>
+    <dimen name="test_chip_horizontal_padding">14dp</dimen>
+    <dimen name="test_chip_spacing">8dp</dimen>
+</resources>

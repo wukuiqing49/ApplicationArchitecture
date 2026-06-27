@@ -1,4 +1,14 @@
 <resources>
     <!-- 基础主题，抽取自 feature_app 以解决组件库依赖循环问题 -->
-    <style name="Theme.ApplicationArchitecture" parent="Theme.AppCompat.DayNight.NoActionBar" />
+    <style name="Theme.ApplicationArchitecture" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="buttonStyle">@style/Widget.ApplicationArchitecture.Button</item>
+    </style>
+
+    <style name="Widget.ApplicationArchitecture.Button" parent="Widget.AppCompat.Button">
+        <item name="android:elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:translationZ">0dp</item>
+        <item name="elevation">0dp</item>
+        <item name="stateListAnimator">@null</item>
+    </style>
 </resources>

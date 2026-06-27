@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">Вам нравится %1$s?</string>
+    <string name="rate_dialog_default_desc">Выберите звезды, чтобы оценить приложение в магазине, или отправьте нам отзыв.</string>
+    <string name="rate_dialog_desc_good">Рады это слышать! Поставьте нам 5 звезд в магазине, чтобы поддержать разработку.</string>
+    <string name="rate_dialog_desc_bad">Нам жаль, что опыт оказался неудачным. Поделитесь предложениями, чтобы мы могли стать лучше.</string>
+    <string name="rate_dialog_btn_cancel">Позже</string>
+    <string name="rate_dialog_btn_action_default">Оценить</string>
+    <string name="rate_dialog_btn_action_good">Оценить в магазине</string>
+    <string name="rate_dialog_btn_action_bad">Отправить отзыв</string>
+
+    <string name="rate_feedback_email_subject">Отзыв о %1$s (Android)</string>
+    <string name="rate_feedback_email_body">Здравствуйте, вот мой отзыв о %1$s:\n\n</string>
+    <string name="rate_feedback_no_email_client">Почтовый клиент не установлен. Отправьте отзыв на %1$s.</string>
+    <string name="rate_feedback_email_empty">Адрес для обратной связи не настроен.</string>
+    <string name="rate_feedback_store_failed">Не удалось открыть магазин приложений.</string>
+    <string name="rate_star_header_desc">Значок звезды оценки</string>
+    <string name="rate_star_1_desc">1 звезда</string>
+    <string name="rate_star_2_desc">2 звезды</string>
+    <string name="rate_star_3_desc">3 звезды</string>
+    <string name="rate_star_4_desc">4 звезды</string>
+    <string name="rate_star_5_desc">5 звезд</string>
+    <string name="google_billing_status_active">Подписка активна</string>
+    <string name="google_billing_status_lifetime">Пожизненный доступ активен</string>
+    <string name="google_billing_status_inactive">Бесплатный план</string>
+    <string name="google_billing_status_free_desc">Активные платные права не найдены.</string>
+    <string name="google_billing_status_unknown">Не удалось получить статус покупки.</string>
+    <string name="google_billing_products_title">Доступные планы</string>
+    <string name="google_billing_products_desc">Выберите план, чтобы продолжить.</string>
+    <string name="google_billing_empty">Платежные планы не настроены.</string>
+    <string name="google_billing_restore">Восстановить покупки</string>
+    <string name="google_billing_restore_success">Статус покупки обновлен.</string>
+    <string name="google_billing_purchase">Купить</string>
+    <string name="google_billing_purchase_success">Покупка успешно завершена.</string>
+    <string name="google_billing_purchase_canceled">Покупка отменена.</string>
+    <string name="google_billing_purchase_failed">Не удалось выполнить покупку.</string>
+    <string name="google_billing_plan_unavailable">Недоступно</string>
+    <string name="google_billing_load_failed">Не удалось загрузить продукты для оплаты.</string>
+</resources>

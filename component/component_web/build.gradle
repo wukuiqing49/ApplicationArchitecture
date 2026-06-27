@@ -1,20 +1,52 @@
 plugins {
-    id 'wkq.android.component'
-    id 'wkq.router'
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
 }
 
+ext.routerModuleName = 'ComponentWeb'
+apply from: rootProject.file('gradle/router-module.gradle')
+
 android {
-    namespace ='com.wkq.common'
+    namespace = 'com.wkq.common'
+    compileSdk appConfig.compileSdk
+
+    defaultConfig {
+        minSdk appConfig.minSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = appConfig.jvmTarget
+    }
 }
 
 dependencies {
-    implementation( libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.xpopup)
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.xpopup
 
     implementation project(':core:core_base')
     implementation project(':core:core_user')
     implementation project(':core:core_util')
     implementation project(':component:component_media')
-
 }

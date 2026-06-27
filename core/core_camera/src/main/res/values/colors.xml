@@ -1,0 +1,7 @@
+<resources>
+    <color name="camera_background">#050505</color>
+    <color name="camera_text_primary">#FFFFFF</color>
+    <color name="camera_text_secondary">#D9FFFFFF</color>
+    <color name="camera_capture_button_enabled">#FFF2F2F2</color>
+    <color name="camera_capture_button_disabled">#66F2F2F2</color>
+</resources>

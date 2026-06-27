@@ -1,8 +1,24 @@
 plugins {
-    id 'wkq.android.application'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
+    namespace = appConfig.appNamespace
+    compileSdk appConfig.compileSdk
+    def enableReleaseMinify = providers.gradleProperty("enableReleaseMinify")
+            .map { it.toBoolean() }
+            .getOrElse(false)
+
+    defaultConfig {
+        applicationId appConfig.appNamespace
+        minSdk appConfig.minSdk
+        targetSdk appConfig.targetSdk
+        versionCode appConfig.versionCode
+        versionName appConfig.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
     signingConfigs {
         release {
             storeFile = file('test.jks')
@@ -15,10 +31,23 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.release
+            minifyEnabled enableReleaseMinify
+            shrinkResources enableReleaseMinify
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             signingConfig = signingConfigs.release
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
     }
 
     applicationVariants.all { variant ->
@@ -35,11 +64,34 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget = appConfig.jvmTarget
+    }
+}
+
 dependencies {
-    // 壳工程只显式装配启动链路需要的 feature/component。
     implementation project(':component:component_web')
     implementation project(':feature:feature_app')
     implementation project(':feature:feature_test')
+
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.constraintlayout
+
+    implementation project(':core:core_base')
+    implementation project(':core:core_util')
+    implementation project(':core:core_storage')
+    implementation project(':core:core_media')
+    implementation project(':core:core_ui')
+    implementation project(':core:core_network')
+    implementation project(':core:core_router_api')
+    implementation project(':core:core_user')
+
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
 }
 
 tasks.whenTaskAdded { task ->

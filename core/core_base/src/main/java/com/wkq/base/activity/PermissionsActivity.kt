@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.lxj.xpopup.XPopup
 import com.wkq.base.R
-import com.wkq.base.util.pop.CommonPopupListener
-import com.wkq.base.util.pop.PermissionsPopupView
+import com.wkq.base.dialog.CommonPopupListener
+import com.wkq.base.dialog.PermissionsPopupView
 import es.dmoral.toasty.Toasty
 
 
@@ -73,7 +73,10 @@ open class PermissionsActivity : AppCompatActivity() {
                     )
             } else {
                 // 部分权限被拒绝，给个提示
-                Toasty.normal(this, getString(R.string.partial_permission_denied)).show()
+                Toasty.normal(
+                    this,
+                    getString(R.string.partial_permission_denied, deniedPermissions.joinToString())
+                ).show()
             }
         }
     }

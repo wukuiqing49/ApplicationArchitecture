@@ -1,13 +1,17 @@
 package com.wkq.base.activity
 
+import android.content.res.Configuration
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
-import com.gyf.immersionbar.ImmersionBar
+import com.wkq.base.insets.SystemBarInsets
 import com.wkq.base.reflect.resolveGenericClass
 
 /**
- * 基础 Activity，集成权限管理、ViewBinding 和沉浸式状态栏
+ * 基础 Activity，集成权限处理、ViewBinding 和系统栏适配。
  */
 abstract class BaseActivity<VB : ViewBinding> : PermissionsActivity() {
 
@@ -34,21 +38,44 @@ abstract class BaseActivity<VB : ViewBinding> : PermissionsActivity() {
         binding = method.invoke(null, layoutInflater) as VB
     }
 
+    /**
+     * 兼容旧子类 override，内部已改为 AndroidX/SystemBars 实现。
+     */
     protected open fun initImmersionBar() {
-        ImmersionBar.with(this)
-            .transparentStatusBar()
-            .statusBarDarkFont(setStatusBarDarkFont())
-            .init()
+        initSystemBars()
+    }
+
+    protected open fun initSystemBars() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            @Suppress("DEPRECATION")
+            window.statusBarColor = Color.TRANSPARENT
+            @Suppress("DEPRECATION")
+            window.navigationBarColor = Color.TRANSPARENT
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isStatusBarContrastEnforced = false
+            window.isNavigationBarContrastEnforced = false
+        }
+        val useDarkIcons = setStatusBarDarkFont()
+        WindowCompat.getInsetsController(window, window.decorView).run {
+            isAppearanceLightStatusBars = useDarkIcons
+            isAppearanceLightNavigationBars = useDarkIcons
+        }
+        applyDefaultSystemBarsInsets()
+    }
+
+    protected open fun applyDefaultSystemBarsInsets() {
+        SystemBarInsets.applySystemBarsInset(binding.root)
     }
 
     protected open fun setViewBelowStatusBar(view: android.view.View) {
-        // Intentionally empty. Specific pages can override when they need inset handling.
+        SystemBarInsets.applyTopInset(view)
     }
 
     open fun setStatusBarDarkFont(): Boolean {
-        val nightModeFlags = resources.configuration.uiMode and
-                android.content.res.Configuration.UI_MODE_NIGHT_MASK
-        return nightModeFlags != android.content.res.Configuration.UI_MODE_NIGHT_YES
+        val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return nightModeFlags != Configuration.UI_MODE_NIGHT_YES
     }
 
     abstract fun initView()

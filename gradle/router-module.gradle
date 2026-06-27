@@ -1,0 +1,14 @@
+if (!project.hasProperty("routerModuleName")) {
+    throw new GradleException("Please configure routerModuleName first, for example: ext.routerModuleName = 'FeatureHome'")
+}
+
+plugins.apply("com.google.devtools.ksp")
+
+ksp {
+    arg("moduleName", project.property("routerModuleName").toString())
+}
+
+dependencies {
+    implementation project(":core:core_router_api")
+    ksp project(":core:core_router_processor")
+}

@@ -1,0 +1,16 @@
+<resources>
+    <string name="camera_capture_title">SiteReport Capture</string>
+    <string name="camera_location_loading">Locating...</string>
+    <string name="camera_location_unavailable">Location unavailable</string>
+    <string name="camera_location_coordinates">Lat %1$.5f, Lng %2$.5f</string>
+    <string name="camera_capture_in_progress">Capturing...</string>
+    <string name="camera_capture_saved_to_gallery">Photo saved to gallery</string>
+    <string name="camera_capture_saved_to_gallery_with_location">Photo saved to gallery, Lat %1$.5f, Lng %2$.5f</string>
+    <string name="camera_capture_failed_with_reason">Capture failed: %1$s</string>
+    <string name="camera_capture_save_failed_with_reason">Failed to save photo: %1$s</string>
+    <string name="camera_start_failed_with_reason">Failed to start camera: %1$s</string>
+    <string name="camera_permission_required">Camera and location permissions are required</string>
+    <string name="camera_preview_content_desc">Camera preview</string>
+    <string name="camera_capture_button_desc">Take photo</string>
+    <string name="camera_back">Back</string>
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">Está gostando de %1$s?</string>
+    <string name="rate_dialog_default_desc">Toque em uma estrela para avaliar na loja ou envie seus comentários.</string>
+    <string name="rate_dialog_desc_good">Ficamos felizes em saber disso! Deixe uma avaliação de 5 estrelas na loja para apoiar o desenvolvimento.</string>
+    <string name="rate_dialog_desc_bad">Pedimos desculpas pela experiência ruim. Compartilhe suas sugestões para que possamos melhorar.</string>
+    <string name="rate_dialog_btn_cancel">Mais tarde</string>
+    <string name="rate_dialog_btn_action_default">Avaliar</string>
+    <string name="rate_dialog_btn_action_good">Avaliar na loja</string>
+    <string name="rate_dialog_btn_action_bad">Enviar feedback</string>
+    <string name="rate_star_header_desc">Ícone de estrela de avaliação</string>
+    <string name="rate_star_1_desc">1 estrela</string>
+    <string name="rate_star_2_desc">2 estrelas</string>
+    <string name="rate_star_3_desc">3 estrelas</string>
+    <string name="rate_star_4_desc">4 estrelas</string>
+    <string name="rate_star_5_desc">5 estrelas</string>
+    
+    <string name="rate_feedback_email_subject">Feedback sobre %1$s (Android)</string>
+    <string name="rate_feedback_email_body">Olá, esta é minha sugestão para %1$s:\n\n</string>
+    <string name="rate_feedback_no_email_client">Nenhum cliente de e-mail instalado. Envie o feedback para %1$s.</string>
+    <string name="rate_feedback_email_empty">O e-mail de feedback não está configurado.</string>
+    <string name="rate_feedback_store_failed">Não foi possível abrir a loja de aplicativos.</string>
+
+    <string name="google_billing_status_active">Assinatura ativa</string>
+    <string name="google_billing_status_lifetime">Acesso vitalicio ativo</string>
+    <string name="google_billing_status_inactive">Plano gratuito</string>
+    <string name="google_billing_status_free_desc">Nenhum direito pago ativo foi encontrado.</string>
+    <string name="google_billing_status_unknown">Não foi possível consultar o status da compra.</string>
+    <string name="google_billing_products_title">Planos disponíveis</string>
+    <string name="google_billing_products_desc">Escolha um plano para continuar.</string>
+    <string name="google_billing_empty">Nenhum plano de cobrança configurado.</string>
+    <string name="google_billing_restore">Restaurar compras</string>
+    <string name="google_billing_restore_success">Status da compra atualizado.</string>
+    <string name="google_billing_redeem_code">Resgatar codigo</string>
+    <string name="google_billing_redeem_refresh_hint">Resgate no Google Play e volte aqui para atualizar o status da compra.</string>
+    <string name="google_billing_redeem_open_failed">Nao foi possivel abrir a pagina de resgate do Google Play.</string>
+    <string name="google_billing_redeem_page_title">Resgatar codigo do Google Play</string>
+    <string name="google_billing_redeem_page_desc">Digite um codigo promocional ou abra o Google Play diretamente. O resgate final e feito pelo Google Play.</string>
+    <string name="google_billing_redeem_code_hint">Codigo promocional</string>
+    <string name="google_billing_redeem_open_google_play">Abrir Google Play para resgatar</string>
+    <string name="google_billing_redeem_refresh_status">Atualizar status da compra</string>
+    <string name="google_billing_redeem_page_note">Depois de resgatar, volte ao SiteReport e atualize o status da compra. Codigos validos podem desbloquear um produto gratuito ou teste de assinatura configurado no Google Play Console.</string>
+    <string name="google_billing_purchase">Comprar</string>
+    <string name="google_billing_purchase_success">Compra concluída com sucesso.</string>
+    <string name="google_billing_purchase_canceled">Compra cancelada.</string>
+    <string name="google_billing_purchase_failed">Falha na compra.</string>
+    <string name="google_billing_plan_unavailable">Indisponível</string>
+    <string name="google_billing_load_failed">Falha ao carregar produtos de cobrança.</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">هل أعجبك %1$s؟</string>
+    <string name="rate_dialog_default_desc">اختر عدد النجوم للتقييم في المتجر أو أرسل لنا ملاحظاتك.</string>
+    <string name="rate_dialog_desc_good">يسعدنا سماع ذلك! يرجى ترك تقييم بخمس نجوم في المتجر لدعم التطوير.</string>
+    <string name="rate_dialog_desc_bad">نعتذر عن التجربة غير المرضية. شاركنا اقتراحاتك حتى نتمكن من التحسين.</string>
+    <string name="rate_dialog_btn_cancel">لاحقًا</string>
+    <string name="rate_dialog_btn_action_default">تقييم</string>
+    <string name="rate_dialog_btn_action_good">قيّم في المتجر</string>
+    <string name="rate_dialog_btn_action_bad">إرسال ملاحظات</string>
+
+    <string name="rate_feedback_email_subject">ملاحظات حول %1$s (Android)</string>
+    <string name="rate_feedback_email_body">مرحبًا، هذه ملاحظاتي حول %1$s:\n\n</string>
+    <string name="rate_feedback_no_email_client">لا يوجد تطبيق بريد مثبت. يرجى إرسال الملاحظات إلى %1$s.</string>
+    <string name="rate_feedback_email_empty">لم يتم إعداد بريد الملاحظات.</string>
+    <string name="rate_feedback_store_failed">تعذر فتح متجر التطبيقات.</string>
+    <string name="rate_star_header_desc">أيقونة نجمة التقييم</string>
+    <string name="rate_star_1_desc">نجمة واحدة</string>
+    <string name="rate_star_2_desc">نجمتان</string>
+    <string name="rate_star_3_desc">3 نجوم</string>
+    <string name="rate_star_4_desc">4 نجوم</string>
+    <string name="rate_star_5_desc">5 نجوم</string>
+    <string name="google_billing_status_active">الاشتراك نشط</string>
+    <string name="google_billing_status_lifetime">الوصول مدى الحياة نشط</string>
+    <string name="google_billing_status_inactive">الخطة المجانية</string>
+    <string name="google_billing_status_free_desc">لم يتم العثور على أي استحقاق مدفوع نشط.</string>
+    <string name="google_billing_status_unknown">تعذر الاستعلام عن حالة الشراء.</string>
+    <string name="google_billing_products_title">الخطط المتاحة</string>
+    <string name="google_billing_products_desc">اختر خطة للمتابعة.</string>
+    <string name="google_billing_empty">لم يتم إعداد أي خطط دفع.</string>
+    <string name="google_billing_restore">استعادة المشتريات</string>
+    <string name="google_billing_restore_success">تم تحديث حالة الشراء.</string>
+    <string name="google_billing_purchase">شراء</string>
+    <string name="google_billing_purchase_success">اكتملت عملية الشراء بنجاح.</string>
+    <string name="google_billing_purchase_canceled">تم إلغاء الشراء.</string>
+    <string name="google_billing_purchase_failed">فشلت عملية الشراء.</string>
+    <string name="google_billing_plan_unavailable">غير متاح</string>
+    <string name="google_billing_load_failed">فشل تحميل منتجات الدفع.</string>
+</resources>

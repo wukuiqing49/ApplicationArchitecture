@@ -1,93 +1,71 @@
 package com.wkq.test
 
-import android.widget.Toast
+import android.view.Gravity
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.wkq.base.activity.BaseActivity
 import com.wkq.router.annotation.Route
-import com.wkq.router.api.Router
 import com.wkq.test.databinding.ActivityTestBinding
-import com.wkq.test.router.ITestService
 
 /**
- * 测试主入口页面
+ * 测试主入口页面。
  */
 @Route(path = "/test/main")
 class TestActivity : BaseActivity<ActivityTestBinding>() {
 
+    private val entries by lazy { TestEntryRegistry.createMainEntries(this) }
+
     override fun initView() {
-        binding.btnRouterOverall.setOnClickListener {
-            Router.open("/test/router_overall", this)
-        }
+        binding.tvSummary.text = "${entries.size} 个测试入口，按能力分组"
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = TestEntryAdapter(entries)
 
-        binding.btnImageLoader.setOnClickListener {
-            Router.open("/test/loader_image", this)
-        }
-
-        binding.btnGradientLabel.setOnClickListener {
-            Router.open("/test/gradient_label", this)
-        }
-
-        binding.btnMultiSpanText.setOnClickListener {
-            Router.open("/test/multi_span_text", this)
-        }
-
-        binding.btnMagicIndicator.setOnClickListener {
-            Router.open("/test/magic_indicator", this)
-        }
-
-        binding.btnPhotoPicker.setOnClickListener {
-            Router.open("/test/photo_picker", this)
-        }
-
-        binding.btnParticleLoading.setOnClickListener {
-            Router.open("/test/particle_loading", this)
-        }
-
-        binding.btnProtocolDemo.setOnClickListener {
-            Router.open("/test/protocol_demo", this)
-        }
-
-        binding.btnWebview.setOnClickListener {
-            Router.open("/common/webview", this) {
-                putExtra("url", "https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_file")
-                putExtra("title", "WebView Demo")
-            }
-        }
-
-        binding.btnJsBridge.setOnClickListener {
-            Router.open("/common/webview", this) {
-                putExtra(
-                    "url",
-                    "file:///android_asset/test.html" +
-                            "?bridge=ThirdPlatformBridge" +
-                            "&method=invoke" +
-                            "&mode=api_params_callback"
-                )
-                putExtra("title", "JSBridge Test")
-                putExtra("open_js", true)
-            }
-        }
-
-        binding.btnNetDynamic.setOnClickListener {
-            val testService = Router.getService(ITestService::class)
-            val helloMsg = testService?.sayHello("Antigravity") ?: "Service not found"
-            Toast.makeText(this, helloMsg, Toast.LENGTH_SHORT).show()
-            Router.open("/test/net_demo", this)
-        }
-
-        binding.btnUrlResolve.setOnClickListener {
-            Router.open("/test/smart_jump", this)
-        }
-
-        binding.btnRouterAdvanced.setOnClickListener {
-            Router.build("/test/target")
-                .withString("input", "Hello from Postcard!")
-                .withTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                .navigation(this) { result ->
-                    val data = result.data?.getStringExtra("result") ?: "No Result"
-                    Toast.makeText(this, "收到返回结果: $data", Toast.LENGTH_LONG).show()
-                }
-        }
+        bindGroupFilters()
     }
 
     override fun initData() = Unit
+
+    private fun bindGroupFilters() {
+        binding.chipGroup.removeAllViews()
+        entries.map { it.group }
+            .distinct()
+            .forEach { group ->
+                binding.chipGroup.addView(createGroupChip(group))
+            }
+    }
+
+    private fun createGroupChip(group: String): TextView {
+        val horizontalPadding = resources.getDimensionPixelSize(R.dimen.test_chip_horizontal_padding)
+        return TextView(this).apply {
+            text = group
+            gravity = Gravity.CENTER
+            minWidth = resources.getDimensionPixelSize(R.dimen.test_chip_min_width)
+            height = resources.getDimensionPixelSize(R.dimen.test_chip_height)
+            setPadding(horizontalPadding, 0, horizontalPadding, 0)
+            setTextColor(0xFF344054.toInt())
+            textSize = 13f
+            background = getDrawable(R.drawable.bg_test_filter_chip)
+            foreground = obtainStyledAttributes(intArrayOf(android.R.attr.selectableItemBackground)).let {
+                val drawable = it.getDrawable(0)
+                it.recycle()
+                drawable
+            }
+            isClickable = true
+            isFocusable = true
+            setOnClickListener { scrollToGroup(group) }
+            layoutParams = android.widget.LinearLayout.LayoutParams(
+                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
+                resources.getDimensionPixelSize(R.dimen.test_chip_height)
+            ).apply {
+                marginEnd = resources.getDimensionPixelSize(R.dimen.test_chip_spacing)
+            }
+        }
+    }
+
+    private fun scrollToGroup(group: String) {
+        val index = entries.indexOfFirst { it.group == group }
+        if (index >= 0) {
+            binding.recyclerView.smoothScrollToPosition(index)
+        }
+    }
 }

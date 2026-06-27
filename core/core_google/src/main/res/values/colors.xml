@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="google_surface">#FFFFFF</color>
+    <color name="google_text_primary">#171D1A</color>
+    <color name="google_text_secondary">#718078</color>
+    <color name="google_action_primary">#245A4A</color>
+    <color name="google_action_primary_text">#FFFFFF</color>
+    <color name="google_action_secondary">#D7E8DF</color>
+    <color name="google_action_secondary_text">#0D2018</color>
+</resources>

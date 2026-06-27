@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">喜歡 %1$s 嗎？</string>
+    <string name="rate_dialog_default_desc">點選星級前往商店評分，或把建議回饋給我們。</string>
+    <string name="rate_dialog_desc_good">太好了！歡迎到商店給我們五星好評，感謝支持。</string>
+    <string name="rate_dialog_desc_bad">抱歉沒能帶來理想體驗，歡迎告訴我們哪裡需要改進。</string>
+    <string name="rate_dialog_btn_cancel">稍後再說</string>
+    <string name="rate_dialog_btn_action_default">評分</string>
+    <string name="rate_dialog_btn_action_good">去評分</string>
+    <string name="rate_dialog_btn_action_bad">傳送回饋</string>
+    <string name="rate_star_header_desc">評分星號圖示</string>
+    <string name="rate_star_1_desc">1 星</string>
+    <string name="rate_star_2_desc">2 星</string>
+    <string name="rate_star_3_desc">3 星</string>
+    <string name="rate_star_4_desc">4 星</string>
+    <string name="rate_star_5_desc">5 星</string>
+
+    <string name="rate_feedback_email_subject">%1$s 回饋 (Android)</string>
+    <string name="rate_feedback_email_body">你好，這是我對 %1$s 的回饋：\n\n</string>
+    <string name="rate_feedback_no_email_client">未偵測到郵件客戶端，請直接傳送郵件至：%1$s</string>
+    <string name="rate_feedback_email_empty">未設定回饋信箱。</string>
+    <string name="rate_feedback_store_failed">未能開啟應用程式商店。</string>
+    <string name="google_billing_status_active">訂閱已生效</string>
+    <string name="google_billing_status_lifetime">永久權限已生效</string>
+    <string name="google_billing_status_inactive">免費方案</string>
+    <string name="google_billing_status_free_desc">未找到有效的付費權益。</string>
+    <string name="google_billing_status_unknown">無法查詢購買狀態。</string>
+    <string name="google_billing_products_title">可用方案</string>
+    <string name="google_billing_products_desc">請選擇一個方案繼續。</string>
+    <string name="google_billing_empty">未設定任何訂閱方案。</string>
+    <string name="google_billing_restore">恢復購買</string>
+    <string name="google_billing_restore_success">購買狀態已重新整理。</string>
+    <string name="google_billing_redeem_code">兌換碼</string>
+    <string name="google_billing_redeem_refresh_hint">請在 Google Play 完成兌換，返回後會重新整理購買狀態。</string>
+    <string name="google_billing_redeem_open_failed">未能開啟 Google Play 兌換頁面。</string>
+    <string name="google_billing_redeem_page_title">兌換 Google Play 代碼</string>
+    <string name="google_billing_redeem_page_desc">輸入促銷碼，或直接開啟 Google Play。最終兌換由 Google Play 完成。</string>
+    <string name="google_billing_redeem_code_hint">促銷碼</string>
+    <string name="google_billing_redeem_open_google_play">開啟 Google Play 兌換</string>
+    <string name="google_billing_redeem_refresh_status">重新整理購買狀態</string>
+    <string name="google_billing_redeem_page_note">兌換完成後返回 SiteReport 並重新整理購買狀態。有效兌換碼可解鎖在 Google Play Console 設定的一次性商品免費兌換或訂閱試用。</string>
+    <string name="google_billing_purchase">購買</string>
+    <string name="google_billing_purchase_success">購買已完成。</string>
+    <string name="google_billing_purchase_canceled">購買已取消。</string>
+    <string name="google_billing_purchase_failed">購買失敗。</string>
+    <string name="google_billing_plan_unavailable">暫不可用</string>
+    <string name="google_billing_load_failed">載入訂閱商品失敗。</string>
+</resources>

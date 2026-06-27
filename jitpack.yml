@@ -1,0 +1,5 @@
+jdk:
+  - openjdk17
+
+install:
+  - ./gradlew :core:core_base:publishReleasePublicationToMavenLocal -PPOM_GROUP_ID=$GROUP.$ARTIFACT -PPOM_VERSION=$VERSION -PGITHUB_REPOSITORY=${GROUP#com.github.}/$ARTIFACT

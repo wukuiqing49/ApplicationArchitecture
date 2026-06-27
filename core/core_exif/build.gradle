@@ -1,0 +1,58 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+}
+
+android {
+    namespace = 'com.wkq.exif'
+    compileSdk appConfig.compileSdk
+
+    defaultConfig {
+        minSdk appConfig.minSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.all {
+            systemProperty 'file.encoding', 'UTF-8'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = appConfig.jvmTarget
+        freeCompilerArgs.addAll(["-Xskip-metadata-version-check"])
+    }
+}
+
+dependencies {
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    api libs.kotlinx.coroutines.android
+    api libs.androidx.room.runtime
+    api libs.androidx.room.ktx
+    ksp libs.androidx.room.compiler
+    
+    // 暴露给其他引入core_exif的业务模块，避免重复依赖
+    api libs.androidx.exifinterface
+    api libs.commons.imaging
+    implementation libs.metadata.extractor
+
+    testImplementation libs.sqlite.jdbc
+    testImplementation libs.junit
+    testImplementation libs.robolectric
+}

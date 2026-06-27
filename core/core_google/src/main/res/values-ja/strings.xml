@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">%1$s を気に入っていますか？</string>
+    <string name="rate_dialog_default_desc">星を選んでストアで評価するか、ご意見をお送りください。</string>
+    <string name="rate_dialog_desc_good">ありがとうございます。開発を応援するため、ストアで5つ星の評価をお願いします。</string>
+    <string name="rate_dialog_desc_bad">期待に沿えず申し訳ありません。改善のため、ご意見をお聞かせください。</string>
+    <string name="rate_dialog_btn_cancel">後で</string>
+    <string name="rate_dialog_btn_action_default">評価</string>
+    <string name="rate_dialog_btn_action_good">ストアで評価</string>
+    <string name="rate_dialog_btn_action_bad">フィードバックを送信</string>
+    <string name="rate_star_header_desc">評価スターアイコン</string>
+    <string name="rate_star_1_desc">1つ星</string>
+    <string name="rate_star_2_desc">2つ星</string>
+    <string name="rate_star_3_desc">3つ星</string>
+    <string name="rate_star_4_desc">4つ星</string>
+    <string name="rate_star_5_desc">5つ星</string>
+    
+    <string name="rate_feedback_email_subject">%1$s へのフィードバック (Android)</string>
+    <string name="rate_feedback_email_body">こんにちは。%1$s へのフィードバックです：\n\n</string>
+    <string name="rate_feedback_no_email_client">メールアプリが見つかりません。%1$s までフィードバックをお送りください。</string>
+    <string name="rate_feedback_email_empty">フィードバック用メールアドレスが設定されていません。</string>
+    <string name="rate_feedback_store_failed">アプリストアを開けませんでした。</string>
+
+    <string name="google_billing_status_active">サブスクリプション有効</string>
+    <string name="google_billing_status_lifetime">買い切りアクセス有効</string>
+    <string name="google_billing_status_inactive">無料プラン</string>
+    <string name="google_billing_status_free_desc">有効な有料権限は見つかりませんでした。</string>
+    <string name="google_billing_status_unknown">購入状態を確認できません。</string>
+    <string name="google_billing_products_title">利用可能なプラン</string>
+    <string name="google_billing_products_desc">続行するプランを選択してください。</string>
+    <string name="google_billing_empty">課金プランが設定されていません。</string>
+    <string name="google_billing_restore">購入を復元</string>
+    <string name="google_billing_restore_success">購入状態を更新しました。</string>
+    <string name="google_billing_redeem_code">コードを利用</string>
+    <string name="google_billing_redeem_refresh_hint">Google Playでコードを利用してから、ここに戻って購入状態を更新してください。</string>
+    <string name="google_billing_redeem_open_failed">Google Playのコード利用ページを開けませんでした。</string>
+    <string name="google_billing_redeem_page_title">Google Playコードを利用</string>
+    <string name="google_billing_redeem_page_desc">プロモーションコードを入力するか、Google Playを直接開きます。最終的な利用処理はGoogle Playで行われます。</string>
+    <string name="google_billing_redeem_code_hint">プロモーションコード</string>
+    <string name="google_billing_redeem_open_google_play">Google Playで利用</string>
+    <string name="google_billing_redeem_refresh_status">購入状態を更新</string>
+    <string name="google_billing_redeem_page_note">利用後、SiteReportに戻って購入状態を更新してください。有効なコードは、Google Play Consoleで設定された無料アプリ内商品またはサブスクリプション試用を有効化できます。</string>
+    <string name="google_billing_purchase">購入</string>
+    <string name="google_billing_purchase_success">購入が完了しました。</string>
+    <string name="google_billing_purchase_canceled">購入がキャンセルされました。</string>
+    <string name="google_billing_purchase_failed">購入に失敗しました。</string>
+    <string name="google_billing_plan_unavailable">利用できません</string>
+    <string name="google_billing_load_failed">課金商品を読み込めませんでした。</string>
+</resources>

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
 /**
- * 路由跳转的载体，存储路径、参数、动画等
+ * 路由请求载体，保存 path、参数、动画等信息。
  */
 class Postcard(val path: String) {
 
@@ -19,7 +19,7 @@ class Postcard(val path: String) {
     private var flags: Int = -1
 
     fun withBundle(bundle: Bundle): Postcard {
-        this.extras = bundle
+        extras = bundle
         return this
     }
 
@@ -84,21 +84,14 @@ class Postcard(val path: String) {
         return this
     }
 
-    /**
-     * 普通跳转
-     */
     fun navigation(context: Context) {
         Router.navigate(context, this)
     }
 
-    /**
-     * 带 Result 回调的跳转
-     */
     fun navigation(activity: FragmentActivity, callback: (ActivityResult) -> Unit) {
         Router.navigateWithResult(activity, this, callback)
     }
 
-    // --- 内部使用的 Getter ---
     fun getExtras() = extras
     fun getEnterAnim() = enterAnim
     fun getExitAnim() = exitAnim
@@ -106,7 +99,7 @@ class Postcard(val path: String) {
 }
 
 /**
- * 内部使用的代理 Fragment，用于承接 ActivityResult
+ * 内部代理 Fragment，用于承接 ActivityResult。
  */
 class RouterResultProxyFragment : Fragment() {
     private var callback: ((ActivityResult) -> Unit)? = null
@@ -114,8 +107,9 @@ class RouterResultProxyFragment : Fragment() {
 
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         callback?.invoke(result)
-        // 完成任务后自毁
-        parentFragmentManager.beginTransaction().remove(this).commitAllowingStateLoss()
+        parentFragmentManager.beginTransaction()
+            .remove(this)
+            .commitAllowingStateLoss()
     }
 
     fun setParams(intent: Intent, callback: (ActivityResult) -> Unit) {
@@ -125,9 +119,15 @@ class RouterResultProxyFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        intent?.let {
-            launcher.launch(it)
-            intent = null // 确保只启动一次
+        val targetIntent = intent ?: return
+        intent = null
+        try {
+            launcher.launch(targetIntent)
+        } catch (t: Throwable) {
+            RouterConfig.logger.e("Launch route for result failed.", t)
+            parentFragmentManager.beginTransaction()
+                .remove(this)
+                .commitAllowingStateLoss()
         }
     }
 }

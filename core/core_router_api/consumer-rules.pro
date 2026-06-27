@@ -8,6 +8,13 @@
 # Keep generated route bootstrap classes.
 -keep class com.wkq.router.generated.** { *; }
 
+# @Param injection uses targetClassName + "_Syringe" to find the generated injector.
+# Keep target class names when they contain @Param fields, otherwise R8 may rename
+# the Activity/Fragment class and break Class.forName(target.javaClass.name + "_Syringe").
+-keepclasseswithmembers class * {
+    @com.wkq.router.annotation.Param <fields>;
+}
+
 # Keep SPI-style interfaces and their generated/reflectively-created implementations.
 -keep public interface com.wkq.router.api.IRouteInit { *; }
 -keep class * implements com.wkq.router.api.IRouteInit {

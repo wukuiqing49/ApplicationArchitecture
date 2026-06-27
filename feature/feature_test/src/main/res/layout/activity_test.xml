@@ -1,152 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:fillViewport="true">
+    android:background="#F7F8FA"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="测试中心"
+        android:textColor="#172033"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/header_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="14dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_summary"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="32dp"
-            android:text="测试入口 (Test Portal)"
-            android:textColor="#333333"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textColor="#667085"
+            android:textSize="14sp"
+            tools:text="14 个测试入口，按能力分组" />
 
-        <Button
-            android:id="@+id/btn_router_overall"
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="#1A73E8"
-            android:text="路由全场景演示 (Overall)"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
-        <Button
-            android:id="@+id/btn_image_loader"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="图片加载测试 (ImageLoader)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_gradient_label"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="渐变标签演示 (GradientLabel)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_multi_span_text"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="多段 Span 文本测试 (MultiSpanTextView)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_magic_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="指示器测试 (MagicIndicator)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_photo_picker"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="媒体选择测试 (PhotoPicker)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_particle_loading"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="粒子加载测试 (ParticleLoading)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_protocol_demo"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="协议及账号演示 (ProtocolDemo)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_webview"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="原生 Web 演示 (Custom WebView)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_js_bridge"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="JSBridge 测试 (CommonWebActivity)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_net_dynamic"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="动态 BaseUrl 演示 (Net Dynamic)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_url_resolve"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="URL 还原测试 (Url Resolve)"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_router_advanced"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:text="高级路由演示 (Result + Interceptor)"
-            android:textAllCaps="false" />
-
-        <com.wkq.ui.widget.GradientShapeLabelView
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            app:label_bg_end_color="#FF80AB"
-            app:label_bg_orientation="left_right"
-            app:label_bg_radius="18dp"
-            app:label_bg_start_color="#FF4081"
-            app:label_icon_padding="4dp"
-            app:label_icon_size="16dp"
-            app:label_left_icon="@android:drawable/ic_menu_gallery"
-            app:label_text="Gradient Label Sample"
-            app:label_text_color="#FFFFFF"
-            app:label_text_size="13sp" />
-
+            <LinearLayout
+                android:id="@+id/chip_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="UselessLeaf" />
+        </HorizontalScrollView>
     </LinearLayout>
-</ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="20dp"
+        tools:listitem="@layout/item_test_entry" />
+</LinearLayout>

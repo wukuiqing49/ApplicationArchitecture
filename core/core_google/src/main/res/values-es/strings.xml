@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">¿Te gusta %1$s?</string>
+    <string name="rate_dialog_default_desc">Toca una estrella para calificar en la tienda o envíanos tus comentarios.</string>
+    <string name="rate_dialog_desc_good">¡Nos alegra escucharlo! Déjanos una reseña de 5 estrellas en la tienda para apoyar el desarrollo.</string>
+    <string name="rate_dialog_desc_bad">Lamentamos la mala experiencia. Comparte tus sugerencias para que podamos mejorar.</string>
+    <string name="rate_dialog_btn_cancel">Más tarde</string>
+    <string name="rate_dialog_btn_action_default">Calificar</string>
+    <string name="rate_dialog_btn_action_good">Calificar en la tienda</string>
+    <string name="rate_dialog_btn_action_bad">Enviar comentarios</string>
+    <string name="rate_star_header_desc">Icono de estrella de calificación</string>
+    <string name="rate_star_1_desc">1 estrella</string>
+    <string name="rate_star_2_desc">2 estrellas</string>
+    <string name="rate_star_3_desc">3 estrellas</string>
+    <string name="rate_star_4_desc">4 estrellas</string>
+    <string name="rate_star_5_desc">5 estrellas</string>
+    
+    <string name="rate_feedback_email_subject">Comentarios sobre %1$s (Android)</string>
+    <string name="rate_feedback_email_body">Hola, esta es mi sugerencia para %1$s:\n\n</string>
+    <string name="rate_feedback_no_email_client">No hay ningún cliente de correo instalado. Envía tus comentarios a %1$s.</string>
+    <string name="rate_feedback_email_empty">El correo de comentarios no está configurado.</string>
+    <string name="rate_feedback_store_failed">No se pudo abrir la tienda de aplicaciones.</string>
+
+    <string name="google_billing_status_active">Suscripcion activa</string>
+    <string name="google_billing_status_lifetime">Acceso de por vida activo</string>
+    <string name="google_billing_status_inactive">Plan gratuito</string>
+    <string name="google_billing_status_free_desc">No se encontro ningun derecho de pago activo.</string>
+    <string name="google_billing_status_unknown">No se puede consultar el estado de compra.</string>
+    <string name="google_billing_products_title">Planes disponibles</string>
+    <string name="google_billing_products_desc">Elige un plan para continuar.</string>
+    <string name="google_billing_empty">No hay planes de facturación configurados.</string>
+    <string name="google_billing_restore">Restaurar compras</string>
+    <string name="google_billing_restore_success">Estado de compra actualizado.</string>
+    <string name="google_billing_redeem_code">Canjear codigo</string>
+    <string name="google_billing_redeem_refresh_hint">Canjea el codigo en Google Play y vuelve aqui para actualizar el estado de compra.</string>
+    <string name="google_billing_redeem_open_failed">No se pudo abrir la pagina de canje de Google Play.</string>
+    <string name="google_billing_redeem_page_title">Canjear codigo de Google Play</string>
+    <string name="google_billing_redeem_page_desc">Introduce un codigo promocional o abre Google Play directamente. Google Play gestiona el canje final.</string>
+    <string name="google_billing_redeem_code_hint">Codigo promocional</string>
+    <string name="google_billing_redeem_open_google_play">Abrir Google Play para canjear</string>
+    <string name="google_billing_redeem_refresh_status">Actualizar estado de compra</string>
+    <string name="google_billing_redeem_page_note">Despues de canjearlo, vuelve a SiteReport y actualiza el estado de compra. Los codigos validos pueden desbloquear un producto gratuito o una prueba de suscripcion configurada en Google Play Console.</string>
+    <string name="google_billing_purchase">Comprar</string>
+    <string name="google_billing_purchase_success">Compra completada correctamente.</string>
+    <string name="google_billing_purchase_canceled">Compra cancelada.</string>
+    <string name="google_billing_purchase_failed">Compra fallida.</string>
+    <string name="google_billing_plan_unavailable">No disponible</string>
+    <string name="google_billing_load_failed">No se pudieron cargar los productos de facturacion.</string>
+</resources>

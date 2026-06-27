@@ -6,52 +6,112 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.fragment.app.FragmentActivity
+import java.util.ServiceLoader
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.reflect.KClass
 
 /**
- * 路由门面类
+ * 路由入口。
  */
 object Router {
 
-    /**
-     * 初始化路由（扫描所有模块的注册类）
-     */
-    fun init(context: Context) {
-        try {
-            val loader = java.util.ServiceLoader.load(IRouteInit::class.java)
-            for (init in loader) {
-                init.init()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    private val initialized = AtomicBoolean(false)
+    private val syringeCache = ConcurrentHashMap<String, ISyringe>()
+
+    fun setDebug(debug: Boolean) {
+        RouterConfig.debug = debug
+    }
+
+    fun setThrowExceptionWhenRouteNotFound(enable: Boolean) {
+        RouterConfig.throwExceptionWhenRouteNotFound = enable
     }
 
     /**
-     * 构建路由请求
+     * 初始化路由，扫描所有模块生成的注册类。
      */
+    fun init(context: Context) {
+        if (!initialized.compareAndSet(false, true)) {
+            RouterConfig.logger.d("Router already initialized, skip.")
+            return
+        }
+
+        var successCount = 0
+        var failureCount = 0
+
+        try {
+            val iterator = ServiceLoader.load(IRouteInit::class.java).iterator()
+            while (true) {
+                val init = try {
+                    if (!iterator.hasNext()) break
+                    iterator.next()
+                } catch (t: Throwable) {
+                    failureCount++
+                    RouterConfig.logger.e("Load router initializer failed.", t)
+                    continue
+                }
+
+                try {
+                    init.init()
+                    successCount++
+                } catch (t: Throwable) {
+                    failureCount++
+                    RouterConfig.logger.e("Run router initializer failed: ${init.javaClass.name}", t)
+                }
+            }
+        } catch (t: Throwable) {
+            initialized.set(false)
+            RouterConfig.logger.e("Router init failed.", t)
+            if (RouterConfig.throwExceptionWhenRouteNotFound) {
+                throw t
+            }
+            return
+        }
+
+        RouterConfig.logger.d("Router init finished, success=$successCount, failure=$failureCount.")
+        if (failureCount > 0 && RouterConfig.throwExceptionWhenRouteNotFound) {
+            throw IllegalStateException("Router init has failed modules, failure=$failureCount")
+        }
+    }
+
     fun build(path: String): Postcard {
         return Postcard(path)
     }
 
-    /**
-     * 执行拦截器并导航
-     */
     fun navigate(context: Context, postcard: Postcard) {
-        val interceptors = RouteTable.interceptors.sortedByDescending { it.priority }.map { it.interceptor as IInterceptor }
-        
-        executeInterceptors(interceptors, 0, postcard) { p ->
+        val interceptors = RouteTable.interceptors
+            .sortedByDescending { it.priority }
+            .mapNotNull { meta ->
+                meta.interceptor as? IInterceptor ?: run {
+                    RouterConfig.logger.e("Invalid router interceptor: ${meta.interceptor.javaClass.name}")
+                    null
+                }
+            }
+
+        executeInterceptors(interceptors, 0, postcard, { p, t ->
+            handleLost(context, p, t)
+        }) { p ->
             realNavigate(context, p)
         }
     }
 
-    /**
-     * 执行拦截器并导航（带 Result）
-     */
-    fun navigateWithResult(activity: FragmentActivity, postcard: Postcard, callback: (ActivityResult) -> Unit) {
-        val interceptors = RouteTable.interceptors.sortedByDescending { it.priority }.map { it.interceptor as IInterceptor }
-        
-        executeInterceptors(interceptors, 0, postcard) { p ->
+    fun navigateWithResult(
+        activity: FragmentActivity,
+        postcard: Postcard,
+        callback: (ActivityResult) -> Unit
+    ) {
+        val interceptors = RouteTable.interceptors
+            .sortedByDescending { it.priority }
+            .mapNotNull { meta ->
+                meta.interceptor as? IInterceptor ?: run {
+                    RouterConfig.logger.e("Invalid router interceptor: ${meta.interceptor.javaClass.name}")
+                    null
+                }
+            }
+
+        executeInterceptors(interceptors, 0, postcard, { p, t ->
+            handleLost(activity, p, t)
+        }) { p ->
             realNavigateWithResult(activity, p, callback)
         }
     }
@@ -63,107 +123,118 @@ object Router {
     }
 
     private fun checkAndLoadGroup(path: String) {
-        if (RouteTable.routes[path] == null) {
-            val group = extractGroup(path)
-            val groupClass = RouteTable.groups[group]
-            if (groupClass != null) {
-                try {
-                    val groupInstance = groupClass.getConstructor().newInstance()
-                    groupInstance.load()
-                    // 移除以防重复加载
-                    RouteTable.groups.remove(group)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
+        if (RouteTable.routes[path] != null) return
+
+        val group = extractGroup(path)
+        val groupClass = RouteTable.groups[group] ?: return
+        try {
+            val groupInstance = groupClass.getConstructor().newInstance()
+            groupInstance.load()
+            RouteTable.groups.remove(group)
+        } catch (t: Throwable) {
+            RouterConfig.logger.e("Load route group failed: $group", t)
         }
     }
 
-    private fun executeInterceptors(interceptors: List<IInterceptor>, index: Int, postcard: Postcard, finish: (Postcard) -> Unit) {
+    private fun executeInterceptors(
+        interceptors: List<IInterceptor>,
+        index: Int,
+        postcard: Postcard,
+        onError: (Postcard, Throwable) -> Unit,
+        finish: (Postcard) -> Unit
+    ) {
         if (index >= interceptors.size) {
             finish(postcard)
             return
         }
 
         val interceptor = interceptors[index]
-        interceptor.process(postcard, object : InterceptorCallback {
-            override fun onContinue(postcard: Postcard) {
-                executeInterceptors(interceptors, index + 1, postcard, finish)
-            }
+        try {
+            interceptor.process(postcard, object : InterceptorCallback {
+                override fun onContinue(postcard: Postcard) {
+                    executeInterceptors(interceptors, index + 1, postcard, onError, finish)
+                }
 
-            override fun onInterrupt(exception: Throwable?) {
-                // 中断不执行后续
-            }
-        })
+                override fun onInterrupt(exception: Throwable?) {
+                    exception?.let {
+                        RouterConfig.logger.e("Router interrupted: ${postcard.path}", it)
+                    }
+                }
+            })
+        } catch (t: Throwable) {
+            RouterConfig.logger.e("Router interceptor failed: ${postcard.path}", t)
+            onError(postcard, t)
+        }
     }
 
     private fun realNavigate(context: Context, postcard: Postcard) {
         checkAndLoadGroup(postcard.path)
         val meta = RouteTable.routes[postcard.path]
         if (meta == null) {
-            val degradationService = getService(IDegradationService::class)
-            if (degradationService != null) {
-                degradationService.onLost(context, postcard)
-            } else {
-                throw RuntimeException("Route not found: ${postcard.path}")
-            }
+            handleLost(context, postcard, null)
             return
         }
 
-        val intent = Intent(context, meta.clazz)
-        intent.putExtras(postcard.getExtras())
-        if (postcard.getFlags() != -1) {
-            intent.setFlags(postcard.getFlags())
+        val intent = Intent(context, meta.clazz).apply {
+            putExtras(postcard.getExtras())
+            if (postcard.getFlags() != -1) {
+                flags = postcard.getFlags()
+            }
+            if (context !is Activity && flags and Intent.FLAG_ACTIVITY_NEW_TASK == 0) {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
         }
-        
-        context.startActivity(intent)
-        
-        // 处理动画
+
+        try {
+            context.startActivity(intent)
+        } catch (t: Throwable) {
+            RouterConfig.logger.e("Start route failed: ${postcard.path}", t)
+            handleLost(context, postcard, t)
+            return
+        }
+
         handleAnimation(context, postcard, meta)
     }
 
-    private fun realNavigateWithResult(activity: FragmentActivity, postcard: Postcard, callback: (ActivityResult) -> Unit) {
+    private fun realNavigateWithResult(
+        activity: FragmentActivity,
+        postcard: Postcard,
+        callback: (ActivityResult) -> Unit
+    ) {
         checkAndLoadGroup(postcard.path)
         val meta = RouteTable.routes[postcard.path]
         if (meta == null) {
-            val degradationService = getService(IDegradationService::class)
-            if (degradationService != null) {
-                degradationService.onLost(activity, postcard)
-            } else {
-                throw RuntimeException("Route not found: ${postcard.path}")
-            }
+            handleLost(activity, postcard, null)
             return
         }
 
-        val intent = Intent(activity, meta.clazz)
-        intent.putExtras(postcard.getExtras())
-        
+        val intent = Intent(activity, meta.clazz).apply {
+            putExtras(postcard.getExtras())
+        }
+
         val proxy = RouterResultProxyFragment()
         proxy.setParams(intent, callback)
-        
+
         activity.supportFragmentManager.beginTransaction()
             .add(proxy, "RouterResultProxy")
-            .commit()
+            .commitAllowingStateLoss()
     }
 
     private fun handleAnimation(context: Context, postcard: Postcard, meta: RouteMeta) {
-        if (context is Activity) {
-            val enterId = if (postcard.getEnterAnim() != 0) postcard.getEnterAnim() else meta.enterAnim
-            val exitId = if (postcard.getExitAnim() != 0) postcard.getExitAnim() else meta.exitAnim
-            if (enterId != 0 || exitId != 0) {
-                if (android.os.Build.VERSION.SDK_INT >= 34) {
-                    context.overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, enterId, exitId)
-                } else {
-                    @Suppress("DEPRECATION")
-                    context.overridePendingTransition(enterId, exitId)
-                }
-            }
+        if (context !is Activity) return
+
+        val enterId = if (postcard.getEnterAnim() != 0) postcard.getEnterAnim() else meta.enterAnim
+        val exitId = if (postcard.getExitAnim() != 0) postcard.getExitAnim() else meta.exitAnim
+        if (enterId == 0 && exitId == 0) return
+
+        if (android.os.Build.VERSION.SDK_INT >= 34) {
+            context.overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, enterId, exitId)
+        } else {
+            @Suppress("DEPRECATION")
+            context.overridePendingTransition(enterId, exitId)
         }
     }
 
-    /**
-     * 获取 Fragment 实例
-     */
     fun getFragment(path: String, bundle: Bundle? = null): androidx.fragment.app.Fragment? {
         checkAndLoadGroup(path)
         val meta = RouteTable.routes[path] ?: return null
@@ -171,76 +242,90 @@ object Router {
             val fragment = meta.clazz.getConstructor().newInstance() as? androidx.fragment.app.Fragment
             fragment?.arguments = bundle
             fragment
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (t: Throwable) {
+            RouterConfig.logger.e("Create fragment failed: $path", t)
             null
         }
     }
 
-    /**
-     * 获取 View 实例
-     */
     fun getView(path: String, context: Context): android.view.View? {
         checkAndLoadGroup(path)
         val meta = RouteTable.routes[path] ?: return null
         return try {
             meta.clazz.getConstructor(Context::class.java).newInstance(context) as? android.view.View
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (t: Throwable) {
+            RouterConfig.logger.e("Create view failed: $path", t)
             null
         }
     }
 
-    private val syringeCache = java.util.concurrent.ConcurrentHashMap<String, ISyringe>()
-
     /**
-     * 自动注入参数
-     * @param target Activity 或 Fragment 实例
+     * 自动注入 @Param 参数。
      */
     fun inject(target: Any) {
         val className = target.javaClass.name + "_Syringe"
         var syringe = syringeCache[className]
         if (syringe == null) {
-            try {
+            syringe = try {
                 val syringeClass = Class.forName(className)
-                syringe = syringeClass.getConstructor().newInstance() as ISyringe
-                syringeCache[className] = syringe
-            } catch (e: Exception) {
-                // 如果没找到 Syringe 类，说明该类不需要注入
+                (syringeClass.getConstructor().newInstance() as ISyringe).also {
+                    syringeCache[className] = it
+                }
+            } catch (_: ClassNotFoundException) {
+                return
+            } catch (t: Throwable) {
+                RouterConfig.logger.e("Create syringe failed: $className", t)
                 return
             }
         }
-        syringe?.inject(target)
+
+        try {
+            syringe.inject(target)
+        } catch (t: Throwable) {
+            RouterConfig.logger.e("Inject route params failed: ${target.javaClass.name}", t)
+        }
     }
 
-    /**
-     * 获取服务实例
-     */
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> getService(api: KClass<T>): T? {
         return RouteTable.services[api.java] as? T
     }
-    
-    // 兼容旧代码的 open 方法
+
+    /**
+     * 兼容旧调用方式。
+     */
     fun open(path: String, context: Context, block: (Intent.() -> Unit)? = null) {
         val postcard = build(path)
         checkAndLoadGroup(path)
         val meta = RouteTable.routes[path]
         if (meta == null) {
-            val degradationService = getService(IDegradationService::class)
-            if (degradationService != null) {
-                degradationService.onLost(context, postcard)
-            } else {
-                throw RuntimeException("Route not found: $path")
-            }
+            handleLost(context, postcard, null)
             return
         }
+
         val intent = Intent(context, meta.clazz)
         block?.invoke(intent)
         postcard.withBundle(intent.extras ?: Bundle())
-        // 注意：原先 open 方法如果 block 设置了 flags，无法传给 postcard
-        // 这里尽可能将 flags 也提取进 postcard，保证 navigate 正确执行
         postcard.withFlags(intent.flags)
         navigate(context, postcard)
+    }
+
+    private fun handleLost(context: Context?, postcard: Postcard, cause: Throwable?) {
+        RouterConfig.logger.e("Route not found or unavailable: ${postcard.path}", cause)
+        if (context != null) {
+            val degradationService = getService(IDegradationService::class)
+            if (degradationService != null) {
+                try {
+                    degradationService.onLost(context, postcard)
+                    return
+                } catch (t: Throwable) {
+                    RouterConfig.logger.e("Route degradation failed: ${postcard.path}", t)
+                }
+            }
+        }
+
+        if (RouterConfig.throwExceptionWhenRouteNotFound) {
+            throw RuntimeException("Route not found: ${postcard.path}", cause)
+        }
     }
 }

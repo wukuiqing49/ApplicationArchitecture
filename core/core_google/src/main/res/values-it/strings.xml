@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">Ti piace %1$s?</string>
+    <string name="rate_dialog_default_desc">Tocca una stella per valutare l?app o inviaci un feedback.</string>
+    <string name="rate_dialog_desc_good">Siamo felici di sentirlo! Lascia una recensione nello store per supportarci.</string>
+    <string name="rate_dialog_desc_bad">Ci dispiace che l?esperienza non sia stata ideale. Dicci cosa possiamo migliorare.</string>
+    <string name="rate_dialog_btn_cancel">Pi? tardi</string>
+    <string name="rate_dialog_btn_action_default">Valuta</string>
+    <string name="rate_dialog_btn_action_good">Valuta nello store</string>
+    <string name="rate_dialog_btn_action_bad">Invia feedback</string>
+    <string name="rate_feedback_email_subject">Feedback per %1$s (Android)</string>
+    <string name="rate_feedback_email_body">Ciao, ecco il mio feedback su %1$s:
+
+</string>
+    <string name="rate_feedback_no_email_client">Nessun client email installato. Invia il feedback a %1$s.</string>
+    <string name="rate_feedback_email_empty">L’email per il feedback non è configurata.</string>
+    <string name="rate_feedback_store_failed">Impossibile aprire lo store dell?app.</string>
+    <string name="rate_star_header_desc">Icona stella di valutazione</string>
+    <string name="rate_star_1_desc">1 stella</string>
+    <string name="rate_star_2_desc">2 stelle</string>
+    <string name="rate_star_3_desc">3 stelle</string>
+    <string name="rate_star_4_desc">4 stelle</string>
+    <string name="rate_star_5_desc">5 stelle</string>
+    <string name="google_billing_status_active">Abbonamento attivo</string>
+    <string name="google_billing_status_lifetime">Accesso a vita attivo</string>
+    <string name="google_billing_status_inactive">Piano gratuito</string>
+    <string name="google_billing_status_free_desc">Nessun diritto a pagamento attivo trovato.</string>
+    <string name="google_billing_status_unknown">Impossibile controllare lo stato dell’acquisto.</string>
+    <string name="google_billing_products_title">Piani disponibili</string>
+    <string name="google_billing_products_desc">Scegli un piano per continuare.</string>
+    <string name="google_billing_empty">Nessun piano di fatturazione configurato.</string>
+    <string name="google_billing_restore">Ripristina acquisti</string>
+    <string name="google_billing_restore_success">Stato dell’acquisto aggiornato.</string>
+    <string name="google_billing_purchase">Acquista</string>
+    <string name="google_billing_purchase_success">Acquisto completato correttamente.</string>
+    <string name="google_billing_purchase_canceled">Acquisto annullato.</string>
+    <string name="google_billing_purchase_failed">Acquisto non riuscito.</string>
+    <string name="google_billing_plan_unavailable">Non disponibile</string>
+    <string name="google_billing_load_failed">Impossibile caricare i prodotti di fatturazione.</string>
+</resources>

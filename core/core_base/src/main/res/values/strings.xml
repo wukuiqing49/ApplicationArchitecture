@@ -2,6 +2,9 @@
 
     <string name="string_cancel" >取消</string>
     <string name="string_sure">Yes</string>
+    <string name="base_cancel">取消</string>
+    <string name="base_confirm">确定</string>
+    <string name="base_loading">加载中...</string>
     <string name="permission_request_title">权限申请</string>
     <string name="permission_request_setting_title">权限申请</string>
     <string name="permission_permanently_denied">以下权限被永久拒绝，是否前往设置页面进行授权？</string>
@@ -13,7 +16,21 @@
     <string name="partial_permission_denied">部分权限被拒绝: %1$s</string>
     
     <string name="base_empty_no_data">暂无数据</string>
-    <string name="hello_from_base">Hello from core_base resources!</string>
     <string name="base_dialog_common_title">title</string>
     <string name="base_dialog_common_content">content</string>
+    <string name="srl_header_failed">刷新失败</string>
+    <string name="srl_header_finish">刷新完成</string>
+    <string name="srl_header_loading">等待底部加载完成...</string>
+    <string name="srl_header_pulling">下拉可以刷新</string>
+    <string name="srl_header_refreshing">正在刷新...</string>
+    <string name="srl_header_release">释放立即刷新</string>
+    <string name="srl_header_secondary">释放进入二楼</string>
+    <string name="srl_header_update">上次更新 M-d HH:mm</string>
+    <string name="srl_footer_failed">加载失败</string>
+    <string name="srl_footer_finish">加载完成</string>
+    <string name="srl_footer_loading">正在加载...</string>
+    <string name="srl_footer_nothing">没有更多数据了</string>
+    <string name="srl_footer_pulling">上拉加载更多</string>
+    <string name="srl_footer_refreshing">等待头部刷新完成...</string>
+    <string name="srl_footer_release">释放立即加载</string>
 </resources>

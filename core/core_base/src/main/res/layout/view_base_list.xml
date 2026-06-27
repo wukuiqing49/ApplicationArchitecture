@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"
-                app:emptyText="暂无数据" />
+                app:emptyText="@string/base_empty_no_data" />
 
         </FrameLayout>
 

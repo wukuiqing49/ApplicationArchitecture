@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="string_cancel">取消</string>
+    <string name="string_sure">確定</string>
+    <string name="base_cancel">取消</string>
+    <string name="base_confirm">確定</string>
+    <string name="base_loading">載入中...</string>
+    <string name="permission_request_title">權限申請</string>
+    <string name="permission_request_setting_title">權限申請</string>
+    <string name="permission_permanently_denied">以下權限已被永久拒絕，是否前往設定頁面授權？</string>
+    <string name="go_to_settings">前往設定</string>
+    <string name="cancel">取消</string>
+    <string name="permissions_granted_setting">請前往系統設定開啟應用程式通知</string>
+    <string name="permissions_granted">權限已在設定中開啟</string>
+    <string name="permissions_not_granted">權限仍未全部開啟，請再次檢查設定</string>
+    <string name="partial_permission_denied">部分權限被拒絕：%1$s</string>
+    <string name="base_empty_no_data">暫無資料</string>
+    <string name="base_dialog_common_title">提示</string>
+    <string name="base_dialog_common_content">內容</string>
+    <string name="srl_header_failed">刷新失敗</string>
+    <string name="srl_header_finish">刷新完成</string>
+    <string name="srl_header_loading">等待底部載入完成...</string>
+    <string name="srl_header_pulling">下拉可以刷新</string>
+    <string name="srl_header_refreshing">正在刷新...</string>
+    <string name="srl_header_release">釋放立即刷新</string>
+    <string name="srl_header_secondary">釋放進入二樓</string>
+    <string name="srl_header_update">上次更新 M-d HH:mm</string>
+    <string name="srl_footer_failed">載入失敗</string>
+    <string name="srl_footer_finish">載入完成</string>
+    <string name="srl_footer_loading">正在載入...</string>
+    <string name="srl_footer_nothing">沒有更多資料了</string>
+    <string name="srl_footer_pulling">上拉載入更多</string>
+    <string name="srl_footer_refreshing">等待頂部刷新完成...</string>
+    <string name="srl_footer_release">釋放立即載入</string>
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">Enjoying %1$s?</string>
+    <string name="rate_dialog_default_desc">Tap a star to rate it on the store or send us your thoughts.</string>
+    <string name="rate_dialog_desc_good">We are thrilled to hear that! Please leave us a 5-star review on the store to support our development.</string>
+    <string name="rate_dialog_desc_bad">We apologize for the poor experience. Please share your suggestions with us so we can improve!</string>
+    <string name="rate_dialog_btn_cancel">Maybe Later</string>
+    <string name="rate_dialog_btn_action_default">Rate</string>
+    <string name="rate_dialog_btn_action_good">Rate on Store</string>
+    <string name="rate_dialog_btn_action_bad">Send Feedback</string>
+    <string name="rate_star_header_desc">Rating star icon</string>
+    <string name="rate_star_1_desc">1 star</string>
+    <string name="rate_star_2_desc">2 stars</string>
+    <string name="rate_star_3_desc">3 stars</string>
+    <string name="rate_star_4_desc">4 stars</string>
+    <string name="rate_star_5_desc">5 stars</string>
+    
+    <string name="rate_feedback_email_subject">Feedback for %1$s (Android)</string>
+    <string name="rate_feedback_email_body">Hello, here is my suggestion for %1$s:\n\n</string>
+    <string name="rate_feedback_no_email_client">No email client installed. Please send feedback to %1$s.</string>
+    <string name="rate_feedback_email_empty">Feedback email is not configured.</string>
+    <string name="rate_feedback_store_failed">Failed to open application store.</string>
+
+    <string name="google_billing_status_active">Subscription Active</string>
+    <string name="google_billing_status_lifetime">Lifetime Access Active</string>
+    <string name="google_billing_status_inactive">Free Plan</string>
+    <string name="google_billing_status_free_desc">No active paid entitlement was found.</string>
+    <string name="google_billing_status_unknown">Unable to query purchase status.</string>
+    <string name="google_billing_products_title">Available Plans</string>
+    <string name="google_billing_products_desc">Choose a plan to continue.</string>
+    <string name="google_billing_empty">No billing plans configured.</string>
+    <string name="google_billing_restore">Restore Purchases</string>
+    <string name="google_billing_restore_success">Purchase status refreshed.</string>
+    <string name="google_billing_redeem_code">Redeem Code</string>
+    <string name="google_billing_redeem_refresh_hint">Redeem in Google Play, then return here to refresh purchase status.</string>
+    <string name="google_billing_redeem_open_failed">Failed to open Google Play redeem page.</string>
+    <string name="google_billing_redeem_page_title">Redeem Google Play code</string>
+    <string name="google_billing_redeem_page_desc">Enter a promo code or open Google Play directly. The final redemption is handled by Google Play.</string>
+    <string name="google_billing_redeem_code_hint">Promo code</string>
+    <string name="google_billing_redeem_open_google_play">Open Google Play to Redeem</string>
+    <string name="google_billing_redeem_refresh_status">Refresh Purchase Status</string>
+    <string name="google_billing_redeem_page_note">After redeeming, return to SiteReport and refresh purchase status. Valid codes can unlock a free in-app product or subscription trial configured in Google Play Console.</string>
+    <string name="google_billing_purchase">Purchase</string>
+    <string name="google_billing_purchase_success">Purchase completed successfully.</string>
+    <string name="google_billing_purchase_canceled">Purchase canceled.</string>
+    <string name="google_billing_purchase_failed">Purchase failed.</string>
+    <string name="google_billing_plan_unavailable">Not available</string>
+    <string name="google_billing_load_failed">Failed to load billing products.</string>
+</resources>

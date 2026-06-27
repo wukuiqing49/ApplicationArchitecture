@@ -1,0 +1,46 @@
+name: Publish core_base
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Maven version, for example 1.0.0"
+        required: true
+        type: string
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set version
+        id: version
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "value=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish core_base to GitHub Packages
+        run: ./gradlew :core:core_base:publishReleasePublicationToGitHubPackagesRepository -PPOM_GROUP_ID=com.github.${{ github.repository_owner }} -PPOM_VERSION=${{ steps.version.outputs.value }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_REPOSITORY: ${{ github.repository }}

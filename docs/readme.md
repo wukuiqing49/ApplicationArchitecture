@@ -21,7 +21,6 @@ mindmap
       ::icon(fa fa-cube)
       core_base[基础框架 - MVVM/BaseClasses]
       core_network[网络层 - Retrofit/Flow/FileUpload]
-      core_data[数据层 - Room/MMKV]
       core_user[用户中心 - MultiAccount/StateFlow]
       core_ui[UI组件 - CommonViews]
       core_util[工具类 - File/Image/Sp]
@@ -54,7 +53,7 @@ mindmap
 - **:app**: 组合所有业务模块，负责 Application 的初始化、全局配置及打包配置。
 
 ### 🛰️ 核心基础层 (Core Layer)
-- **:core:core_base**: 提供 MVVM 基础类（BaseActivity, BaseViewModel 等），规范生命周期管理。
+- **:core:core_base**: 提供 MVVM 基础类、标题页、列表页、弹框、权限、Insets、通用 View 等基础能力。使用说明见 [core_base 使用说明](core_base_usage.md)。
 - **:core:core_network**: 深度封装 Retrofit 3。主要特性：
     - **协程化 API**: 通过 `awaitResult()` 实现线性代码书写。
     - **全局拦截**: `GlobalNetHandler` 统一处理业务 Code（如 Token 失效）。
@@ -70,7 +69,6 @@ mindmap
         - **双重缓存 (loadPinned)**: 内存 + 磁盘强缓存，适用于头像、礼物等高频小资源。
         - **GIF 安全加载**: 自动关闭内存缓存防止 OOM，确保动画流畅。
         - **ImageView 扩展**: 提供 `loadUrl`, `loadRes`, `loadFile` 等简洁调用方式。
-- **:core:core_data**: 基于 Room 的本地持久化方案，支持自动迁移。
 
 ### 3. 🛣️ 路由框架 (Router X)
 由项目原生维护的高性能路由系统：

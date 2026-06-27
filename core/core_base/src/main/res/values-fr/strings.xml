@@ -1,0 +1,34 @@
+<resources>
+    <string name="string_cancel">Annuler</string>
+    <string name="string_sure">OK</string>
+    <string name="base_cancel">Annuler</string>
+    <string name="base_confirm">OK</string>
+    <string name="base_loading">Chargement...</string>
+    <string name="permission_request_title">Demande d’autorisation</string>
+    <string name="permission_request_setting_title">Demande d’autorisation</string>
+    <string name="permission_permanently_denied">Les autorisations suivantes ont été refusées définitivement. Ouvrir les paramètres pour les accorder ?</string>
+    <string name="go_to_settings">Ouvrir les paramètres</string>
+    <string name="cancel">Annuler</string>
+    <string name="permissions_granted_setting">Veuillez ouvrir les paramètres système et activer les notifications de l’application</string>
+    <string name="permissions_granted">Les autorisations ont été activées dans les paramètres</string>
+    <string name="permissions_not_granted">Certaines autorisations sont encore désactivées. Veuillez vérifier à nouveau les paramètres</string>
+    <string name="partial_permission_denied">Autorisations partiellement refusées : %1$s</string>
+    <string name="base_empty_no_data">Aucune donnée</string>
+    <string name="base_dialog_common_title">Avis</string>
+    <string name="base_dialog_common_content">Contenu</string>
+    <string name="srl_header_failed">Échec de l’actualisation</string>
+    <string name="srl_header_finish">Actualisation terminée</string>
+    <string name="srl_header_loading">En attente du chargement...</string>
+    <string name="srl_header_pulling">Tirez vers le bas pour actualiser</string>
+    <string name="srl_header_refreshing">Actualisation...</string>
+    <string name="srl_header_release">Relâchez pour actualiser</string>
+    <string name="srl_header_secondary">Relâchez pour le second niveau</string>
+    <string name="srl_header_update">Dernière mise à jour M-d HH:mm</string>
+    <string name="srl_footer_failed">Échec du chargement</string>
+    <string name="srl_footer_finish">Chargement terminé</string>
+    <string name="srl_footer_loading">Chargement...</string>
+    <string name="srl_footer_nothing">Plus de données</string>
+    <string name="srl_footer_pulling">Tirez vers le haut pour charger plus</string>
+    <string name="srl_footer_refreshing">En attente de l’actualisation...</string>
+    <string name="srl_footer_release">Relâchez pour charger</string>
+</resources>

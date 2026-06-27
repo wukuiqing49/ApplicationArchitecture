@@ -1,0 +1,34 @@
+<resources>
+    <string name="string_cancel">취소</string>
+    <string name="string_sure">OK</string>
+    <string name="base_cancel">취소</string>
+    <string name="base_confirm">OK</string>
+    <string name="base_loading">로딩 중...</string>
+    <string name="permission_request_title">권한 요청</string>
+    <string name="permission_request_setting_title">권한 요청</string>
+    <string name="permission_permanently_denied">다음 권한이 영구적으로 거부되었습니다. 설정을 열어 허용하시겠습니까?</string>
+    <string name="go_to_settings">설정 열기</string>
+    <string name="cancel">취소</string>
+    <string name="permissions_granted_setting">시스템 설정을 열고 앱 알림을 활성화하세요</string>
+    <string name="permissions_granted">설정에서 권한이 활성화되었습니다</string>
+    <string name="permissions_not_granted">일부 권한이 아직 비활성화되어 있습니다. 설정을 다시 확인하세요</string>
+    <string name="partial_permission_denied">일부 거부된 권한: %1$s</string>
+    <string name="base_empty_no_data">데이터 없음</string>
+    <string name="base_dialog_common_title">알림</string>
+    <string name="base_dialog_common_content">내용</string>
+    <string name="srl_header_failed">새로고침 실패</string>
+    <string name="srl_header_finish">새로고침 완료</string>
+    <string name="srl_header_loading">로딩 완료 대기 중...</string>
+    <string name="srl_header_pulling">아래로 당겨 새로고침</string>
+    <string name="srl_header_refreshing">새로고침 중...</string>
+    <string name="srl_header_release">놓으면 새로고침</string>
+    <string name="srl_header_secondary">놓으면 두 번째 단계로 이동</string>
+    <string name="srl_header_update">마지막 업데이트 M-d HH:mm</string>
+    <string name="srl_footer_failed">로드 실패</string>
+    <string name="srl_footer_finish">로드 완료</string>
+    <string name="srl_footer_loading">로딩 중...</string>
+    <string name="srl_footer_nothing">더 이상 데이터가 없습니다</string>
+    <string name="srl_footer_pulling">위로 당겨 더 불러오기</string>
+    <string name="srl_footer_refreshing">새로고침 대기 중...</string>
+    <string name="srl_footer_release">놓으면 로드</string>
+</resources>

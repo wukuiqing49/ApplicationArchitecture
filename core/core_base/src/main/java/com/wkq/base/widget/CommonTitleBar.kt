@@ -14,12 +14,10 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.annotation.ColorInt
 import com.wkq.base.R
+import com.wkq.base.insets.SystemBarInsets
 
 
-/**
- * 灏佽鐨勫浘鏂?Toolbar
- * 鍖呭惈 宸︿晶(Image+Text) 涓棿(Text) 鍙充晶(Text+Image)
- */
+
 class CommonTitleBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -40,38 +38,25 @@ class CommonTitleBar @JvmOverloads constructor(
     // 鐐瑰嚮浜嬩欢鐩戝惉
     var onLeftClickListener: (() -> Unit)? = null
     var onRightClickListener: (() -> Unit)? = null
-    var fitStatusBar = true
+    var fitStatusBar = false
 
-    private fun getStatusBarHeight(context: Context): Int {
-        val resId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
-        return if (resId > 0) context.resources.getDimensionPixelSize(resId) else 0
-    }
     init {
         // 鍔犺浇甯冨眬
         LayoutInflater.from(context).inflate(R.layout.view_common_title_bar, this, true)
-        val initialLeft = paddingLeft
-        val initialTop = paddingTop
-        val initialRight = paddingRight
-        val initialBottom = paddingBottom
 
         if (attrs != null) {
             val ta = context.obtainStyledAttributes(attrs, R.styleable.CommonTitleBar)
 
             fitStatusBar = ta.getBoolean(
                 R.styleable.CommonTitleBar_titleBar_fitStatusBar,
-                true
+                false
             )
 
             ta.recycle()
         }
 
         if (fitStatusBar) {
-            val top = getStatusBarHeight(context)
-            if (paddingTop != top) {
-                setPadding(initialLeft, top, initialRight, initialBottom)
-            }
-        } else {
-            setPadding(initialLeft, initialTop, initialRight, initialBottom)
+            applyStatusBarInset()
         }
         // 缁戝畾 ID
         llLeft = findViewById(R.id.ll_left_container)
@@ -134,6 +119,10 @@ class CommonTitleBar @JvmOverloads constructor(
     }
 
 
+
+    fun applyStatusBarInset() {
+        SystemBarInsets.applyTopInset(this)
+    }
 
     // --- 涓棿鏍囬寮€鏀炬柟娉?---
     fun setTitle(title: String?) {

@@ -1,0 +1,9 @@
+<resources>
+    <dimen name="camera_horizontal_spacing">20dp</dimen>
+    <dimen name="camera_top_spacing">24dp</dimen>
+    <dimen name="camera_top_action_size">40dp</dimen>
+    <dimen name="camera_top_scrim_height">160dp</dimen>
+    <dimen name="camera_status_margin_top">92dp</dimen>
+    <dimen name="camera_bottom_spacing">36dp</dimen>
+    <dimen name="camera_capture_button_size">88dp</dimen>
+</resources>

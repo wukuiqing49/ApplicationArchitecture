@@ -32,5 +32,5 @@ kotlin {
 
 dependencies {
     implementation libs.androidx.core.ktx
-    api libs.mmkv
+    api project(':core:core_util')
 }

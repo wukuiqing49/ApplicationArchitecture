@@ -32,6 +32,42 @@
             android:name="com.wkq.test.TestActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name="com.wkq.test.CoreModulesDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.CoreBaseDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseActivityDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseVMActivityDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseTitleActivityDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseVMTitleActivityDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseListActivityDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseVMListActivityDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseListStateDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseFullScreenActivityDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseVMFullScreenActivityDemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wkq.test.corebase.CoreBaseFragmentHostActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.wkq.test.router.NetDynamicBaseUrlActivity"
             android:screenOrientation="portrait" />
         <activity

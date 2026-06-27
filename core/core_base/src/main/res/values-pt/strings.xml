@@ -1,0 +1,34 @@
+<resources>
+    <string name="string_cancel">Cancelar</string>
+    <string name="string_sure">OK</string>
+    <string name="base_cancel">Cancelar</string>
+    <string name="base_confirm">OK</string>
+    <string name="base_loading">Carregando...</string>
+    <string name="permission_request_title">Solicitação de permissões</string>
+    <string name="permission_request_setting_title">Solicitação de permissões</string>
+    <string name="permission_permanently_denied">As seguintes permissões foram negadas permanentemente. Abrir as configurações para concedê-las?</string>
+    <string name="go_to_settings">Abrir configurações</string>
+    <string name="cancel">Cancelar</string>
+    <string name="permissions_granted_setting">Abra as configurações do sistema e ative as notificações do app</string>
+    <string name="permissions_granted">As permissões foram ativadas nas configurações</string>
+    <string name="permissions_not_granted">Algumas permissões ainda estão desativadas. Verifique as configurações novamente</string>
+    <string name="partial_permission_denied">Permissões parcialmente negadas: %1$s</string>
+    <string name="base_empty_no_data">Sem dados</string>
+    <string name="base_dialog_common_title">Aviso</string>
+    <string name="base_dialog_common_content">Conteúdo</string>
+    <string name="srl_header_failed">Falha ao atualizar</string>
+    <string name="srl_header_finish">Atualização concluída</string>
+    <string name="srl_header_loading">Aguardando carregamento...</string>
+    <string name="srl_header_pulling">Puxe para baixo para atualizar</string>
+    <string name="srl_header_refreshing">Atualizando...</string>
+    <string name="srl_header_release">Solte para atualizar</string>
+    <string name="srl_header_secondary">Solte para o segundo nível</string>
+    <string name="srl_header_update">Última atualização M-d HH:mm</string>
+    <string name="srl_footer_failed">Falha ao carregar</string>
+    <string name="srl_footer_finish">Carregamento concluído</string>
+    <string name="srl_footer_loading">Carregando...</string>
+    <string name="srl_footer_nothing">Não há mais dados</string>
+    <string name="srl_footer_pulling">Puxe para cima para carregar mais</string>
+    <string name="srl_footer_refreshing">Aguardando atualização...</string>
+    <string name="srl_footer_release">Solte para carregar</string>
+</resources>

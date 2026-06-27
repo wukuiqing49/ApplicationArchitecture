@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">Vous aimez %1$s ?</string>
+    <string name="rate_dialog_default_desc">Touchez une ?toile pour noter l?application ou envoyez-nous vos remarques.</string>
+    <string name="rate_dialog_desc_good">Ravi de l?entendre ! Laissez un avis sur la boutique pour nous soutenir.</string>
+    <string name="rate_dialog_desc_bad">D?sol? que l?exp?rience ne soit pas id?ale. Dites-nous ce que nous pouvons am?liorer.</string>
+    <string name="rate_dialog_btn_cancel">Plus tard</string>
+    <string name="rate_dialog_btn_action_default">Noter</string>
+    <string name="rate_dialog_btn_action_good">Noter sur la boutique</string>
+    <string name="rate_dialog_btn_action_bad">Envoyer un avis</string>
+    <string name="rate_star_header_desc">Icône étoile de notation</string>
+    <string name="rate_star_1_desc">1 étoile</string>
+    <string name="rate_star_2_desc">2 étoiles</string>
+    <string name="rate_star_3_desc">3 étoiles</string>
+    <string name="rate_star_4_desc">4 étoiles</string>
+    <string name="rate_star_5_desc">5 étoiles</string>
+    
+    <string name="rate_feedback_email_subject">Avis sur %1$s (Android)</string>
+    <string name="rate_feedback_email_body">Bonjour, voici mon avis sur %1$s :
+
+</string>
+    <string name="rate_feedback_no_email_client">Aucun client e-mail install?. Envoyez votre avis ? %1$s.</string>
+    <string name="rate_feedback_email_empty">L’adresse e-mail de retour n’est pas configurée.</string>
+    <string name="rate_feedback_store_failed">Impossible d?ouvrir la boutique d?applications.</string>
+
+    <string name="google_billing_status_active">Abonnement actif</string>
+    <string name="google_billing_status_lifetime">Acces a vie actif</string>
+    <string name="google_billing_status_inactive">Offre gratuite</string>
+    <string name="google_billing_status_free_desc">Aucun droit payant actif n’a été trouvé.</string>
+    <string name="google_billing_status_unknown">Impossible de consulter l’état d’achat.</string>
+    <string name="google_billing_products_title">Offres disponibles</string>
+    <string name="google_billing_products_desc">Choisissez une offre pour continuer.</string>
+    <string name="google_billing_empty">Aucune offre de facturation configurée.</string>
+    <string name="google_billing_restore">Restaurer les achats</string>
+    <string name="google_billing_restore_success">État d’achat actualisé.</string>
+    <string name="google_billing_redeem_code">Utiliser un code</string>
+    <string name="google_billing_redeem_refresh_hint">Utilisez le code dans Google Play, puis revenez ici pour actualiser le statut d achat.</string>
+    <string name="google_billing_redeem_open_failed">Impossible d ouvrir la page de code Google Play.</string>
+    <string name="google_billing_redeem_page_title">Utiliser un code Google Play</string>
+    <string name="google_billing_redeem_page_desc">Saisissez un code promotionnel ou ouvrez directement Google Play. L activation finale est geree par Google Play.</string>
+    <string name="google_billing_redeem_code_hint">Code promotionnel</string>
+    <string name="google_billing_redeem_open_google_play">Ouvrir Google Play</string>
+    <string name="google_billing_redeem_refresh_status">Actualiser le statut d achat</string>
+    <string name="google_billing_redeem_page_note">Apres activation, revenez dans SiteReport et actualisez le statut d achat. Les codes valides peuvent debloquer un produit gratuit ou un essai d abonnement configure dans Google Play Console.</string>
+    <string name="google_billing_purchase">Acheter</string>
+    <string name="google_billing_purchase_success">Achat terminé avec succès.</string>
+    <string name="google_billing_purchase_canceled">Achat annulé.</string>
+    <string name="google_billing_purchase_failed">Échec de l’achat.</string>
+    <string name="google_billing_plan_unavailable">Non disponible</string>
+    <string name="google_billing_load_failed">Impossible de charger les produits de facturation.</string>
+</resources>

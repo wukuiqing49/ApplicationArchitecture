@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rate_dialog_default_title">%1$s이 마음에 드시나요?</string>
+    <string name="rate_dialog_default_desc">별점을 선택해 스토어에서 평가하거나 의견을 보내 주세요.</string>
+    <string name="rate_dialog_desc_good">좋게 봐주셔서 감사합니다. 개발을 응원할 수 있도록 스토어에서 5점 리뷰를 남겨 주세요.</string>
+    <string name="rate_dialog_desc_bad">만족스러운 경험을 드리지 못해 죄송합니다. 개선할 점을 알려 주세요.</string>
+    <string name="rate_dialog_btn_cancel">나중에</string>
+    <string name="rate_dialog_btn_action_default">평가</string>
+    <string name="rate_dialog_btn_action_good">스토어에서 평가</string>
+    <string name="rate_dialog_btn_action_bad">피드백 보내기</string>
+    <string name="rate_star_header_desc">평점 별 아이콘</string>
+    <string name="rate_star_1_desc">별 1개</string>
+    <string name="rate_star_2_desc">별 2개</string>
+    <string name="rate_star_3_desc">별 3개</string>
+    <string name="rate_star_4_desc">별 4개</string>
+    <string name="rate_star_5_desc">별 5개</string>
+    
+    <string name="rate_feedback_email_subject">%1$s 피드백 (Android)</string>
+    <string name="rate_feedback_email_body">안녕하세요. %1$s에 대한 제 의견입니다:\n\n</string>
+    <string name="rate_feedback_no_email_client">설치된 메일 앱이 없습니다. %1$s로 피드백을 보내 주세요.</string>
+    <string name="rate_feedback_email_empty">피드백 이메일이 설정되어 있지 않습니다.</string>
+    <string name="rate_feedback_store_failed">앱 스토어를 열 수 없습니다.</string>
+
+    <string name="google_billing_status_active">구독 활성</string>
+    <string name="google_billing_status_lifetime">평생 이용 활성</string>
+    <string name="google_billing_status_inactive">무료 플랜</string>
+    <string name="google_billing_status_free_desc">활성화된 유료 권한을 찾을 수 없습니다.</string>
+    <string name="google_billing_status_unknown">구매 상태를 조회할 수 없습니다.</string>
+    <string name="google_billing_products_title">사용 가능한 플랜</string>
+    <string name="google_billing_products_desc">계속하려면 플랜을 선택하세요.</string>
+    <string name="google_billing_empty">설정된 결제 플랜이 없습니다.</string>
+    <string name="google_billing_restore">구매 복원</string>
+    <string name="google_billing_restore_success">구매 상태를 새로고침했습니다.</string>
+    <string name="google_billing_redeem_code">코드 사용</string>
+    <string name="google_billing_redeem_refresh_hint">Google Play에서 코드를 사용한 뒤 여기로 돌아와 구매 상태를 새로고침하세요.</string>
+    <string name="google_billing_redeem_open_failed">Google Play 코드 사용 페이지를 열 수 없습니다.</string>
+    <string name="google_billing_redeem_page_title">Google Play 코드 사용</string>
+    <string name="google_billing_redeem_page_desc">프로모션 코드를 입력하거나 Google Play를 직접 여세요. 최종 사용 처리는 Google Play에서 진행됩니다.</string>
+    <string name="google_billing_redeem_code_hint">프로모션 코드</string>
+    <string name="google_billing_redeem_open_google_play">Google Play에서 사용</string>
+    <string name="google_billing_redeem_refresh_status">구매 상태 새로고침</string>
+    <string name="google_billing_redeem_page_note">코드를 사용한 뒤 SiteReport로 돌아와 구매 상태를 새로고침하세요. 유효한 코드는 Google Play Console에 설정된 무료 인앱 상품 또는 구독 체험을 활성화할 수 있습니다.</string>
+    <string name="google_billing_purchase">구매</string>
+    <string name="google_billing_purchase_success">구매가 완료되었습니다.</string>
+    <string name="google_billing_purchase_canceled">구매가 취소되었습니다.</string>
+    <string name="google_billing_purchase_failed">구매에 실패했습니다.</string>
+    <string name="google_billing_plan_unavailable">사용할 수 없음</string>
+    <string name="google_billing_load_failed">결제 상품을 불러오지 못했습니다.</string>
+</resources>

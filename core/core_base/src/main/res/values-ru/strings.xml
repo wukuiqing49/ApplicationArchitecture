@@ -1,0 +1,34 @@
+<resources>
+    <string name="string_cancel">Отмена</string>
+    <string name="string_sure">OK</string>
+    <string name="base_cancel">Отмена</string>
+    <string name="base_confirm">OK</string>
+    <string name="base_loading">Загрузка...</string>
+    <string name="permission_request_title">Запрос разрешений</string>
+    <string name="permission_request_setting_title">Запрос разрешений</string>
+    <string name="permission_permanently_denied">Следующие разрешения были запрещены навсегда. Открыть настройки, чтобы предоставить их?</string>
+    <string name="go_to_settings">Открыть настройки</string>
+    <string name="cancel">Отмена</string>
+    <string name="permissions_granted_setting">Откройте системные настройки и включите уведомления приложения</string>
+    <string name="permissions_granted">Разрешения включены в настройках</string>
+    <string name="permissions_not_granted">Некоторые разрешения все еще отключены. Проверьте настройки еще раз</string>
+    <string name="partial_permission_denied">Частично запрещенные разрешения: %1$s</string>
+    <string name="base_empty_no_data">Нет данных</string>
+    <string name="base_dialog_common_title">Уведомление</string>
+    <string name="base_dialog_common_content">Содержимое</string>
+    <string name="srl_header_failed">Не удалось обновить</string>
+    <string name="srl_header_finish">Обновление завершено</string>
+    <string name="srl_header_loading">Ожидание загрузки...</string>
+    <string name="srl_header_pulling">Потяните вниз, чтобы обновить</string>
+    <string name="srl_header_refreshing">Обновление...</string>
+    <string name="srl_header_release">Отпустите, чтобы обновить</string>
+    <string name="srl_header_secondary">Отпустите для второго уровня</string>
+    <string name="srl_header_update">Последнее обновление M-d HH:mm</string>
+    <string name="srl_footer_failed">Не удалось загрузить</string>
+    <string name="srl_footer_finish">Загрузка завершена</string>
+    <string name="srl_footer_loading">Загрузка...</string>
+    <string name="srl_footer_nothing">Данных больше нет</string>
+    <string name="srl_footer_pulling">Потяните вверх, чтобы загрузить еще</string>
+    <string name="srl_footer_refreshing">Ожидание обновления...</string>
+    <string name="srl_footer_release">Отпустите, чтобы загрузить</string>
+</resources>

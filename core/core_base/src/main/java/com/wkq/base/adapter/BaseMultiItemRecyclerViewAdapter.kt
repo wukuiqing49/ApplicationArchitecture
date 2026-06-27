@@ -31,6 +31,42 @@ abstract class BaseMultiItemRecyclerViewAdapter<T : IBaseMultiItem> :
     }
 
     /**
+     * 追加多条数据。
+     */
+    fun addData(newData: List<T>?) {
+        if (newData.isNullOrEmpty()) return
+        val startPosition = dataList.size
+        dataList.addAll(newData)
+        notifyItemRangeInserted(startPosition, newData.size)
+    }
+
+    /**
+     * 更新指定位置的数据。
+     */
+    fun updateData(position: Int, item: T) {
+        if (position !in dataList.indices) return
+        dataList[position] = item
+        notifyItemChanged(position)
+    }
+
+    /**
+     * 删除指定位置的数据。
+     */
+    fun removeAt(position: Int) {
+        if (position !in dataList.indices) return
+        dataList.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    /**
+     * 清空所有数据。
+     */
+    fun clearData() {
+        dataList.clear()
+        notifyDataSetChanged()
+    }
+
+    /**
      * 获取数据列表
      */
     fun getData(): List<T> = dataList

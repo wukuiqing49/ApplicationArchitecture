@@ -1,0 +1,34 @@
+<resources>
+    <string name="string_cancel">Abbrechen</string>
+    <string name="string_sure">OK</string>
+    <string name="base_cancel">Abbrechen</string>
+    <string name="base_confirm">OK</string>
+    <string name="base_loading">Wird geladen...</string>
+    <string name="permission_request_title">Berechtigungsanfrage</string>
+    <string name="permission_request_setting_title">Berechtigungsanfrage</string>
+    <string name="permission_permanently_denied">Die folgenden Berechtigungen wurden dauerhaft verweigert. Einstellungen öffnen, um sie zu erteilen?</string>
+    <string name="go_to_settings">Einstellungen öffnen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="permissions_granted_setting">Bitte öffnen Sie die Systemeinstellungen und aktivieren Sie App-Benachrichtigungen</string>
+    <string name="permissions_granted">Berechtigungen wurden in den Einstellungen aktiviert</string>
+    <string name="permissions_not_granted">Einige Berechtigungen sind noch deaktiviert. Bitte prüfen Sie die Einstellungen erneut</string>
+    <string name="partial_permission_denied">Teilweise verweigerte Berechtigungen: %1$s</string>
+    <string name="base_empty_no_data">Keine Daten</string>
+    <string name="base_dialog_common_title">Hinweis</string>
+    <string name="base_dialog_common_content">Inhalt</string>
+    <string name="srl_header_failed">Aktualisierung fehlgeschlagen</string>
+    <string name="srl_header_finish">Aktualisierung abgeschlossen</string>
+    <string name="srl_header_loading">Warten auf Ladevorgang...</string>
+    <string name="srl_header_pulling">Zum Aktualisieren nach unten ziehen</string>
+    <string name="srl_header_refreshing">Wird aktualisiert...</string>
+    <string name="srl_header_release">Zum Aktualisieren loslassen</string>
+    <string name="srl_header_secondary">Loslassen für zweite Ebene</string>
+    <string name="srl_header_update">Letzte Aktualisierung M-d HH:mm</string>
+    <string name="srl_footer_failed">Laden fehlgeschlagen</string>
+    <string name="srl_footer_finish">Laden abgeschlossen</string>
+    <string name="srl_footer_loading">Wird geladen...</string>
+    <string name="srl_footer_nothing">Keine weiteren Daten</string>
+    <string name="srl_footer_pulling">Nach oben ziehen, um mehr zu laden</string>
+    <string name="srl_footer_refreshing">Warten auf Aktualisierung...</string>
+    <string name="srl_footer_release">Loslassen zum Laden</string>
+</resources>

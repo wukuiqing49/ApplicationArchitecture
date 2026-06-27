@@ -1,5 +1,7 @@
 package com.wkq.base.activity
 
+import android.graphics.Color
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +9,7 @@ import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.viewbinding.ViewBinding
 import com.wkq.base.databinding.ViewTitleContentContainerBinding
-import java.lang.reflect.ParameterizedType
+import com.wkq.base.reflect.resolveGenericClass
 
 abstract class BaseTitleActivity<ContentVB : ViewBinding> :
     BaseActivity<ViewTitleContentContainerBinding>() {
@@ -23,8 +25,7 @@ abstract class BaseTitleActivity<ContentVB : ViewBinding> :
     override fun initViewBinding() {
         binding = ViewTitleContentContainerBinding.inflate(layoutInflater)
 
-        val type = javaClass.genericSuperclass as ParameterizedType
-        val clazz = type.actualTypeArguments[0] as Class<ContentVB>
+        val clazz = resolveGenericClass<ContentVB>(this, 0)
         val method = clazz.getMethod("inflate", LayoutInflater::class.java)
         contentBinding = method.invoke(null, layoutInflater) as ContentVB
 
@@ -95,15 +96,25 @@ abstract class BaseTitleActivity<ContentVB : ViewBinding> :
         }
     }
 
+    override fun applyDefaultSystemBarsInsets() {
+        // 标题页由 CommonTitleBar 处理顶部 Insets，内容区默认约束在标题栏下方。
+    }
+
     override fun initImmersionBar() {
         super.initImmersionBar()
-        setViewBelowStatusBar(binding.titleBar)
+        binding.titleBar.applyStatusBarInset()
         setTitleContentLayoutMode(TitleContentLayoutMode.VERTICAL)
     }
 
-    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.titleBar.onLeftClickListener = { finish() }
+    }
+
+    fun showTitleFullScreen() {
+        binding.titleBar.setLeftIconVisible(false)
+        setTitleContentLayoutMode(TitleContentLayoutMode.OVERLAY)
+        binding.titleBar.setBackgroundColor(Color.TRANSPARENT)
     }
 
     protected fun setPageTitle(title: String) {
