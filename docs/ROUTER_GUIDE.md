@@ -2,6 +2,12 @@
 
 Router X 是一个 Android 组件化路由库，基于 KSP 在编译期生成路由表，运行时通过 ServiceLoader 自动加载。支持页面跳转、参数传递、参数自动注入、ActivityResult、Fragment/View 获取、拦截器、服务发现和路由降级。
 
+网络版本发布流程见：
+
+```text
+core/路由版本发布.md
+```
+
 ## 1. 你需要接入哪些东西
 
 Router X 分三部分：
@@ -20,14 +26,14 @@ router-processor    KSP 处理器，负责生成路由注册代码
 :core:core_router_processor
 ```
 
-如果是发成网络库，推荐坐标为：
+如果是发成 JitPack 网络库，推荐坐标为：
 
 ```text
-com.wkq.router:router-api:1.0.0
-com.wkq.router:router-processor:1.0.0
+com.github.wukuiqing49.ApplicationArchitecture:core_router_api:v1.0.0
+com.github.wukuiqing49.ApplicationArchitecture:core_router_processor:v1.0.0
 ```
 
-`router-api` 会通过 `api` 暴露 `router-annotation`，普通使用方只需要依赖 `router-api` 和 `router-processor`。
+`core_router_api` 会通过 `api` 暴露 `core_router_annotation`，普通使用方只需要依赖 `core_router_api` 和 `core_router_processor`。
 
 ## 2. 本地源码引用
 
@@ -203,8 +209,8 @@ ksp {
 }
 
 dependencies {
-    implementation "com.wkq.router:router-api:1.0.0"
-    ksp "com.wkq.router:router-processor:1.0.0"
+    implementation "com.github.wukuiqing49.ApplicationArchitecture:core_router_api:v1.0.0"
+    ksp "com.github.wukuiqing49.ApplicationArchitecture:core_router_processor:v1.0.0"
 }
 ```
 
@@ -212,12 +218,12 @@ Version Catalog 写法：
 
 ```toml
 [versions]
-router = "1.0.0"
+router = "v1.0.0"
 ksp = "你的 Kotlin 对应版本"
 
 [libraries]
-router-api = { module = "com.wkq.router:router-api", version.ref = "router" }
-router-processor = { module = "com.wkq.router:router-processor", version.ref = "router" }
+router-api = { module = "com.github.wukuiqing49.ApplicationArchitecture:core_router_api", version.ref = "router" }
+router-processor = { module = "com.github.wukuiqing49.ApplicationArchitecture:core_router_processor", version.ref = "router" }
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -248,7 +254,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    implementation "com.wkq.router:router-api:1.0.0"
+    implementation "com.github.wukuiqing49.ApplicationArchitecture:core_router_api:v1.0.0"
 }
 ```
 
@@ -634,11 +640,11 @@ implementation project(":core:core_router_api")
 ksp project(":core:core_router_processor")
 ```
 
-Maven 引用：
+JitPack Maven 引用：
 
 ```gradle
-implementation "com.wkq.router:router-api:1.0.0"
-ksp "com.wkq.router:router-processor:1.0.0"
+implementation "com.github.wukuiqing49.ApplicationArchitecture:core_router_api:v1.0.0"
+ksp "com.github.wukuiqing49.ApplicationArchitecture:core_router_processor:v1.0.0"
 ```
 
 同一个 App 内只保留一种方式。

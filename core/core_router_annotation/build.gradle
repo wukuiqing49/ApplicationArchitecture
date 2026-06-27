@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id 'org.jetbrains.kotlin.jvm'
+    id 'maven-publish'
 }
 
 dependencies {
@@ -11,5 +12,53 @@ dependencies {
 kotlin {
     compilerOptions {
         jvmTarget = JvmTarget.JVM_17
+    }
+}
+
+java {
+    withSourcesJar()
+}
+
+def publishedGroupId = providers.gradleProperty("POM_GROUP_ID")
+        .orElse(providers.environmentVariable("POM_GROUP_ID"))
+        .orElse("com.github.USER.REPOSITORY")
+def publishedVersion = providers.gradleProperty("POM_VERSION")
+        .orElse(providers.environmentVariable("POM_VERSION"))
+        .orElse("0.0.1-SNAPSHOT")
+def githubRepository = providers.gradleProperty("GITHUB_REPOSITORY")
+        .orElse(providers.environmentVariable("GITHUB_REPOSITORY"))
+        .orElse("OWNER/REPOSITORY")
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            from components.java
+            groupId = publishedGroupId.get()
+            artifactId = "core_router_annotation"
+            version = publishedVersion.get()
+
+            pom {
+                name = "core_router_annotation"
+                description = "Router X annotations and generated bootstrap interfaces."
+                url = "https://github.com/${githubRepository.get()}"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "wukuiqing49"
+                        name = "wukuiqing49"
+                    }
+                }
+                scm {
+                    connection = "scm:git:https://github.com/${githubRepository.get()}.git"
+                    developerConnection = "scm:git:ssh://git@github.com/${githubRepository.get()}.git"
+                    url = "https://github.com/${githubRepository.get()}"
+                }
+            }
+        }
     }
 }

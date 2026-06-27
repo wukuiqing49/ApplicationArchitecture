@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id 'maven-publish'
 }
 
 android {
@@ -15,6 +16,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
     }
 
     kotlin {
@@ -32,7 +39,55 @@ dependencies {
     
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
-    implementation libs.androidx.fragment.ktx
+    api libs.androidx.fragment.ktx
+    api libs.androidx.activity.ktx
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.androidx.lifecycle.viewmodel.ktx
+}
+
+def publishedGroupId = providers.gradleProperty("POM_GROUP_ID")
+        .orElse(providers.environmentVariable("POM_GROUP_ID"))
+        .orElse("com.github.USER.REPOSITORY")
+def publishedVersion = providers.gradleProperty("POM_VERSION")
+        .orElse(providers.environmentVariable("POM_VERSION"))
+        .orElse("0.0.1-SNAPSHOT")
+def githubRepository = providers.gradleProperty("GITHUB_REPOSITORY")
+        .orElse(providers.environmentVariable("GITHUB_REPOSITORY"))
+        .orElse("OWNER/REPOSITORY")
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = publishedGroupId.get()
+            artifactId = "core_router_api"
+            version = publishedVersion.get()
+
+            afterEvaluate {
+                from components.release
+            }
+
+            pom {
+                name = "core_router_api"
+                description = "Router X Android runtime API."
+                url = "https://github.com/${githubRepository.get()}"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "wukuiqing49"
+                        name = "wukuiqing49"
+                    }
+                }
+                scm {
+                    connection = "scm:git:https://github.com/${githubRepository.get()}.git"
+                    developerConnection = "scm:git:ssh://git@github.com/${githubRepository.get()}.git"
+                    url = "https://github.com/${githubRepository.get()}"
+                }
+            }
+        }
+    }
 }
