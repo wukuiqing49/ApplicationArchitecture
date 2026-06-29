@@ -1,16 +1,16 @@
 package com.wkq.app
 
 import android.app.Application
+import com.wkq.app.BuildConfig
+import com.wkq.app.base.BaseApplication
 import com.wkq.common.web.util.WebPreLoader
-import com.wkq.router.api.Router
 import com.wkq.net.config.NetConfig
 import com.wkq.net.core.NetManager
+import com.wkq.router.api.Router
 import com.wkq.user.manager.UserManager
 import com.wkq.util.ProcessUtils
 import com.wkq.util.SpUtils
 import com.wkq.util.coil.CacheManager
-
-import com.wkq.app.base.BaseApplication
 
 /**
  * 全局 Application
@@ -28,13 +28,14 @@ class MyApplication : BaseApplication() {
         // 初始化路由 (确保子进程也能跨模块跳转)
         Router.init(this)
         val config = NetConfig.Builder()
-            .setBaseUrl("https://api.example.com/") // 主的
-            .putBaseUrl("google", "https://google.com/") // 演示动态域名
-            .putBaseUrl("github", "https://api.github.com/") // 演示动态域名
+            .setBaseUrl("https://api.example.com/")
+            .putBaseUrl("google", "https://google.com/")
+            .putBaseUrl("github", "https://api.github.com/")
             .setConnectTimeout(15L)
             .setReadTimeout(20L)
             .setWriteTimeout(20L)
             .setDebugLogsEnabled(true)
+            .setAllowUnsafeSsl(BuildConfig.DEBUG)
             .addDefaultHeader("Global-Version", "1.0.0")
             .build()
 

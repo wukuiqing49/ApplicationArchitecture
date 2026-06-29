@@ -2,4 +2,4 @@ jdk:
   - openjdk17
 
 install:
-  - ./gradlew :core:core_base:publishReleasePublicationToMavenLocal :core:core_router_annotation:publishReleasePublicationToMavenLocal :core:core_router_api:publishReleasePublicationToMavenLocal :core:core_router_processor:publishReleasePublicationToMavenLocal -PPOM_GROUP_ID=$GROUP.$ARTIFACT -PPOM_VERSION=$VERSION -PGITHUB_REPOSITORY=${GROUP#com.github.}/$ARTIFACT
+  - ./gradlew :core:core_base:publishReleasePublicationToMavenLocal :core:core_network:publishReleasePublicationToMavenLocal :core:core_router_annotation:publishReleasePublicationToMavenLocal :core:core_router_api:publishReleasePublicationToMavenLocal :core:core_router_processor:publishReleasePublicationToMavenLocal -PPOM_GROUP_ID=$GROUP.$ARTIFACT -PPOM_VERSION=$VERSION -PGITHUB_REPOSITORY=${GROUP#com.github.}/$ARTIFACT

@@ -18,6 +18,17 @@ object LoggingInterceptor {
 
 
     private const val MAX_LENGTH = 3000
+    private const val MAX_BODY_LOG_BYTES = 256 * 1024L
+    private val SENSITIVE_HEADER_NAMES = setOf(
+        "authorization",
+        "cookie",
+        "set-cookie",
+        "token",
+        "access-token",
+        "refresh-token",
+        "x-token",
+        "x-auth-token"
+    )
 
     fun create(isDebug: Boolean): Interceptor {
         return Interceptor { chain ->
@@ -60,7 +71,7 @@ object LoggingInterceptor {
             sb.append("Headers:\n")
             for (name in request.headers.names()) {
                 sb.append("  ").append(name).append(": ")
-                    .append(request.header(name)).append("\n")
+                    .append(maskHeaderValue(name, request.header(name))).append("\n")
             }
         }
 
@@ -70,7 +81,7 @@ object LoggingInterceptor {
                 sb.append("  ")
                     .append(url.queryParameterName(i))
                     .append(" = ")
-                    .append(url.queryParameterValue(i))
+                    .append(maskValueIfSensitive(url.queryParameterName(i), url.queryParameterValue(i)))
                     .append("\n")
             }
         }
@@ -101,29 +112,39 @@ object LoggingInterceptor {
             sb.append("Headers:\n")
             for (name in response.headers.names()) {
                 sb.append("  ").append(name).append(": ")
-                    .append(response.header(name)).append("\n")
+                    .append(maskHeaderValue(name, response.header(name))).append("\n")
             }
         }
 
-        if (responseBody != null) {
-            val contentType = responseBody.contentType()?.toString().orEmpty()
-            sb.append("Response Content-Type: ").append(contentType).append("\n")
+        val contentType = responseBody.contentType()?.toString().orEmpty()
+        sb.append("Response Content-Type: ").append(contentType).append("\n")
 
-            try {
+        try {
+            if (shouldSkipBodyLog(contentType, responseBody.contentLength())) {
+                sb.append("Response Body: skipped, contentLength=")
+                    .append(responseBody.contentLength())
+                    .append("\n")
+            } else {
                 val source = responseBody.source()
-                source.request(Long.MAX_VALUE)
+                source.request(MAX_BODY_LOG_BYTES)
                 val buffer = source.buffer.clone()
+                val readLength = buffer.size.coerceAtMost(MAX_BODY_LOG_BYTES)
 
                 val charset = responseBody.contentType()?.charset(Charsets.UTF_8) ?: Charsets.UTF_8
-                val bodyString = buffer.readString(charset)
+                val bodyString = buffer.readString(readLength, charset)
 
                 if (bodyString.isNotBlank()) {
                     sb.append("Response Body:\n")
                     sb.append(formatJsonIfNeeded(bodyString)).append("\n")
+                    if (responseBody.contentLength() > MAX_BODY_LOG_BYTES) {
+                        sb.append("Response Body 已截断，仅展示前 ")
+                            .append(MAX_BODY_LOG_BYTES)
+                            .append(" bytes\n")
+                    }
                 }
-            } catch (e: Exception) {
-                sb.append("Response Body 读取失败: ").append(e.message).append("\n")
             }
+        } catch (e: Exception) {
+            sb.append("Response Body 读取失败: ").append(e.message).append("\n")
         }
 
         sb.append("================ 响应结束 ================\n")
@@ -140,7 +161,7 @@ object LoggingInterceptor {
                         sb.append("  ")
                             .append(body.name(i))
                             .append(" = ")
-                            .append(body.value(i))
+                            .append(maskValueIfSensitive(body.name(i), body.value(i)))
                             .append("\n")
                     }
                     sb.toString()
@@ -190,5 +211,31 @@ object LoggingInterceptor {
             Log.d(tag, message.substring(start, end))
             start = end
         }
+    }
+
+    private fun shouldSkipBodyLog(contentType: String, contentLength: Long): Boolean {
+        val lowerContentType = contentType.lowercase()
+        if (contentLength > MAX_BODY_LOG_BYTES) return true
+        return lowerContentType.startsWith("image/") ||
+                lowerContentType.startsWith("video/") ||
+                lowerContentType.startsWith("audio/") ||
+                lowerContentType.contains("octet-stream") ||
+                lowerContentType.contains("zip") ||
+                lowerContentType.contains("pdf")
+    }
+
+    private fun maskHeaderValue(name: String, value: String?): String {
+        return maskValueIfSensitive(name, value)
+    }
+
+    private fun maskValueIfSensitive(name: String, value: String?): String {
+        if (value.isNullOrEmpty()) return value.orEmpty()
+        val key = name.lowercase()
+        val isSensitive = key in SENSITIVE_HEADER_NAMES ||
+                key.contains("password") ||
+                key.contains("secret") ||
+                key.contains("token") ||
+                key.contains("auth")
+        return if (isSensitive) "***" else value
     }
 }

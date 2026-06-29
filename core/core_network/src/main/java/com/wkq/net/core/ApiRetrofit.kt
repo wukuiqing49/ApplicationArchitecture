@@ -6,19 +6,29 @@ import com.wkq.net.https.HttpsUtils
 import com.wkq.net.interceptor.LoggingInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.awaitResponse
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.CancellationException
 
 /**
- * 处理一般 JSON API 交互的单例客户端。
- * 必须先调用 [NetManager.init] 获取配置后才能使用。
+ * 处理普通 JSON API 的 Retrofit 单例客户端。
  */
 object ApiRetrofit {
 
-    private val retrofit: Retrofit by lazy {
+    @Volatile
+    private var retrofit: Retrofit? = null
+
+    private val lock = Any()
+
+    private fun getRetrofit(): Retrofit {
+        return retrofit ?: synchronized(lock) {
+            retrofit ?: buildRetrofit().also { retrofit = it }
+        }
+    }
+
+    private fun buildRetrofit(): Retrofit {
         val config = NetManager.getConfig()
 
         val okHttpClientBuilder = OkHttpClient.Builder()
@@ -28,106 +38,160 @@ object ApiRetrofit {
             .addInterceptor(NetManager.headerInterceptor)
             .addInterceptor(LoggingInterceptor.create(config.isDebugLogsEnabled))
 
-        // 配置 HTTPS
-        val sslSocketFactory = HttpsUtils.createSSLSocketFactory()
-        okHttpClientBuilder.sslSocketFactory(sslSocketFactory, HttpsUtils.UnSafeTrustManager())
-        okHttpClientBuilder.hostnameVerifier(HttpsUtils.UnSafeHostnameVerifier())
+        if (config.allowUnsafeSsl) {
+            val trustManager = HttpsUtils.UnSafeTrustManager()
+            val sslSocketFactory = HttpsUtils.createSSLSocketFactory(trustManager)
+            okHttpClientBuilder.sslSocketFactory(sslSocketFactory, trustManager)
+            okHttpClientBuilder.hostnameVerifier(HttpsUtils.UnSafeHostnameVerifier())
+        }
 
-        Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(config.baseUrl)
             .client(okHttpClientBuilder.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    /**
-     * 动态创建 API Service 实例
-     */
     fun <T> create(serviceClass: Class<T>): T {
-        return retrofit.create(serviceClass)
+        return getRetrofit().create(serviceClass)
+    }
+
+    internal fun reset() {
+        synchronized(lock) {
+            retrofit = null
+        }
     }
 }
 
 /**
- * 全局内联辅助函数，用于安全地执行 Retrofit 挂起函数，并将异常映射为安全的 [ApiResponse]。
- * 用法: val response = safeApiCall { apiService.getMusicList() }
+ * 默认 code/message/data 响应壳请求入口，兼容旧用法。
  */
 suspend inline fun <T> safeApiCall(crossinline apiCall: suspend () -> BaseResponse<T>): ApiResponse<T> {
+    return safeApiCall(apiCall, BaseResponseParser())
+}
+
+/**
+ * 使用自定义响应壳解析器执行请求，适配 status/msg/result 等非固定后台格式。
+ */
+suspend inline fun <R, T> safeApiCall(
+    crossinline apiCall: suspend () -> R,
+    parser: NetResponseParser<R, T>
+): ApiResponse<T> {
     return try {
         val response = apiCall()
-        if (response.isSuccess()) {
-            ApiResponse.Success(response.data)
+        if (parser.isSuccess(response)) {
+            ApiResponse.Success(parser.data(response))
         } else {
-            // 触发全局 Code 处理器（如 Token 失效判断）
-            val handled = NetManager.getConfig().globalHandler?.onHandleBusinessCode(response.code, response.message) ?: false
+            val code = parser.code(response)
+            val message = parser.message(response)
+            val handled = NetManager.getConfig().globalHandler?.onHandleBusinessCode(code, message) ?: false
             if (handled) {
-                // 如果全局拦截器处理了此 Code（如跳转登录），这里仍返回 Error 状态以便调用方感知，
-                // 但具体的全局交互逻辑已在拦截器中完成。
+                // 全局处理器已经完成具体交互，这里仍返回 Error 让调用方感知。
             }
-            ApiResponse.Error(response.code, response.message ?: "服务器业务逻辑错误: ${response.code}")
+            ApiResponse.Error(code, message ?: NetMessages.provider().businessError(code), ErrorType.BUSINESS)
         }
+    } catch (e: CancellationException) {
+        throw e
     } catch (e: Exception) {
-        val (code, msg) = ExceptionHelper.handleException(e)
-        ApiResponse.Error(code, msg)
+        ExceptionHelper.handleToError(e)
     }
 }
 
 /**
- * 针对非 BaseResponse 格式的接口，直接将数据内容映射为 ApiResponse.Success。
- * 没有任何业务 Code 校验逻辑。
+ * 使用 NetConfig 中配置的默认响应壳解析器执行请求。
+ *
+ * 如果接口本身不带业务响应壳，请使用 safeRawApiCall，避免把原始 JSON 当成业务壳解析。
+ */
+suspend inline fun <R, T> safeApiCallWithDefaultParser(
+    crossinline apiCall: suspend () -> R
+): ApiResponse<T> {
+    val parser = NetManager.getConfig().defaultResponseParserFactory.create<R, T>()
+    return safeApiCall(apiCall, parser)
+}
+
+/**
+ * 针对非业务响应壳接口，直接把返回内容映射为 Success。
  */
 suspend inline fun <T> safeRawApiCall(crossinline apiCall: suspend () -> T): ApiResponse<T> {
     return try {
         val response = apiCall()
         ApiResponse.Success(response)
+    } catch (e: CancellationException) {
+        throw e
     } catch (e: Exception) {
-        val (code, msg) = ExceptionHelper.handleException(e)
-        ApiResponse.Error(code, msg)
+        ExceptionHelper.handleToError(e)
     }
 }
 
 /**
- * 扩展方法：将标准的 Retrofit [Call] 作为挂起协程块执行。
- * 模仿了旧版的 `.request(Callback)` 风格，但使用协程进行线性、同步的代码书写。
- *
- * 用法: apiService.getMusicList(1).awaitResult().onSuccess { ... }.onError { ... }
+ * 默认 code/message/data Call 请求入口，兼容旧用法。
  */
 suspend fun <T> Call<BaseResponse<T>>.awaitResult(): ApiResponse<T> {
+    return awaitResult(BaseResponseParser())
+}
+
+/**
+ * 将 Retrofit Call 作为协程执行，并使用自定义响应壳解析器适配非固定后台格式。
+ */
+suspend fun <R, T> Call<R>.awaitResult(parser: NetResponseParser<R, T>): ApiResponse<T> {
     return try {
         val response = this.awaitResponse()
         if (response.isSuccessful) {
             val body = response.body()
-            if (body != null && body.isSuccess()) {
-                ApiResponse.Success(body.data)
+            if (body != null && parser.isSuccess(body)) {
+                ApiResponse.Success(parser.data(body))
             } else {
-                val code = body?.code ?: response.code()
-                val message = body?.message ?: "Server error: $code"
+                val code = body?.let { parser.code(it) } ?: response.code()
+                val message = body?.let { parser.message(it) } ?: NetMessages.provider().serverError(code)
                 NetManager.getConfig().globalHandler?.onHandleBusinessCode(code, message)
-                ApiResponse.Error(code, message)
+                ApiResponse.Error(code, message, ErrorType.BUSINESS)
             }
         } else {
-            ApiResponse.Error(response.code(), response.message().ifEmpty { "HTTP Error ${response.code()}" })
+            ApiResponse.Error(
+                code = response.code(),
+                message = NetMessages.provider().httpError(
+                    response.code(),
+                    response.message().ifEmpty { response.code().toString() }
+                ),
+                type = ErrorType.HTTP
+            )
         }
+    } catch (e: CancellationException) {
+        throw e
     } catch (e: Exception) {
-        val (code, msg) = ExceptionHelper.handleException(e)
-        ApiResponse.Error(code, msg)
+        ExceptionHelper.handleToError(e)
     }
 }
 
 /**
- * 针对非 BaseResponse 格式的接口，直接将 ResponseBody 映射为 ApiResponse。
+ * 使用 NetConfig 中配置的默认响应壳解析器执行 Call 请求。
+ */
+suspend fun <R, T> Call<R>.awaitResultWithDefaultParser(): ApiResponse<T> {
+    val parser = NetManager.getConfig().defaultResponseParserFactory.create<R, T>()
+    return awaitResult(parser)
+}
+
+/**
+ * 针对非业务响应壳的 Call，直接将 body 映射为 Success。
  */
 suspend fun <T> Call<T>.awaitRawResult(): ApiResponse<T> {
     return try {
         val response = this.awaitResponse()
         if (response.isSuccessful) {
-            val body = response.body()
-            ApiResponse.Success(body)
+            ApiResponse.Success(response.body())
         } else {
-            ApiResponse.Error(response.code(), response.message().ifEmpty { "HTTP Error ${response.code()}" })
+            ApiResponse.Error(
+                code = response.code(),
+                message = NetMessages.provider().httpError(
+                    response.code(),
+                    response.message().ifEmpty { response.code().toString() }
+                ),
+                type = ErrorType.HTTP
+            )
         }
+    } catch (e: CancellationException) {
+        throw e
     } catch (e: Exception) {
-        val (code, msg) = ExceptionHelper.handleException(e)
-        ApiResponse.Error(code, msg)
+        ExceptionHelper.handleToError(e)
     }
 }

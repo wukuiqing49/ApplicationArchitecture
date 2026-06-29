@@ -2,6 +2,9 @@ package com.wkq.net.exception
 
 import android.net.ParseException
 import com.google.gson.JsonParseException
+import com.wkq.net.core.ApiResponse
+import com.wkq.net.core.ErrorType
+import com.wkq.net.core.NetMessages
 import org.json.JSONException
 import retrofit2.HttpException
 import java.net.ConnectException
@@ -30,32 +33,41 @@ object ExceptionHelper {
      * @return 包含映射后的 (errorCode, errorMessage) 的 Pair。
      */
     fun handleException(e: Throwable): Pair<Int, String> {
+        val error = handleToError(e)
+        return Pair(error.code, error.message)
+    }
+
+    /**
+     * 将异常转换为稳定的 ApiResponse.Error。
+     */
+    fun handleToError(e: Throwable): ApiResponse.Error {
+        val messages = NetMessages.provider()
         return when (e) {
             is SocketTimeoutException -> {
-                Pair(ERROR_NETWORK_TIMEOUT, "请求超时，请稍后重试: ${e.message}")
+                ApiResponse.Error(ERROR_NETWORK_TIMEOUT, messages.requestTimeout(e.message), ErrorType.TIMEOUT, e)
             }
             is ConnectException -> {
-                Pair(ERROR_NETWORK_CONNECTION, "无法连接到服务器，请检查网络: ${e.message}")
+                ApiResponse.Error(ERROR_NETWORK_CONNECTION, messages.connectionFailed(e.message), ErrorType.NETWORK, e)
             }
             is UnknownHostException -> {
-                Pair(ERROR_NETWORK_UNKNOWN_HOST, "无法识别主机，请检查网络连接: ${e.message}")
+                ApiResponse.Error(ERROR_NETWORK_UNKNOWN_HOST, messages.unknownHost(e.message), ErrorType.NETWORK, e)
             }
             is JsonParseException, is JSONException, is ParseException -> {
-                Pair(ERROR_JSON_PARSING, "数据解析错误，服务器返回了错误的 JSON 格式。")
+                ApiResponse.Error(ERROR_JSON_PARSING, messages.jsonParseError(), ErrorType.PARSE, e)
             }
             is SSLHandshakeException -> {
-                Pair(ERROR_SSL, "SSL 证书验证失败: ${e.message}")
+                ApiResponse.Error(ERROR_SSL, messages.sslError(e.message), ErrorType.SSL, e)
             }
             is HttpException -> {
                 val code = e.code()
                 val msg = e.message()
-                Pair(code, "HTTP 错误 $code: $msg")
+                ApiResponse.Error(code, messages.httpError(code, msg), ErrorType.HTTP, e)
             }
             is CancellationException -> {
-                Pair(ERROR_CANCELED, "请求已取消")
+                ApiResponse.Error(ERROR_CANCELED, messages.canceled(), ErrorType.CANCELED, e)
             }
             else -> {
-                Pair(ERROR_UNKNOWN, e.message ?: "发生未知错误")
+                ApiResponse.Error(ERROR_UNKNOWN, messages.unknownError(e.message), ErrorType.UNKNOWN, e)
             }
         }
     }

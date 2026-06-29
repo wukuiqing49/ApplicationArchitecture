@@ -30,10 +30,10 @@ object HttpsUtils {
     /**
      * 使用 UnSafeTrustManager 创建一个信任所有证书的 SSLSocketFactory。
      */
-    fun createSSLSocketFactory(): SSLSocketFactory {
+    fun createSSLSocketFactory(trustManager: X509TrustManager = UnSafeTrustManager()): SSLSocketFactory {
         return try {
             val sslContext = SSLContext.getInstance("TLS")
-            sslContext.init(null, arrayOf<TrustManager>(UnSafeTrustManager()), SecureRandom())
+            sslContext.init(null, arrayOf<TrustManager>(trustManager), SecureRandom())
             sslContext.socketFactory
         } catch (e: Exception) {
             throw RuntimeException("创建 SSLSocketFactory 失败", e)

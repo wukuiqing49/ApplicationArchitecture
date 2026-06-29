@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id 'maven-publish'
 }
 
 android {
@@ -27,6 +28,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 kotlin {
@@ -49,4 +55,70 @@ dependencies {
     
     testImplementation libs.junit
 
+}
+
+def publishedGroupId = providers.gradleProperty("POM_GROUP_ID")
+        .orElse(providers.environmentVariable("POM_GROUP_ID"))
+        .orElse("com.github.USER.REPOSITORY")
+def publishedArtifactId = providers.gradleProperty("POM_ARTIFACT_ID")
+        .orElse(providers.environmentVariable("POM_ARTIFACT_ID"))
+        .orElse("core_network")
+def publishedVersion = providers.gradleProperty("POM_VERSION")
+        .orElse(providers.environmentVariable("POM_VERSION"))
+        .orElse("0.0.1-SNAPSHOT")
+def githubRepository = providers.gradleProperty("GITHUB_REPOSITORY")
+        .orElse(providers.environmentVariable("GITHUB_REPOSITORY"))
+        .orElse("OWNER/REPOSITORY")
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = publishedGroupId.get()
+            artifactId = publishedArtifactId.get()
+            version = publishedVersion.get()
+
+            afterEvaluate {
+                from components.release
+            }
+
+            pom {
+                name = "core_network"
+                description = "Android network library based on Retrofit and OkHttp, with unified response handling, upload, download, dynamic base url and consumer ProGuard rules."
+                url = "https://github.com/${githubRepository.get()}"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "wukuiqing49"
+                        name = "wukuiqing49"
+                    }
+                }
+                scm {
+                    connection = "scm:git:https://github.com/${githubRepository.get()}.git"
+                    developerConnection = "scm:git:ssh://git@github.com/${githubRepository.get()}.git"
+                    url = "https://github.com/${githubRepository.get()}"
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/${githubRepository.get()}")
+            credentials {
+                username = providers.gradleProperty("gpr.user")
+                        .orElse(providers.environmentVariable("GITHUB_ACTOR"))
+                        .orElse("")
+                        .get()
+                password = providers.gradleProperty("gpr.key")
+                        .orElse(providers.environmentVariable("GITHUB_TOKEN"))
+                        .orElse("")
+                        .get()
+            }
+        }
+    }
 }
